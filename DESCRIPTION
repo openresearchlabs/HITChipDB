@@ -16,7 +16,7 @@ Depends:
     plyr,
     preprocessCore,
     reshape2,
-    RPA,
+    RPA, 
     svDialogs,
     tcltk
 URL: TBA
