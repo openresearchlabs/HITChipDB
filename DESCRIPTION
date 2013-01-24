@@ -11,12 +11,14 @@ Depends:
     R (>= 2.12.1),
     affy,
     DBI,
+    MASS,
     methods,
     microbiome,
     plyr,
     preprocessCore,
     reshape2,
-    RPA, 
+    RMySQL,
+    RPA,
     svDialogs,
     tcltk
 URL: TBA
@@ -29,4 +31,5 @@ Collate:
     'internal.R'
     'mysql.R'
     'nmf.R'
+    'toydata.R'
 Packaged: 2012-01-12 14:19:39 UTC; lei

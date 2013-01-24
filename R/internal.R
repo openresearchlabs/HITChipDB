@@ -1,4 +1,4 @@
-# Copyright (C) 2011-2012 Leo Lahti and Jarkko Salojarvi 
+# Copyright (C) 2011-2013 Leo Lahti and Jarkko Salojarvi 
 # Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
 
 # This file is a part of the microbiome R package
@@ -1038,15 +1038,13 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, mc.cores = 1, verbose = 
   # dbuser = "pit"; dbpwd = "passu"; dbname = "pitchipdb"; mc.cores = 1; verbose = TRUE
   # dbuser = "pit"; dbpwd = "passu"; dbname = "Phyloarray_PIT"; mc.cores = 1; verbose = TRUE
 
-  if (!require(RMySQL)) {
-    install.packages("RMySQL")
-    require(RMySQL)
-  }
+  microbiome::InstallMarginal("RMySQL")
 
   # library(microbiome); fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "lmlahti"; dbpwd = "passu"; dbname = "Phyloarray"; verbose = TRUE; mc.cores = 1
 
   ## ask parameters or read from R-file
   if (!(is.null(host) && is.null(port))) {
+    drv <- dbDriver("MySQL")
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname, host = host, port = port)
   } else { 
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
