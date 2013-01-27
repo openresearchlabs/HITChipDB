@@ -1036,7 +1036,6 @@ ScaleProfile <- function (dat, method = 'minmax', bg.adjust = NULL, minmax.quant
 preprocess.chipdata <- function (dbuser, dbpwd, dbname, mc.cores = 1, verbose = TRUE, host = NULL, port = NULL) {
 
   # dbuser = "pit"; dbpwd = "passu"; dbname = "pitchipdb"; mc.cores = 1; verbose = TRUE
-  # dbuser = "pit"; dbpwd = "passu"; dbname = "Phyloarray_PIT"; mc.cores = 1; verbose = TRUE
 
   microbiome::InstallMarginal("RMySQL")
 
@@ -1101,8 +1100,9 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, mc.cores = 1, verbose = 
   # This handles also pmTm, complement and mismatch filtering
   phylogeny.info <- get.phylogeny.info(params$phylogeny, 
     	       		     rmoligos = params$rm.phylotypes$oligos, 
-	    		     dbuser = dbuser, dbpwd = dbpwd, dbname = dbname, verbose = verbose, 
-			     remove.nonspecific.oligos = params$remove.nonspecific.oligos, 
+	    		     dbuser = dbuser, dbpwd = dbpwd, dbname = dbname, 
+			     verbose = verbose, 
+		remove.nonspecific.oligos = params$remove.nonspecific.oligos, 
 			     chip = params$chip)
 			     
   ####################
@@ -1231,13 +1231,15 @@ threshold.data <- function(dat, sd.times = 6){
 summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verbose = TRUE, rm.phylotypes = NULL) {
 
   # oligo.data <- log10(oligo.matrix.nolog.simulated); verbose = T; rm.phylotypes = NULL
-
   # phylogeny.info; oligo.data; method; level; rm.phylotypes = rm.phylotypes; verbose = TRUE
 
   # If remove L0 is not NULL, then add L1 groups under this group to removal list
   if (!is.null(rm.phylotypes$L0)) {
     rm.phylotypes$L1 <- c(rm.phylotypes$L1,
-  						unlist(levelmap(phylotypes = rm.phylotypes$L0, level.from = "L0", level.to = "L1", phylogeny.info = phylogeny.info)))
+  		unlist(levelmap(phylotypes = rm.phylotypes$L0, 
+				level.from = "L0", 
+				level.to = "L1", 
+				phylogeny.info = phylogeny.info)))
 
     rm.phylotypes$L1 <- unique(rm.phylotypes$L1)
   }
@@ -1253,7 +1255,10 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
   # If remove L2 is not NULL, then add species groups under this group to removal list
   if (!is.null(rm.phylotypes$L2)) {
     rm.phylotypes$species <- c(rm.phylotypes$species,
-  						unlist(levelmap(phylotypes = rm.phylotypes$L2, level.from = "L2", level.to = "species", phylogeny.info = phylogeny.info)))
+  			unlist(levelmap(phylotypes = rm.phylotypes$L2, 
+				level.from = "L2", 
+				level.to = "species", 
+				phylogeny.info = phylogeny.info)))
 
     rm.phylotypes$species <- unique(rm.phylotypes$species)
   }
@@ -1364,7 +1369,14 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       # variances set according to number of matching probes
       # This will provide slight emphasis to downweigh potentially
       # cross-hybridizing probes
-      vec <- rpa.fit(dat, tau2.method = "robust", alpha = 1 + 0.1*ncol(oligo.data)/2, beta = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)$mu
+      vec <- rpa.fit(dat, tau2.method = "robust", 
+      	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
+			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)$mu
+
+      # Switch to this when the probe variances estimated from large atlas become available.		  
+      # Remember to compare performance
+      # vec <- d.update.fast(dat, variances)
+      # vec <- d.update.fast(dat - affinities, variances)}, mc.cores = mc.cores), identity))
 
     } else if (method == "ave") {
 
@@ -1429,17 +1441,18 @@ calculate.rpa <- function (level, phylo, oligo.data) {
       noise <- NA
     } else {
       res <- rpa.fit(dat)
-      vec <- res$mu
-      noise <- sqrt(res$tau2)
-      names(noise) <- probes
+      vec <- res$mu # probeset summary
+      variances <- res$tau2
+      names(variances) <- probes
     }
 
-    noise.list[[entity]] <- noise
-    summarized.matrix[entity, ] <- vec #, epsilon, alpha, beta, tau2.method, d.method)
+    noise.list[[entity]] <- variances
+    summarized.matrix[entity, ] <- vec 
+    # epsilon, alpha, beta, tau2.method, d.method
 
   }
 
-  list(emat = summarized.matrix, noise = noise.list)
+  list(emat = summarized.matrix, tau2 = noise.list)
   
 }
 
