@@ -1212,7 +1212,7 @@ threshold.data <- function(dat, sd.times = 6){
 
 
 
-sync.rm.phylotypes <- function (rm.phylotypes) {
+sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
 
   # If remove L0 is not NULL, then add L1 groups under this group to removal list
   if (!is.null(rm.phylotypes$L0)) {
@@ -1273,7 +1273,7 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
   # oligo.data <- log10(oligo.matrix.nolog.simulated); verbose = T; rm.phylotypes = NULL
   # phylogeny.info; oligo.data; method; level; rm.phylotypes = rm.phylotypes; verbose = TRUE
 
-  rm.phylotypes <- sync.rm.phylotypes(rm.phylotypes)
+  rm.phylotypes <- sync.rm.phylotypes(rm.phylotypes, phylogeny.info)
 
   # print("Remove specified oligos")
   rm.oligos <- rm.phylotypes$oligos
@@ -1398,7 +1398,7 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       # vec <- d.update.fast(dat, variances)
       # vec <- d.update.fast(dat - affinities, variances)}, mc.cores = mc.cores), identity))
 
-    } if (method == "rpa.full") {
+    } else if (method == "rpa.full") {
 
       # RPA is calculated in log domain
       # Downweigh non-specific probes with priors with 10% of virtual data and

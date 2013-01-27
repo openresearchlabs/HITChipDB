@@ -3,7 +3,8 @@
 \title{Description: Probeset summarization with various methods.}
 \usage{
   summarize.probesets(phylogeny.info, oligo.data, method,
-    level, verbose = TRUE, rm.phylotypes = NULL)
+    level, verbose = TRUE, rm.phylotypes = NULL,
+    species.matrix = NULL)
 }
 \arguments{
   \item{phylogeny.info}{oligo - phylotype matching
@@ -19,10 +20,16 @@
   \item{verbose}{print intermediate messages}
 
   \item{rm.phylotypes}{Phylotypes to exclude (a list with
-  fields species, L1, L2) Returns:}
+  fields species, L1, L2)}
+
+  \item{species.matrix}{Optional. Provide pre-calculated
+  species-level summaries to speed up computation.
+  Returns:}
 }
 \value{
-  summarized data matrix
+  List with two elements: summarized.matrix (summarized
+  data matrix in log10 scale) and probe.parameters (only
+  used with rpa, probe-level parameter estimates)
 }
 \description{
   Arguments:

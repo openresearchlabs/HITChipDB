@@ -20,7 +20,9 @@
   \item{rm.species}{Species to exclude Returns:}
 }
 \value{
-  summarized data matrix in log10 scale
+  List with two elements: summarized.matrix (summarized
+  data matrix in log10 scale) and probe.parameters (only
+  used with rpa, probe-level parameter estimates)
 }
 \description{
   Arguments:
