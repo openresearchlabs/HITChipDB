@@ -46,7 +46,7 @@ GenerateSimulatedData <- function (output.dir) {
     for (method in c("sum", "rpa", "nmf")) {
 
         message(paste(level, method))
-    	summarized.log10 <- summarize.probesets(phylogeny.info, log10(oligo.matrix.nolog.simulated), method = method, level = level, rm.phylotypes = phylotype.rm.list("HITChip"))
+    	summarized.log10 <- summarize.probesets(phylogeny.info, log10(oligo.matrix.nolog.simulated), method = method, level = level, rm.phylotypes = phylotype.rm.list("HITChip"))$summarized.matrix
       			       	          
         # Store the data in absolute scale					
         finaldata[[level]][[method]] <- 10^summarized.log10
