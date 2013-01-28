@@ -13,7 +13,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-
 # Database utilities for package-internal use only
 
 #' Tests whether the database connection is a phyloarray connection.
@@ -1270,8 +1269,7 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
 
 summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verbose = TRUE, rm.phylotypes = NULL, species.matrix = NULL) {
 
-  # oligo.data <- log10(oligo.matrix.nolog.simulated); verbose = T; rm.phylotypes = NULL
-  # phylogeny.info; oligo.data; method; level; rm.phylotypes = rm.phylotypes; verbose = TRUE
+  # oligo.data <- oligo.log10; method <- method.name; verbose = TRUE; species.matrix = NULL
 
   rm.phylotypes <- sync.rm.phylotypes(rm.phylotypes, phylogeny.info)
 
@@ -1282,8 +1280,8 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
 
   # print("Get species matrix in original scale") # if not pre-calculated version available
   if (is.null(species.matrix)) {
-    probeset.summaries <- 10^summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE, rm.phylotypes$species)
-    species.matrix   <- probeset.summaries$summarized.matrix
+    probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE, rm.phylotypes$species)
+    species.matrix   <- 10^probeset.summaries$summarized.matrix
     probe.parameters <- probeset.summaries$probe.parameters # optinally with rpa
   } else {
     probe.parameters <- list()
@@ -1424,6 +1422,7 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       dat2 <- (10^dat) / nPhylotypesPerOligo[rownames(dat)]
       dat2[dat2 < 1] <- 1
       vec <- log10(colSums(dat2, na.rm = T))
+      vec[which(vec == -Inf)] <- 0
 
     }
     
