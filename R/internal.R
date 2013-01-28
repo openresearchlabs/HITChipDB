@@ -1278,7 +1278,7 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
   if (!is.null(rm.oligos)) { oligo.data <- oligo.data[setdiff(rownames(oligo.data), rm.oligos), ]}
   phylogeny.info <- phylogeny.info[!phylogeny.info$oligoID %in% rm.oligos, ]
 
-  # print("Get species matrix in original scale") # if not pre-calculated version available
+  if (verbose) message("Get species matrix in original scale") # if not pre-calculated version available
   if (is.null(species.matrix)) {
     probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE, rm.phylotypes$species)
     species.matrix   <- 10^probeset.summaries$summarized.matrix
@@ -1293,7 +1293,9 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
 
   } else if (level %in% c("L0", "L1", "L2")) {
 
-    if (method %in% c("rpa", "ave", "sum")) {
+    if (method %in% c("rpa", "ave", "sum", "rpa.full")) {
+
+      if (verbose) {message(paste(level, method))}
 
       # List all species for the given level (L0 / L1 / L2)")
       phylogroups <- levelmap(phylotypes = NULL, level.from = level, level.to = "species", phylogeny.info)
@@ -1311,7 +1313,8 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
 
         if (method == "ave") { vec <- colMeans(mat) }
         if (method == "sum") { vec <- colSums(mat)  } 
-        if (method == "rpa") { vec <- colSums(mat)  } # For RPA, use the sum for L1/L2
+        if (method %in% c("rpa", "rpa.full")) { vec <- colSums(mat)  } # For RPA, use the sum for L1/L2
+
         summarized.matrix[pg, ] <- vec
       }
 
