@@ -256,16 +256,13 @@ detect.chip <- function (dbname) {
 
 ReadParameters <- function (con) {
 
-  if (!require(RMySQL)) {
-    install.packages("RMySQL")
-    require(RMySQL)
-  }
+  InstallMarginal("RMySQL")
 
   ## Determine the working directory
   wdir <- tclvalue(tkchooseDirectory(title = "Save output files into directory:")) 
         
   ## Choose samples to display
-  prj <- microbiome::choose.projects(con, multi = TRUE, condition = NULL)
+  prj <- HITChipDB::choose.projects(con, multi = TRUE, condition = NULL)
 
   if(nrow(prj) < 1) { stop("Choose at least 1 project") }
   samples <- choose.samples(con, multi=TRUE, title='Select samples', 
@@ -506,6 +503,7 @@ prune16S <- function (full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0) 
 
   phylogeny.info
 }
+
 
 #' Description: Get probedata
 #' 
@@ -1010,9 +1008,6 @@ ScaleProfile <- function (dat, method = 'minmax', bg.adjust = NULL, minmax.quant
   return(r)
 }
 
-
-
-
 #' Description: Profiling preprocessing script
 #'
 #' Arguments:
@@ -1041,8 +1036,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, mc.cores = 1, verbose = 
   # library(microbiome); fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "lmlahti"; dbpwd = "passu"; dbname = "Phyloarray"; verbose = TRUE; mc.cores = 1
 
   ## ask parameters or read from R-file
-  if (!(is.null(host) && is.null(port))) {
-    drv <- dbDriver("MySQL")
+  drv <- dbDriver("MySQL")
+  if (!(is.null(host) && is.null(port))) {    
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname, host = host, port = port)
   } else { 
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
@@ -1109,15 +1104,10 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, mc.cores = 1, verbose = 
   ####################
 
   # Summarize probes into oligos and hybridisations into samples
-  d.oligo2 <- summarize.rawdata(log10(d.scaled), 
+  oligo.log10 <- summarize.rawdata(log10(d.scaled), 
   	      			fdat.hybinfo, 
 				fdat.oligoinfo = fdat.oligoinfo, 
 				oligo.ids = sort(unique(phylogeny.info$oligoID)))
-
-  # Then apply background correction if required:
-  # if (!is.null(params$bgc.method)) { d.oligo2 <- oligo.bg.correction(d.oligo2, bgc.method = params$bgc.method) }
-  # d.oligo2 <- oligo.bg.correction(d.oligo2, bgc.method = NULL)
-  oligo.log10 <- d.oligo2
 
   # Return to the original scale
   oligo.abs <- matrix(10^oligo.log10, nrow = nrow(oligo.log10)) # - 1  

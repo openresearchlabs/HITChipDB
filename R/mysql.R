@@ -133,7 +133,6 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 }
 
 
-
 #' get.phylogeny.info
 #' 
 #' Description: Get phylogeny
@@ -161,14 +160,10 @@ get.phylogeny.info <- function (phylogeny = "16S", rmoligos = NULL, dbuser, dbpw
 
   # phylogeny = "16S"; rmoligos = NULL; verbose = TRUE; remove.nonspecific.oligos = FALSE; chip = "HITChip"
 
-  if (!require(RMySQL)) {
-    install.packages("RMySQL")
-    require(RMySQL)
-  }
+  InstallMarginal("RMySQL")
 
   if (verbose) { message("Load phylogeny.info info") }
 
-  require(RMySQL)
   drv <- dbDriver("MySQL")
   if (!(is.null(host) && is.null(port))) {
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname, host = host, port = port)
@@ -180,7 +175,6 @@ get.phylogeny.info <- function (phylogeny = "16S", rmoligos = NULL, dbuser, dbpw
   message("Collect the full phylogeny")
   excloligos <- ifelse(length(rmoligos>0),
                        paste('AND NOT (', paste("o.oligoID='",rmoligos,"'",sep="",collapse=" OR "), ') ', sep=''), '')
-                       
 
   if (chip == "MITChip" || chip == "PITChip") {
 
