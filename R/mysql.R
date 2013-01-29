@@ -37,6 +37,7 @@
 fetch.sample.info <- function (allowed.projects, chiptype = NULL, 
 		  dbuser, dbpwd, dbname, selected.samples = NULL, host = NULL, port = NULL) { 
 
+
   if (!require(RMySQL)) {
     install.packages("RMySQL")
     require(RMySQL)
