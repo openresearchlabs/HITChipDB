@@ -1,8 +1,8 @@
 Package: HITChipDB
 Type: Package
 Title: HITChipDB
-Version: 0.3.68
-Date: 2012-01-28
+Version: 0.3.69
+Date: 2012-01-29
 Author: Leo Lahti and Jarkko Salojarvi
 Maintainer: HITChipDB developer team <microbiome-admin@googlegroups.com>
 Description: R package for HITChipDB studies
@@ -25,6 +25,7 @@ URL: TBA
 LazyLoad: yes
 Collate:
     'firstlib.R'
+    'deprecated.R'
     'HITChipDB-package.R'
     'show-methods.R'
     'profiling.R'
