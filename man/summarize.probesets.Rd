@@ -3,10 +3,12 @@
 \title{summarize.probesets}
 \usage{
   summarize.probesets(phylogeny.info, oligo.data, method,
-    level, verbose = TRUE, rm.phylotypes = NULL)
+    level, verbose = TRUE, rm.phylotypes = NULL,
+    species.matrix = NULL, version = 1)
 
   summarize.probesets(phylogeny.info, oligo.data, method,
-    level, verbose = TRUE, rm.phylotypes = NULL)
+    level, verbose = TRUE, rm.phylotypes = NULL,
+    species.matrix = NULL, version = 1)
 }
 \arguments{
   \item{phylogeny.info}{oligo - phylotype matching
@@ -41,9 +43,13 @@
   \item{verbose}{print intermediate messages}
 
   \item{rm.phylotypes}{Phylotypes to exclude (a list with
-  fields species, L1, L2)
+  fields species, L1, L2)}
 
-  Returns:}
+  \item{species.matrix}{Optional. Provide pre-calculated
+  species-level summaries to speed up computation.}
+
+  \item{version}{Use current (1) or experimental (2)
+  version Returns:}
 }
 \value{
   List with two elements: summarized.matrix (summarized

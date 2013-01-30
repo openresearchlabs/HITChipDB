@@ -1259,83 +1259,44 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
 
 summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verbose = TRUE, rm.phylotypes = NULL, species.matrix = NULL, version = 1) {
 
-  if (method == "nmf" && level == "species") {
-    warning("nmf oligo summarization method not implemented at species level"); 
-    return(NULL)
-  }
-
   # oligo.data <- oligo.log10; method <- method.name; verbose = TRUE; species.matrix = NULL
 
-  rm.phylotypes <- sync.rm.phylotypes(rm.phylotypes, phylogeny.info)
-
   # print("Remove specified oligos")
+  rm.phylotypes <- sync.rm.phylotypes(rm.phylotypes, phylogeny.info)
   rm.oligos <- rm.phylotypes$oligos
   if (!is.null(rm.oligos)) { oligo.data <- oligo.data[setdiff(rownames(oligo.data), rm.oligos), ]}
   phylogeny.info <- phylogeny.info[!phylogeny.info$oligoID %in% rm.oligos, ]
 
-  if (version == 1) {
+  # Summarize
+  if (method %in% c("rpa", "rpa.full", "sum", "ave")) { 
 
-  if (verbose) message("Get species matrix in original scale") # if not pre-calculated version available
-  if (is.null(species.matrix)) {
-    probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE, rm.phylotypes$species)
-    species.matrix   <- 10^probeset.summaries$summarized.matrix
-    probe.parameters <- probeset.summaries$probe.parameters # optinally with rpa
-  } else {
-    probe.parameters <- list()
-  }
+    res <- summarize.probesets.through.species(level, phylogeny.info, oligo.data, method, rm.phylotypes)
+ 
+  } else if (method %in% c("rpa2", "sum2", "ave2", "nmf")) {
 
-
-  if (level == "species") {
-
-    summarized.matrix <- species.matrix
-
-  } else if (level %in% c("L0", "L1", "L2")) {
-
-    if (method %in% c("rpa", "ave", "sum", "rpa.full")) {
-
-      if (verbose) {message(paste(level, method))}
-
-      # List all species for the given level (L0 / L1 / L2)")
-      phylogroups <- levelmap(phylotypes = NULL, level.from = level, level.to = "species", phylogeny.info)
-
-      # Remove specified phylogroups
-      phylogroups <- phylogroups[setdiff(names(phylogroups), rm.phylotypes[[level]])]
-
-      summarized.matrix <- matrix(NA, nrow = length(phylogroups), ncol = ncol(oligo.data))
-      rownames(summarized.matrix) <- sort(names(phylogroups))
-      colnames(summarized.matrix) <- colnames(oligo.data)
-
-      for (pg in names(phylogroups)) {
-        specs <- unique(phylogroups[[pg]])
-        mat <- matrix(species.matrix[specs,], nrow = length(specs))
-
-        if (method == "ave") { vec <- colMeans(mat) }
-        if (method == "sum") { vec <- colSums(mat)  } 
-        if (method %in% c("rpa", "rpa.full")) { vec <- colSums(mat)  } # For RPA, use the sum for L1/L2
-
-        summarized.matrix[pg, ] <- vec
-      }
-
-    } else if (method == "nmf") {
-
-      # Add +1 to avoid taking log10 for 0
-      summarized.matrix <- 1 + deconvolution.nonneg(10^oligo.data, phylogeny.info, level)
-
-    }
-
-  } else {
-
-    message(level)
-    message(nchar(level))
-    message(colnames(phylogeny.info))
-    stop("Provide proper level!")
+    res <- summarize.probesets.directly(level, phylogeny.info, oligo.data, method, rm.phylotypes)
 
   }
 
-    # Return in the original log10 domain    
-    res <- list(summarized.matrix = log10(summarized.matrix), probe.parameters = probe.parameters)
+  #} else if (method == "nmf") {
+  #
+  #  if (level == "species") {
+  #    warning("nmf oligo summarization method not implemented at species level"); 
+  #    return(NULL)
+  #  }
+  #
+  #  # Add +1 to avoid taking log10 for 0
+  #  summarized.matrix <- 1 + deconvolution.nonneg(10^oligo.data, phylogeny.info, level)
+  #  res <- list(summarized.matrix = summarized.matrix, probe.parameters = list())
+  #
+  #}
 
-  } else {
+  res
+
+}
+
+
+summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, method, rm.phylotypes) {
 
   # Retrieve oligos for each taxonomic group
   probesets <- retrieve.probesets(phylogeny.info, level = level)
@@ -1352,18 +1313,8 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
 
   probe.parameters <- list()
 
-  if (method == "nmf") {
-
-      # Add +1 to avoid taking log10 for 0
-      summarized.matrix <- 1 + deconvolution.nonneg(10^oligo.data, phylogeny.info, level)
-
-  } else {
-
-
-   for (set in names(probesets)) {
+  for (set in names(probesets)) {
    
-    if (verbose) { message(set) }
-
     # Pick data for particular probes
     probes <- probesets[[set]]
 
@@ -1373,66 +1324,85 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
     rownames(dat) <- probes
     colnames(dat) <- colnames(oligo.data)
 
-    if (method == "rpa") {
+    if (method == "rpa2") {
 
-      # RPA is calculated in log domain
-      # Downweigh non-specific probes with priors with 10% of virtual data and
-      # variances set according to number of matching probes
-      # This will provide slight emphasis to downweigh potentially
-      # cross-hybridizing probes
-      vec <- rpa.fit(dat, tau2.method = "robust", 
-      	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
-			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)$mu
-
-      # Switch to this when the probe variances estimated from large atlas become available.		  
-      # Remember to compare performance
-      # vec <- d.update.fast(dat, variances)
-      # vec <- d.update.fast(dat - affinities, variances)}, mc.cores = mc.cores), identity))
-
-     } else if (method == "rpa.full") {
-
-      # RPA is calculated in log domain
-      # Downweigh non-specific probes with priors with 10% of virtual data and
-      # variances set according to number of matching probes
-      # This will provide slight emphasis to downweigh potentially
-      # cross-hybridizing probes
-      res <- rpa.fit(dat, tau2.method = "robust", 
+      	    # RPA is calculated in log domain
+     	    # Downweigh non-specific probes with priors with 10% of virtual data and
+      	    # variances set according to number of matching probes
+      	    # This will provide slight emphasis to downweigh potentially
+      	    # cross-hybridizing probes
+      	    res <- rpa.fit(dat, tau2.method = "robust", 
       	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
 			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)
 
-      vec <- res$mu
-      probe.parameters[[set]] <- res$tau2
+      	    vec <- res$mu
+      	    probe.parameters[[set]] <- res$tau2
 
-    } else if (method == "ave") {
+     } else if (method == "ave2") {
 
-      vec <- log10(colMeans((10^dat), na.rm = T))
+      	    vec <- log10(colMeans((10^dat), na.rm = T))
 
-    } else if (method == "sum") {
+     } else if (method == "sum2") {
 
-      # Weight each probe by the inverse of the number of matching phylotypes
-      # Then calculate sum -> less specific probes are downweighted
-      # However, set the minimum signal to 0 in log10 scale (1 in original scale)!
-      dat2 <- (10^dat) / nPhylotypesPerOligo[rownames(dat)]
-      dat2[dat2 < 1] <- 1
-      vec <- log10(colSums(dat2, na.rm = T))
-      vec[which(vec == -Inf)] <- 0
+            # Weight each probe by the inverse of the number of matching phylotypes
+      	    # Then calculate sum -> less specific probes are downweighted
+      	    # However, set the minimum signal to 0 in log10 scale (1 in original scale)!
+      	    dat2 <- (10^dat) / nPhylotypesPerOligo[rownames(dat)]
+      	    dat2[dat2 < 1] <- 1
+      	    vec <- log10(colSums(dat2, na.rm = T))
+      	    vec[which(vec == -Inf)] <- 0
 
-    } 
-    
-    summarized.matrix[set, ] <- vec 
+     } 
 
-   }
-  }
-
-    # Return summaries in the original log10 domain    
-    res <- list(summarized.matrix = summarized.matrix, probe.parameters = probe.parameters)
-
+     summarized.matrix[set, ] <- vec 
 
   }
 
-  res
+  list(summarized.matrix = summarized.matrix, probe.parameters = probe.parameters)  
 
 }
+
+
+summarize.probesets.through.species <- function (level, phylogeny.info, oligo.data, method, rm.phylotypes) {
+
+  # Get species-level summary first
+  probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE, rm.phylotypes$species)
+  species.matrix   <- 10^probeset.summaries$summarized.matrix
+  probe.parameters <- probeset.summaries$probe.parameters 
+
+  if (level == "species") {
+     res <- list(summarized.matrix = log10(species.matrix), probe.parameters = probe.parameters)
+     return(res)
+  }
+
+  # List all species for the given level (L0 / L1 / L2)")
+  phylogroups <- levelmap(phylotypes = NULL, level.from = level, level.to = "species", phylogeny.info)
+
+  # Remove specified phylogroups
+  phylogroups <- phylogroups[setdiff(names(phylogroups), rm.phylotypes[[level]])]
+
+  summarized.matrix <- matrix(NA, nrow = length(phylogroups), ncol = ncol(oligo.data))
+  rownames(summarized.matrix) <- sort(names(phylogroups))
+  colnames(summarized.matrix) <- colnames(oligo.data)
+
+  # Go through each phylogroup and summarize from species level
+  for (pg in names(phylogroups)) {
+
+    specs <- unique(phylogroups[[pg]])
+    mat <- matrix(species.matrix[specs,], nrow = length(specs))
+
+    if (method == "ave") { vec <- colMeans(mat) }
+    if (method == "sum") { vec <- colSums(mat)  } 
+    if (method %in% c("rpa", "rpa.full")) { vec <- colSums(mat)  } # For RPA, use the sum for L1/L2
+
+    summarized.matrix[pg, ] <- vec
+
+  }
+
+  list(summarized.matrix = log10(summarized.matrix), probe.parameters = probe.parameters)
+
+}
+
 
 #' Description: Probeset summarization with various methods.
 #' 
