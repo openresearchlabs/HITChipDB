@@ -161,7 +161,7 @@ get.phylogeny.info <- function (phylogeny = "16S", rmoligos = NULL, dbuser, dbpw
 
   # phylogeny = "16S"; rmoligos = NULL; verbose = TRUE; remove.nonspecific.oligos = FALSE; chip = "HITChip"
 
-  InstallMarginal("RMySQL")
+  microbiome::InstallMarginal("RMySQL")
 
   if (verbose) { message("Load phylogeny.info info") }
 

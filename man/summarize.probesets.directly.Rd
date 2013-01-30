@@ -1,12 +1,13 @@
-\name{summarize.probesets}
-\alias{summarize.probesets}
-\title{Description: summarize.probesets}
+\name{summarize.probesets.directly}
+\alias{summarize.probesets.directly}
+\title{Description: summarize.probesets.directly}
 \usage{
-  summarize.probesets(phylogeny.info, oligo.data, method,
-    level, verbose = TRUE, rm.phylotypes = NULL,
-    species.matrix = NULL)
+  summarize.probesets.directly(level, phylogeny.info,
+    oligo.data, method, rm.phylotypes)
 }
 \arguments{
+  \item{level}{summarization level}
+
   \item{phylogeny.info}{oligo - phylotype matching
   data.frame}
 
@@ -15,15 +16,8 @@
 
   \item{method}{summarization method}
 
-  \item{level}{summarization level}
-
-  \item{verbose}{print intermediate messages}
-
   \item{rm.phylotypes}{Phylotypes to exclude (a list with
-  fields species, L1, L2)}
-
-  \item{species.matrix}{Optional. Provide pre-calculated
-  species-level summaries to speed up computation.
+  fields species, L1, L2)
 
   Returns:}
 }
