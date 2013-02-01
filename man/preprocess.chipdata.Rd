@@ -2,7 +2,7 @@
 \alias{preprocess.chipdata}
 \title{Description: Profiling preprocessing script}
 \usage{
-  preprocess.chipdata(dbuser, dbpwd, dbname, mc.cores = 1,
+  preprocess.chipdata(dbuser, dbpwd, dbname,
     verbose = TRUE, host = NULL, port = NULL)
 }
 \arguments{
@@ -11,9 +11,6 @@
   \item{dbpwd}{MySQL password}
 
   \item{dbname}{MySQL database name}
-
-  \item{mc.cores}{Optional. Number of cores if
-  parallelization is used.}
 
   \item{verbose}{monitor processing through intermediate
   messages}

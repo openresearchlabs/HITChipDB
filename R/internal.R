@@ -510,7 +510,6 @@ prune16S <- function (full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0) 
 #'   @param dbuser MySQL user
 #'   @param dbpwd  MySQL password
 #'   @param dbname MySqL database name
-#'   @param mc.cores Number of cores for multicore computing
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
 #' Returns:                                        
@@ -521,19 +520,13 @@ prune16S <- function (full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0) 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, mc.cores = 1, host = NULL, port = NULL) {
+get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, host = NULL, port = NULL) {
 
-  if (!require(RMySQL)) {
-    install.packages("RMySQL")
-    require(RMySQL)
-  }
-
-  # hybridization.ids <- unique(project.info[["hybridisationID"]]); rmoligos <- rm.phylotypes$oligos; mc.cores = 1
+  microbiome::InstallMarginal("RMySQL")
 
   # List unique hybridisations for the selected samples
   hids <- mysql.format(hybridization.ids)
                       
-  require(RMySQL)
   drv <- dbDriver("MySQL")
   if (!(is.null(host) && is.null(port))) {
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname, host = host, port = port)
@@ -1008,7 +1001,6 @@ ScaleProfile <- function (dat, method = 'minmax', bg.adjust = NULL, minmax.quant
 #'   @param dbuser MySQL username
 #'   @param dbpwd  MySQL password
 #'   @param dbname MySQL database name
-#'   @param mc.cores Optional. Number of cores if parallelization is used.
 #'   @param verbose monitor processing through intermediate messages
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
@@ -1021,13 +1013,11 @@ ScaleProfile <- function (dat, method = 'minmax', bg.adjust = NULL, minmax.quant
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, mc.cores = 1, verbose = TRUE, host = NULL, port = NULL) {
-
-  # dbuser = "pit"; dbpwd = "passu"; dbname = "pitchipdb"; mc.cores = 1; verbose = TRUE
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL) {
 
   microbiome::InstallMarginal("RMySQL")
 
-  # library(microbiome); fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "lmlahti"; dbpwd = "passu"; dbname = "Phyloarray"; verbose = TRUE; mc.cores = 1
+  # library(microbiome); fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "lmlahti"; dbpwd = "passu"; dbname = "Phyloarray"; verbose = TRUE; 
 
   ## ask parameters or read from R-file
   drv <- dbDriver("MySQL")
@@ -1052,7 +1042,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, mc.cores = 1, verbose = 
   	       	  		    selected.samples = params$samples$sampleID)
 
   message("Get probe-level data for the selected hybridisations")
-  tmp <- get.probedata(unique(project.info[["hybridisationID"]]), params$rm.phylotypes$oligos, dbuser, dbpwd, dbname, mc.cores = mc.cores, host = host, port = port)
+  tmp <- get.probedata(unique(project.info[["hybridisationID"]]), params$rm.phylotypes$oligos, dbuser, dbpwd, dbname, host = host, port = port)
   fdat.orig <- tmp$data       # features x hybs, original non-log scale
   fdat.oligoinfo <- tmp$info  # oligoinfo
 
@@ -1493,7 +1483,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       # Switch to this when the probe variances estimated from large atlas become available.		  
       # Remember to compare performance
       # vec <- d.update.fast(dat, variances)
-      # vec <- d.update.fast(dat - affinities, variances)}, mc.cores = mc.cores), identity))
 
     } else if (method == "rpa.full") {
 
