@@ -476,30 +476,6 @@ scaling.minmax <- function (dat, quantile.points = NULL, minmax.points = NULL, r
 
 
 
-#' Description: filter 16S data
-#' 
-#' Arguments:
-#'   @param full16S full16S
-#'   @param pmTm.margin default 2.5
-#'   @param complement logical
-#'   @param mismatch logical
-#'
-#' Returns:
-#'   @return filtered 16S data
-#'
-#' @export
-#' @references See citation("microbiome") 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords utilities
-
-prune16S <- function (full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0) {
- 
-  keep <- ((full16S$Tm >= (full16S$pmTm-pmTm.margin)) & (full16S$complement == complement)) & (full16S$mismatch == mismatch)
-
-  phylogeny.info <- full16S[keep, ]
-
-  phylogeny.info
-}
 
 
 #' Description: Get probedata
@@ -657,7 +633,8 @@ WriteLog <- function (naHybs, params) {
 #' Arguments:
 #'   @param finaldata preprocessed data matrices in absolute scale (from the chipdata function)
 #'   @param output.dir output directory
-#'   @param phylogeny.info phylogeny.info
+#'   @param phylogeny.info phylogeny.info used in summarization
+#'   @param phylogeny.info.full phylogeny.info.full unfiltered phylogenyinfo
 #'   @param verbose verbose
 #'
 #' Returns:
@@ -668,7 +645,7 @@ WriteLog <- function (naHybs, params) {
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-WriteChipData <- function (finaldata, output.dir, phylogeny.info, verbose = TRUE) {
+WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info.full, verbose = TRUE) {
 
   ## featurelevel data
   ## WriteMatrix(cbind(fdat.oligoinfo, d.scaled), paste("featureprofile_", scriptVersion, ".tab", sep = ""), params)
@@ -690,11 +667,14 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, verbose = TRUE
     }
   }
 
-  ## Write oligo specificity at species level (the number of species for the oligo targets)
+  
+  # Write phylogeny.info
   fname <- paste(output.dir, "/phylogeny.tab", sep = "")
-  #nSpeciesPerOligo <- sapply(split(phylogeny.info, phylogeny.info$oligoID), function(x) length(unique(x$species)))
-  #WriteMatrix(cbind(phylogeny.info, nSpeciesPerOligo = nSpeciesPerOligo[phylogeny.info$oligoID]), fname, verbose)
   WriteMatrix(phylogeny.info, fname, verbose)
+
+  # Write unfiltered phylogeny.info
+  fname <- paste(output.dir, "/phylogeny.full.tab", sep = "")
+  WriteMatrix(phylogeny.info.full, fname, verbose)
 
   # Return path to the output directory 
   output.dir

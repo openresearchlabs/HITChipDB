@@ -140,15 +140,14 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #' 
 #' Arguments:
 #'   @param phylogeny phylogeny (default: 16S)
-#'   @param rmoligos oligos to exclude
 #'   @param dbuser MySQL user
 #'   @param dbpwd MySQL password
 #'   @param dbname MySqL database name
 #'   @param verbose verbose
-#'   @param remove.nonspecific.oligos Logical. Remove oligos with multiple targets.
 #'   @param chip chip type
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
+#'
 #' Returns:
 #'   @return phylogeny.info
 #'
@@ -157,9 +156,7 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-get.phylogeny.info <- function (phylogeny = "16S", rmoligos = NULL, dbuser, dbpwd, dbname, verbose = TRUE, remove.nonspecific.oligos = FALSE, chip = "HITChip", host = NULL, port = NULL) {   
-
-  # phylogeny = "16S"; rmoligos = NULL; verbose = TRUE; remove.nonspecific.oligos = FALSE; chip = "HITChip"
+get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE, chip = "HITChip", host = NULL, port = NULL) {   
 
   microbiome::InstallMarginal("RMySQL")
 
@@ -249,27 +246,8 @@ get.phylogeny.info <- function (phylogeny = "16S", rmoligos = NULL, dbuser, dbpw
   # Close MySQL connection
   dbDisconnect(con)
 
-  # Apply the standard filters
-  if (verbose) {
-    message("Hybridisation temperature: Tm >= pmTm - 2.5\n")
-    message("Number of mismatches: 0\n")
-    message("Must be a complement sequence\n")
-    message("No requirement for a full-length hybridisation\n\n")
-  }
-
-  phylogeny.info <- prune16S(full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0)
-
-  rmoligos2 <- rmoligos
-  if (remove.nonspecific.oligos) {
-    if (verbose) {message("Removing oligos that have multiple targets at L2 level")}
-    nPhylotypesPerOligo <- n.phylotypes.per.oligo(phylogeny.info, "L2") 
-    nonspecific.oligos <- setdiff(phylogeny.info$oligoID, names(which(nPhylotypesPerOligo == 1)))
-    rmoligos2 <- c(rmoligos, nonspecific.oligos)
-  } 
-
-  phylogeny.info <- phylogeny.info[!phylogeny.info$oligoID %in% rmoligos2, ]
-
-  phylogeny.info        
+  # Return full 16S phylogeny
+  full16S
 
 }
 

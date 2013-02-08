@@ -52,16 +52,17 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   finaldata <- chipdata$data
   params    <- chipdata$params
   phylogeny.info <- chipdata$phylogeny.info
+  phylogeny.info.full <- chipdata$phylogeny.info.full
 
   ## Write preprocessed data in tab delimited file
-  outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, verbose = verbose)
+  outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, verbose = verbose)
 
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
   hc.params <- add.heatmap(finaldata[["oligo"]], output.dir = params$wdir, phylogeny.info = phylogeny.info)
 
   # Plot hierachical clustering trees into the output directory
-  if (ncol(finaldata[["oligo"]])>2) { 
+  if (ncol(finaldata[["oligo"]]) > 2) { 
 
     method <- "complete"
     dat <- finaldata[["oligo"]]
@@ -95,9 +96,6 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   tmp <- WriteLog(chipdata$naHybs, params)
   params$logfilename <- tmp$log.file
   params$paramfilename <- tmp$parameter.file
-
-  ## featurelevel data: fdat.orig, fdat.hybinfo, fdat.oligoinfo, 
-  # save(finaldata, phylogeny.info, params, file = paste(params$wdir, "/sourcefiles.RData", sep = ""), compress = "xz")
 
   params
 
