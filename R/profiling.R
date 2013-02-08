@@ -21,6 +21,9 @@
 #'   @param dbpwd  MySQL password
 #'   @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT"; PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")
 #'   @param verbose verbose
+#'   @param host host; needed with FTP connections
+#'   @param port port; needed with FTP connections
+#'   @param precalculated.probe.parameters Use precalculated probe parameters?
 #'
 #' Returns:
 #'   @return Profiling parameters. Also writes output to the user-specified directory.
@@ -30,10 +33,21 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE) {
+run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, precalculated.probe.parameters = FALSE) {
+
+  if (precalculated.probe.parameters) {
+     # probe.parameters
+     if (verbose) {message("Loading pre-calculated preprocessing parameters")}
+     load(data.file <- system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
+  }		     
 
   # Fetch and preprocess the data		     
-  chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname)
+  chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname, 
+  	       				verbose = verbose,
+					   host = host,
+					   port = port,	
+ 			       probe.parameters = probe.parameters)
+					   
 
   finaldata <- chipdata$data
   params    <- chipdata$params

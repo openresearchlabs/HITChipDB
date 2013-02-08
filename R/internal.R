@@ -995,132 +995,6 @@ ScaleProfile <- function (dat, method = 'minmax', bg.adjust = NULL, minmax.quant
   return(r)
 }
 
-#' Description: Profiling preprocessing script
-#'
-#' Arguments:
-#'   @param dbuser MySQL username
-#'   @param dbpwd  MySQL password
-#'   @param dbname MySQL database name
-#'   @param verbose monitor processing through intermediate messages
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
-#'                                        
-#' Returns:
-#'   @return Preprocessed data and parameters
-#'
-#' @export
-#' @references See citation("microbiome") 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords utilities
-
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL) {
-
-  microbiome::InstallMarginal("RMySQL")
-
-  # library(microbiome); fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "lmlahti"; dbpwd = "passu"; dbname = "Phyloarray"; verbose = TRUE; 
-
-  ## ask parameters or read from R-file
-  drv <- dbDriver("MySQL")
-  if (!(is.null(host) && is.null(port))) {    
-    con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname, host = host, port = port)
-  } else { 
-    con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
-  }  
-  
-  params <- ReadParameters(con)  
-  params$chip <- detect.chip(dbname)
-  params$rm.phylotypes <- phylotype.rm.list(params$chip) # List oligos and phylotypes to remove by default
-
-  # Minmax parameters hard-coded to standardize normalization;
-  # Using the parameters from HITChip atlas with 3200 samples
-  # params$minmax.points <- c(30.02459, 132616.91371)
-  params$minmax.points <- c(30, 133000) 
-
-  # Get sample information matrix for the selected projects	
-  project.info <- fetch.sample.info(params$prj$projectName, chiptype = NULL, 
-  	       	  		    dbuser, dbpwd, dbname, 
-  	       	  		    selected.samples = params$samples$sampleID)
-
-  message("Get probe-level data for the selected hybridisations")
-  tmp <- get.probedata(unique(project.info[["hybridisationID"]]), params$rm.phylotypes$oligos, dbuser, dbpwd, dbname, host = host, port = port)
-  fdat.orig <- tmp$data       # features x hybs, original non-log scale
-  fdat.oligoinfo <- tmp$info  # oligoinfo
-
-  # Annotations for selected hybridisations
-  fdat.hybinfo <- project.info[match(colnames(fdat.orig), project.info$hybridisationID), ]
-  rownames(fdat.hybinfo) <- colnames(fdat.orig)
-
-  ## Discard the hybs that contain only NAs
-  onlyNA <- colMeans(is.na(fdat.orig)) == 1
-  naHybs <- colnames(fdat.orig)[onlyNA]
-  if(sum(onlyNA) > 0){
-    message("Removing the following hybs, because they contain only NAs:\n")
-    message(naHybs,"\n\n")
-    fdat.orig <- fdat.orig[, !onlyNA]
-    fdat.hybinfo <- fdat.hybinfo[, !onlyNA]
-  }
-  
-  ##############################
-  ## Between-array normalization
-  ##############################
-
-  # selected scaling for featurelevel data
-  # Background correction after this step, if any. 
-  # Order of normalization / bg correction was validated empirically.
-  # bg.adjust intentionally set to NULL 
-  # bg correction done _after_ oligo summarization, if any (see next steps)
-  d.scaled <- ScaleProfile(fdat.orig, params$normalization, bg.adjust = NULL, minmax.points = params$minmax.points) 
-
-  ##################################
-  ## GET OLIGO-PHYLOTYPE MAPPINGS
-  ##################################
-
-  # This handles also pmTm, complement and mismatch filtering
-  phylogeny.info <- get.phylogeny.info(params$phylogeny, 
-    	       		     rmoligos = params$rm.phylotypes$oligos, 
-	    		     dbuser = dbuser, dbpwd = dbpwd, dbname = dbname, 
-			     verbose = verbose, 
-		remove.nonspecific.oligos = params$remove.nonspecific.oligos, 
-			     chip = params$chip)
-			     
-  ####################
-  ## COMPUTE SUMMARIES
-  ####################
-
-  # Summarize probes into oligos and hybridisations into samples
-  oligo.log10 <- summarize.rawdata(log10(d.scaled), 
-  	      			fdat.hybinfo, 
-				fdat.oligoinfo = fdat.oligoinfo, 
-				oligo.ids = sort(unique(phylogeny.info$oligoID)))
-
-  # Return to the original scale
-  oligo.abs <- matrix(10^oligo.log10, nrow = nrow(oligo.log10)) # - 1  
-  rownames( oligo.abs ) <- rownames( oligo.log10 )
-  colnames( oligo.abs ) <- colnames( oligo.log10 )
-
-  # Oligo summarization
-  finaldata <- list()
-  finaldata[["oligo"]] <- oligo.abs
-  levels <- c("species", "L2", "L1")
-  if (params$chip == "MITChip" || params$chip == "PITChip") {levels <- c(levels, "L0")}
-  for (level in levels) {
-    finaldata[[level]] <- list()
-    for (method in c("sum", "rpa", "nmf")) {
-        message(paste(level, method))
-    	summarized.log10 <- summarize.probesets(phylogeny.info, oligo.log10, 
-      			       	          method = method, level = level, 	
-			rm.phylotypes = params$rm.phylotypes)$summarized.matrix
-
-        # Store the data in absolute scale					
-        finaldata[[level]][[method]] <- 10^summarized.log10
-
-    }
-  }
-
-  list(data = finaldata, phylogeny.info = phylogeny.info, naHybs = naHybs, params = params)
-
-}
-
 
 #' Description: determine threshold for bg correction
 #'
@@ -1235,6 +1109,10 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
 #'   @param verbose print intermediate messages
 #'   @param rm.phylotypes Phylotypes to exclude (a list with fields species, L1, L2)
 #'   @param species.matrix Optional. Provide pre-calculated species-level summaries to speed up computation.
+#'   @param probe.parameters Optional. If probe.parameters are given,
+#'          the summarization is based on these and model parameters are not
+#' 	    estimated. A list. One element for each probeset with the following probe vectors: 
+#'	    affinities, variances
 #'
 #' Returns:
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
@@ -1243,8 +1121,7 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
-summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verbose = TRUE, rm.phylotypes = NULL, species.matrix = NULL) {
+summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verbose = TRUE, rm.phylotypes = NULL, species.matrix = NULL, probe.parameters = list()) {
 
   # print("Remove specified oligos")
   rm.phylotypes <- sync.rm.phylotypes(rm.phylotypes, phylogeny.info)
@@ -1253,15 +1130,15 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
   phylogeny.info <- phylogeny.info[!phylogeny.info$oligoID %in% rm.oligos, ]
 
   # Option 1: Summarize probes through species level (default with RPA)
-  if (method %in% c("rpa", "rpa.full", "rpa.spe", "rpa.full.spe", "sum.spe", "ave.spe")) { 
+  if (method %in% c("rpa", "rpa.full", "rpa.spe", "rpa.full.spe", "sum.spe", "ave.spe")) {
 
-    res <- summarize.probesets.through.species(level, phylogeny.info, oligo.data, gsub(".spe", "", method), rm.phylotypes)
+    res <- summarize.probesets.through.species(level, phylogeny.info, oligo.data, gsub(".spe", "", method), rm.phylotypes, probe.parameters = probe.parameters)
  
   # Option 2: Summarize from oligos to all levels directly 
   # (default with SUM and AVE)
   } else if (method %in% c("rpa.experimental", "rpa.full.experimental", "sum", "ave")) {
 
-    res <- summarize.probesets.directly(level, phylogeny.info, oligo.data, gsub(".experimental", "", method), rm.phylotypes)
+    res <- summarize.probesets.directly(level, phylogeny.info, oligo.data, gsub(".experimental", "", method), rm.phylotypes, probe.parameters = probe.parameters)
 
   # NMF is always straight from oligos to levels
   } else if (method == "nmf") {
@@ -1281,8 +1158,6 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
 }
 
 
-
-
 #' Description: summarize.probesets.directly
 #'
 #' Arguments:
@@ -1291,6 +1166,10 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
 #'   @param oligo.data preprocessed probes x samples data matrix in log10 domain
 #'   @param method summarization method
 #'   @param rm.phylotypes Phylotypes to exclude (a list with fields species, L1, L2)
+#'   @param probe.parameters Optional. If probe.parameters are given,
+#'          the summarization is based on these and model parameters are not
+#' 	    estimated. A list. One element for each probeset with the following probe vectors: 
+#'	    affinities, variances
 #'
 #' Returns:
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
@@ -1300,7 +1179,7 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, method, rm.phylotypes) {
+summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, method, rm.phylotypes, probe.parameters = list()) {
 
   # Retrieve oligos for each taxonomic group
   probesets <- retrieve.probesets(phylogeny.info, level = level)
@@ -1315,8 +1194,6 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
   summarized.matrix <- array(NA, dim = c(length(probesets), ncol(oligo.data)), 
   		    	      dimnames = list(names(probesets), colnames(oligo.data))) 
 
-  probe.parameters <- list()
-
   for (set in names(probesets)) {
    
     # Pick data for particular probes
@@ -1329,6 +1206,11 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
     colnames(dat) <- colnames(oligo.data)
 
     if (method == "rpa") {
+
+      # Summarize with pre-calculated variances
+      vec <- d.update.fast(dat, probe.parameters[[set]]$variances)
+
+    } else if (method == "rpa.full") {
 
       	    # RPA is calculated in log domain
      	    # Downweigh non-specific probes with priors with 10% of virtual data and
@@ -1375,6 +1257,10 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
 #'   @param oligo.data preprocessed probes x samples data matrix in log10 domain
 #'   @param method summarization method
 #'   @param rm.phylotypes Phylotypes to exclude (a list with fields species, L1, L2)
+#'   @param probe.parameters Optional. If probe.parameters are given,
+#'          the summarization is based on these and model parameters are not
+#' 	    estimated. A list. One element for each probeset with the following probe vectors: 
+#'	    affinities, variances
 #'
 #' Returns:
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
@@ -1384,10 +1270,10 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-summarize.probesets.through.species <- function (level, phylogeny.info, oligo.data, method, rm.phylotypes) {
+summarize.probesets.through.species <- function (level, phylogeny.info, oligo.data, method, rm.phylotypes, probe.parameters = list()) {
 
   # Get species-level summary first
-  probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE, rm.phylotypes$species)
+  probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE, rm.phylotypes$species, probe.parameters = probe.parameters)
   species.matrix   <- 10^probeset.summaries$summarized.matrix
   probe.parameters <- probeset.summaries$probe.parameters 
 
@@ -1433,6 +1319,10 @@ summarize.probesets.through.species <- function (level, phylogeny.info, oligo.da
 #'   @param method summarization method
 #'   @param verbose print intermediate messages
 #'   @param rm.species Species to exclude
+#'   @param probe.parameters Optional. If probe.parameters are given,
+#'          the summarization is based on these and model parameters are not
+#' 	    estimated. A list. One element for each probeset with the following probe vectors: 
+#'	    affinities, variances
 #' Returns:
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
 #'
@@ -1441,7 +1331,7 @@ summarize.probesets.through.species <- function (level, phylogeny.info, oligo.da
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-summarize.probesets.species <- function (phylogeny.info, oligo.data, method, verbose = TRUE, rm.species = c("Victivallis vadensis")) {
+summarize.probesets.species <- function (phylogeny.info, oligo.data, method, verbose = TRUE, rm.species = c("Victivallis vadensis"), probe.parameters = list()) {
 
   level <- "species"			    
 
@@ -1453,8 +1343,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
   # initialize
   summarized.matrix <- array(NA, dim = c(length(probesets), ncol(oligo.data)), 
   		    	      dimnames = list(names(probesets), colnames(oligo.data))) 
-
-  probe.parameters <- list()
 
   for (set in names(probesets)) {
 
@@ -1471,18 +1359,8 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
 
     if (method == "rpa") {
 
-      # RPA is calculated in log domain
-      # Downweigh non-specific probes with priors with 10% of virtual data and
-      # variances set according to number of matching probes
-      # This will provide slight emphasis to downweigh potentially
-      # cross-hybridizing probes
-      vec <- rpa.fit(dat, tau2.method = "robust", 
-      	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
-			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)$mu
-
-      # Switch to this when the probe variances estimated from large atlas become available.		  
-      # Remember to compare performance
-      # vec <- d.update.fast(dat, variances)
+      # Summarize with pre-calculated variances
+      vec <- d.update.fast(dat, probe.parameters[[set]]$variances)
 
     } else if (method == "rpa.full") {
 
@@ -1521,12 +1399,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
   list(summarized.matrix = summarized.matrix, probe.parameters = probe.parameters)
   
 }
-
-
-
-
-
-
 
 
 #' Description: RPA for HITChip
