@@ -20,8 +20,8 @@
 prune16S <- function (full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = NULL, remove.nonspecific.oligos = FALSE) {
 
     message("Applying probe filters..")
-    message(paste("Hybridisation temperature: Tm >= pmTm - ", pmTm, "\n", sep = ""))
-    message(paste("Number of mismatches: ", nmismatch, "\n", sep = ""))
+    message(paste("Hybridisation temperature: Tm >= pmTm - ", pmTm.margin, "\n", sep = ""))
+    message(paste("Number of mismatches: ", mismatch, "\n", sep = ""))
     message(paste("Must be a complement sequence (complement = ", complement, ")\n", sep = ""))
     message("No requirement for a full-length hybridisation\n\n")
 

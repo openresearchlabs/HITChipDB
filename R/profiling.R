@@ -38,6 +38,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   if (precalculated.probe.parameters) {
      # probe.parameters
      if (verbose) {message("Loading pre-calculated preprocessing parameters")}
+     probe.parameters <- NULL
      load(data.file <- system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
   }		     
 

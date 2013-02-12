@@ -32,4 +32,7 @@ Collate:
     'mysql.R'
     'nmf.R'
     'toydata.R'
+    'preprocess.chipdata.R'
+    'prune16S.R'
+    'summarize.probesets.species.R'
 Packaged: 2012-01-12 14:19:39 UTC; lei

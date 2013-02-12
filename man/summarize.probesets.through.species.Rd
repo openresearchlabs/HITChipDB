@@ -3,7 +3,8 @@
 \title{Description: summarize.probesets.through.species}
 \usage{
   summarize.probesets.through.species(level,
-    phylogeny.info, oligo.data, method, rm.phylotypes)
+    phylogeny.info, oligo.data, method, rm.phylotypes,
+    probe.parameters = list())
 }
 \arguments{
   \item{level}{summarization level}
@@ -17,7 +18,13 @@
   \item{method}{summarization method}
 
   \item{rm.phylotypes}{Phylotypes to exclude (a list with
-  fields species, L1, L2)
+  fields species, L1, L2)}
+
+  \item{probe.parameters}{Optional. If probe.parameters are
+  given, the summarization is based on these and model
+  parameters are not estimated. A list. One element for
+  each probeset with the following probe vectors:
+  affinities, variances
 
   Returns:}
 }

@@ -3,7 +3,8 @@
 \title{Description: Profiling preprocessing script}
 \usage{
   preprocess.chipdata(dbuser, dbpwd, dbname,
-    verbose = TRUE, host = NULL, port = NULL)
+    verbose = TRUE, host = NULL, port = NULL,
+    probe.parameters = list())
 }
 \arguments{
   \item{dbuser}{MySQL username}
@@ -17,7 +18,13 @@
 
   \item{host}{host; needed with FTP connections}
 
-  \item{port}{port; needed with FTP connections
+  \item{port}{port; needed with FTP connections}
+
+  \item{probe.parameters}{Optional. If probe.parameters are
+  given, the summarization is based on these and model
+  parameters are not estimated. A list. One element for
+  each probeset with the following probe vectors:
+  affinities, variances
 
   Returns:}
 }

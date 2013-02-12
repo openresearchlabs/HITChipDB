@@ -4,7 +4,7 @@
 \usage{
   summarize.probesets(phylogeny.info, oligo.data, method,
     level, verbose = TRUE, rm.phylotypes = NULL,
-    species.matrix = NULL)
+    species.matrix = NULL, probe.parameters = list())
 }
 \arguments{
   \item{phylogeny.info}{oligo - phylotype matching
@@ -23,7 +23,13 @@
   fields species, L1, L2)}
 
   \item{species.matrix}{Optional. Provide pre-calculated
-  species-level summaries to speed up computation.
+  species-level summaries to speed up computation.}
+
+  \item{probe.parameters}{Optional. If probe.parameters are
+  given, the summarization is based on these and model
+  parameters are not estimated. A list. One element for
+  each probeset with the following probe vectors:
+  affinities, variances
 
   Returns:}
 }

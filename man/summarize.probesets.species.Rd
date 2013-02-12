@@ -4,7 +4,8 @@
 \usage{
   summarize.probesets.species(phylogeny.info, oligo.data,
     method, verbose = TRUE,
-    rm.species = c("Victivallis vadensis"))
+    rm.species = c("Victivallis vadensis"),
+    probe.parameters = list())
 }
 \arguments{
   \item{phylogeny.info}{oligo - phylotype matching
@@ -17,7 +18,13 @@
 
   \item{verbose}{print intermediate messages}
 
-  \item{rm.species}{Species to exclude Returns:}
+  \item{rm.species}{Species to exclude}
+
+  \item{probe.parameters}{Optional. If probe.parameters are
+  given, the summarization is based on these and model
+  parameters are not estimated. A list. One element for
+  each probeset with the following probe vectors:
+  affinities, variances Returns:}
 }
 \value{
   List with two elements: summarized.matrix (summarized
