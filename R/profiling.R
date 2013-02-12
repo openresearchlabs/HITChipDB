@@ -23,7 +23,6 @@
 #'   @param verbose verbose
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
-#'   @param precalculated.probe.parameters Use precalculated probe parameters?
 #'
 #' Returns:
 #'   @return Profiling parameters. Also writes output to the user-specified directory.
@@ -35,7 +34,7 @@
 
 run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL) {
 
-  # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; precalculated.probe.parameters = FALSE
+  # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; verbose = T
   
   # Fetch and preprocess the data		     
   chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname, 

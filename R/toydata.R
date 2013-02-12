@@ -31,7 +31,7 @@ GenerateSimulatedData <- function (output.dir) {
 
   data.directory <- system.file("extdata/", package = "microbiome")
 
-  phylogeny.info <- read.profiling(level = "phylogeny.info", data.dir = data.directory)[, 1:6]
+  phylogeny.info <- microbiome::read.profiling(level = "phylogeny.info", data.dir = data.directory)
 
   oligo.matrix.nolog.simulated <- read.profiling(level = "oligo", data.dir = data.directory, log10 = FALSE)
   N <- ncol(oligo.matrix.nolog.simulated)
@@ -46,7 +46,7 @@ GenerateSimulatedData <- function (output.dir) {
     for (method in c("sum", "rpa", "nmf")) {
 
         message(paste(level, method))
-    	summarized.log10 <- summarize.probesets(phylogeny.info, log10(oligo.matrix.nolog.simulated), method = method, level = level, rm.phylotypes = phylotype.rm.list("HITChip"))$summarized.matrix
+    	summarized.log10 <- summarize.probesets(phylogeny.info, log10(oligo.matrix.nolog.simulated), method = method, level = level)$summarized.matrix
       			       	          
         # Store the data in absolute scale					
         finaldata[[level]][[method]] <- 10^summarized.log10

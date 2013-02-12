@@ -5,6 +5,7 @@
 #'   @param phylogeny.info oligo - phylotype matching data.frame
 #'   @param oligo.data preprocessed probes x samples data matrix in log10 domain
 #'   @param method summarization method
+#'   @param verbose verbose
 #'
 #' Returns:
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
@@ -14,7 +15,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, method) {
+summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, method, verbose = TRUE) {
 
   # Retrieve oligos for each taxonomic group
   probesets <- retrieve.probesets(phylogeny.info, level = level)

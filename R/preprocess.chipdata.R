@@ -22,10 +22,7 @@
 #'   @param verbose monitor processing through intermediate messages
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
-#'   @param probe.parameters Optional. If probe.parameters are given,
-#'          the summarization is based on these and model parameters are not
-#' 	    estimated. A list. One element for each probeset with the following probe vectors: 
-#'	    affinities, variances
+#'   @param use.precalculated.phylogeny use precalculated phylogeny?
 #'                                        
 #' Returns:
 #'   @return Preprocessed data and parameters
@@ -35,7 +32,9 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = TRUE) {
+
+  # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
 
   microbiome::InstallMarginal("RMySQL")
 
@@ -110,7 +109,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   if (!use.precalculated.phylogeny || !chip == "HITChip") {
 
     message("Fetching Phylogeny from the database")
-    phylogeny.info.full <- get.phylogeny.info(params$phylogeny, 
+    phylogeny.full <- get.phylogeny.info(params$phylogeny, 
 	    		     dbuser = dbuser, 
 			     dbpwd = dbpwd, 
 			     dbname = dbname, 
@@ -121,19 +120,31 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 
     # This handles also pmTm, complement and mismatch filtering
     # This is the phylogeny used in probe summarization into taxonomic levels
-    rm.oligos <- sync.rm.phylotypes(params$rm.phylotypes, phylogeny.info)$oligos
-    phylogeny.info.filtered <- prune16S(phylogeny.info.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
+    rm.oligos <- sync.rm.phylotypes(params$rm.phylotypes, phylogeny.full)$oligos
+    phylogeny.filtered <- prune16S(phylogeny.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
+
+    # Keep only relevant cols
+    phylogeny.full <- phylogeny.full[, 1:5]; 
+    phylogeny.filtered <- phylogeny.filtered[, 1:5]; 
+
+    # Remove duplicate rows
+    phylogeny.full <- phylogeny.full[!duplicated(phylogeny.info.full),]
+    phylogeny.filtered <- phylogeny.filtered[!duplicated(phylogeny.info.filtered),]
+
+    #write.table(phylogeny.full, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.full.tab", sep = "\t", quote = F, row.names = F)
+    #write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.filtered.tab", sep = "\t", quote = F, row.names = F)
+    #write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.tab", sep = "\t", quote = F, row.names = F)
 
   } else {
 
-    if (!chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
     message("Using pre-calculated phylogeny")
-    #phylogeny.info.full <- phylogeny.info.full[, 1:5]; phylogeny.info.filtered <- phylogeny.info.filtered[, 1:5]; save(phylogeny.info.full, phylogeny.info.full, file = "~/Rpackages/microbiome/HITChipDB/inst/extdata/phylogeny.rda")
-    load(system.file("extdata/phylogeny.rda", package = "HITChipDB"))
-
+    data.directory <- system.file("extdata/", package = "microbiome")
+    phylogeny.filtered <- microbiome::read.profiling(level = "phylogeny", data.dir = data.directory)
+    phylogeny.full <- microbiome::read.profiling(level = "phylogeny.full", data.dir = data.directory)
+    if (!chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
+    
   }
-
-  phylogeny.info <- phylogeny.info.filtered
+  phylogeny.info <- phylogeny.filtered
 
   ####################
   ## COMPUTE SUMMARIES
@@ -174,7 +185,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     }
   }
 
-  list(data = finaldata, phylogeny.info = phylogeny.info.filtered, phylogeny.info.full = phylogeny.info.full, naHybs = naHybs, params = params)
+  list(data = finaldata, phylogeny.info = phylogeny.info, phylogeny.info.full = phylogeny.full, naHybs = naHybs, params = params)
 
 }
 
