@@ -3,7 +3,7 @@
 \title{Description: Writed data into the output directory}
 \usage{
   WriteChipData(finaldata, output.dir, phylogeny.info,
-    verbose = TRUE)
+    phylogeny.info.full, verbose = TRUE)
 }
 \arguments{
   \item{finaldata}{preprocessed data matrices in absolute
@@ -11,7 +11,11 @@
 
   \item{output.dir}{output directory}
 
-  \item{phylogeny.info}{phylogeny.info}
+  \item{phylogeny.info}{phylogeny.info used in
+  summarization}
+
+  \item{phylogeny.info.full}{phylogeny.info.full unfiltered
+  phylogenyinfo}
 
   \item{verbose}{verbose
 

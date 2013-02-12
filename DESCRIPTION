@@ -1,8 +1,8 @@
 Package: HITChipDB
 Type: Package
 Title: HITChipDB
-Version: 0.3.73
-Date: 2013-02-08
+Version: 0.3.75
+Date: 2013-02-12
 Author: Leo Lahti and Jarkko Salojarvi
 Maintainer: HITChipDB developer team <microbiome-admin@googlegroups.com>
 Description: R package for HITChipDB studies
@@ -32,4 +32,9 @@ Collate:
     'mysql.R'
     'nmf.R'
     'toydata.R'
+    'preprocess.chipdata.R'
+    'prune16S.R'
+    'detect.chip.R'
+    'summarize.probesets.R'
+    'summarize.probesets.directly.R'
 Packaged: 2012-01-12 14:19:39 UTC; lei

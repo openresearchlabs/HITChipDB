@@ -3,7 +3,7 @@
 \title{run.profiling.script}
 \usage{
   run.profiling.script(dbuser, dbpwd, dbname,
-    verbose = TRUE)
+    verbose = TRUE, host = NULL, port = NULL)
 }
 \arguments{
   \item{dbuser}{MySQL username}
@@ -14,7 +14,14 @@
   MITChip: "Phyloarray_MIT"; PITChip old: "Phyloarray_PIT";
   PITChip new: "pitchipdb")}
 
-  \item{verbose}{verbose
+  \item{verbose}{verbose}
+
+  \item{host}{host; needed with FTP connections}
+
+  \item{port}{port; needed with FTP connections}
+
+  \item{precalculated.probe.parameters}{Use precalculated
+  probe parameters?
 
   Returns:}
 }

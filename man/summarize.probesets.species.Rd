@@ -3,8 +3,7 @@
 \title{Description: Probeset summarization with various methods.}
 \usage{
   summarize.probesets.species(phylogeny.info, oligo.data,
-    method, verbose = TRUE,
-    rm.species = c("Victivallis vadensis"))
+    method, verbose = TRUE)
 }
 \arguments{
   \item{phylogeny.info}{oligo - phylotype matching
@@ -15,9 +14,9 @@
 
   \item{method}{summarization method}
 
-  \item{verbose}{print intermediate messages}
+  \item{verbose}{print intermediate messages
 
-  \item{rm.species}{Species to exclude Returns:}
+  Returns:}
 }
 \value{
   List with two elements: summarized.matrix (summarized

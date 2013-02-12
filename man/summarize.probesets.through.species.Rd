@@ -3,7 +3,7 @@
 \title{Description: summarize.probesets.through.species}
 \usage{
   summarize.probesets.through.species(level,
-    phylogeny.info, oligo.data, method, rm.phylotypes)
+    phylogeny.info, oligo.data, method)
 }
 \arguments{
   \item{level}{summarization level}
@@ -14,10 +14,7 @@
   \item{oligo.data}{preprocessed probes x samples data
   matrix in log10 domain}
 
-  \item{method}{summarization method}
-
-  \item{rm.phylotypes}{Phylotypes to exclude (a list with
-  fields species, L1, L2)
+  \item{method}{summarization method
 
   Returns:}
 }

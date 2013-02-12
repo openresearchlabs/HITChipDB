@@ -3,16 +3,22 @@
 \title{Description: filter 16S data}
 \usage{
   prune16S(full16S, pmTm.margin = 2.5, complement = 1,
-    mismatch = 0)
+    mismatch = 0, rmoligos = NULL,
+    remove.nonspecific.oligos = FALSE)
 }
 \arguments{
   \item{full16S}{full16S}
 
-  \item{pmTm.margin}{default 2.5}
+  \item{pmTm.margin}{pmTm margin}
 
   \item{complement}{logical}
 
-  \item{mismatch}{logical
+  \item{mismatch}{logical}
+
+  \item{rmoligos}{oligos to exclude}
+
+  \item{remove.nonspecific.oligos}{Logical. Remove oligos
+  with multiple targets.
 
   Returns:}
 }

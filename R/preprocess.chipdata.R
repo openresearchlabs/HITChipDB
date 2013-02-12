@@ -35,7 +35,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, probe.parameters = list()) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL) {
 
   microbiome::InstallMarginal("RMySQL")
 
@@ -52,6 +52,12 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   params$rm.phylotypes <- phylotype.rm.list(params$chip) 
   # List oligos and phylotypes to remove by default
 
+  # Use precalculated phylogeny with HITChip to speed up
+  if (is.null(use.precalculated.phylogeny)) {
+    if (params$chip == "HITChip")  {use.precalculated.phylogeny <- TRUE}
+    if (!params$chip == "HITChip") {use.precalculated.phylogeny <- FALSE}
+  }
+
   # Minmax parameters hard-coded to standardize normalization;
   # Using the parameters from HITChip atlas with 3200 samples
   # params$minmax.points <- c(30.02459, 132616.91371)
@@ -60,7 +66,11 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 
   # Get sample information matrix for the selected projects	
   project.info <- fetch.sample.info(params$prj$projectName, chiptype = NULL, 
-  	       	  		    dbuser, dbpwd, dbname, 
+  	       	  		    dbuser = dbuser, 
+				    dbpwd = dbpwd, 
+				    dbname = dbname, 
+				    host = host, 
+				    port = port,
   	       	  		    selected.samples = params$samples$sampleID)
 
   message("Get probe-level data for the selected hybridisations")
@@ -97,19 +107,34 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## GET OLIGO-PHYLOTYPE MAPPINGS
   ##################################
 
-  # This handles also pmTm, complement and mismatch filtering
-  phylogeny.info.full <- get.phylogeny.info(params$phylogeny, 
-	    		     dbuser = dbuser, dbpwd = dbpwd, dbname = dbname, 
+  if (!use.precalculated.phylogeny || !chip == "HITChip") {
+
+    message("Fetching Phylogeny from the database")
+    phylogeny.info.full <- get.phylogeny.info(params$phylogeny, 
+	    		     dbuser = dbuser, 
+			     dbpwd = dbpwd, 
+			     dbname = dbname, 
+			     host = host, 
+			     port = port,
 			     verbose = verbose, 
 			     chip = params$chip)
 
+    # This handles also pmTm, complement and mismatch filtering
+    # This is the phylogeny used in probe summarization into taxonomic levels
+    rm.oligos <- sync.rm.phylotypes(params$rm.phylotypes, phylogeny.info)$oligos
+    phylogeny.info.filtered <- prune16S(phylogeny.info.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
 
-  # TODO add this in output, too
-  phylogeny.info.filtered <- prune16S(phylogeny.info.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
-  
+  } else {
+
+    if (!chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
+    message("Using pre-calculated phylogeny")
+    #phylogeny.info.full <- phylogeny.info.full[, 1:5]; phylogeny.info.filtered <- phylogeny.info.filtered[, 1:5]; save(phylogeny.info.full, phylogeny.info.full, file = "~/Rpackages/microbiome/HITChipDB/inst/extdata/phylogeny.rda")
+    load(system.file("extdata/phylogeny.rda", package = "HITChipDB"))
+
+  }
+
   phylogeny.info <- phylogeny.info.filtered
 
-			     
   ####################
   ## COMPUTE SUMMARIES
   ####################
@@ -125,6 +150,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   rownames( oligo.abs ) <- rownames( oligo.log10 )
   colnames( oligo.abs ) <- colnames( oligo.log10 )
 
+  # fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
+
   # Oligo summarization
   finaldata <- list()
   finaldata[["oligo"]] <- oligo.abs
@@ -132,14 +159,14 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   if (params$chip == "MITChip" || params$chip == "PITChip") {levels <- c(levels, "L0")}
   for (level in levels) {
     finaldata[[level]] <- list()
-    for (method in c("sum", "rpa", "nmf")) {
+    for (method in c("sum", "rpa", "frpa", "nmf", "ave")) {
+
         message(paste(level, method))
-    	summarized.log10 <- summarize.probesets(phylogeny.info,		
-			    		  oligo.log10, 
+    	summarized.log10 <- summarize.probesets(
+					phylogeny.info = phylogeny.info,		
+			    		  oligo.data = oligo.log10, 
       			       	          method = method, 
-					   level = level, 	
-				   rm.phylotypes = params$rm.phylotypes,
-				probe.parameters = probe.parameters)$summarized.matrix
+					   level = level)$summarized.matrix
 
         # Store the data in absolute scale					
         finaldata[[level]][[method]] <- 10^summarized.log10

@@ -33,21 +33,15 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, precalculated.probe.parameters = FALSE) {
+run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL) {
 
-  if (precalculated.probe.parameters) {
-     # probe.parameters
-     if (verbose) {message("Loading pre-calculated preprocessing parameters")}
-     load(data.file <- system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
-  }		     
-
+  # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; precalculated.probe.parameters = FALSE
+  
   # Fetch and preprocess the data		     
   chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname, 
   	       				verbose = verbose,
 					   host = host,
-					   port = port,	
- 			       probe.parameters = probe.parameters)
-					   
+					   port = port)
 
   finaldata <- chipdata$data
   params    <- chipdata$params

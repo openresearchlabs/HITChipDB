@@ -171,8 +171,8 @@ get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbos
   
   ## Collect the full phylogenetic information for oligos
   message("Collect the full phylogeny")
-  excloligos <- ifelse(length(rmoligos>0),
-                       paste('AND NOT (', paste("o.oligoID='",rmoligos,"'",sep="",collapse=" OR "), ') ', sep=''), '')
+  #excloligos <- ifelse(length(rmoligos>0),
+  #                     paste('AND NOT (', paste("o.oligoID='",rmoligos,"'",sep="",collapse=" OR "), ') ', sep=''), '')
 
   if (chip == "MITChip" || chip == "PITChip") {
 
@@ -214,7 +214,7 @@ get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbos
                         "AND tt2.nodeDistance=1 ",
                         "AND tt3.nodeDistance=1 ",
 
-                        excloligos,
+                        #excloligos,
                         "ORDER BY l0.name, l1.name, l2.name, species.name, specimen.name, o.oligoID;", sep="")
   } else {
 
@@ -235,7 +235,7 @@ get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbos
                         "AND l1.taxonLevel='level 1' ",
                         "AND tt1.nodeDistance=1 ",
                         "AND tt2.nodeDistance=1 ",
-                        excloligos,
+                        #excloligos,
                         "ORDER BY l1.name, l2.name, species.name, specimen.name, o.oligoID;", sep="")
 
   }

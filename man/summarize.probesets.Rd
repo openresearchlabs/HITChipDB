@@ -3,8 +3,7 @@
 \title{Description: summarize.probesets}
 \usage{
   summarize.probesets(phylogeny.info, oligo.data, method,
-    level, verbose = TRUE, rm.phylotypes = NULL,
-    species.matrix = NULL)
+    level, verbose = TRUE, species.matrix = NULL)
 }
 \arguments{
   \item{phylogeny.info}{oligo - phylotype matching
@@ -18,9 +17,6 @@
   \item{level}{summarization level}
 
   \item{verbose}{print intermediate messages}
-
-  \item{rm.phylotypes}{Phylotypes to exclude (a list with
-  fields species, L1, L2)}
 
   \item{species.matrix}{Optional. Provide pre-calculated
   species-level summaries to speed up computation.
