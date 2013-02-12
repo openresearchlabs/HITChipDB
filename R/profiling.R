@@ -32,6 +32,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
+
 run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL) {
 
   # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; verbose = T

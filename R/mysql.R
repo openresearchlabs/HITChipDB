@@ -147,6 +147,7 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #'   @param chip chip type
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
+#'   @param rmoligos oligos to exclude
 #'
 #' Returns:
 #'   @return phylogeny.info
@@ -156,7 +157,7 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE, chip = "HITChip", host = NULL, port = NULL) {   
+get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE, chip = "HITChip", host = NULL, port = NULL, rmoligos = NULL) {   
 
   microbiome::InstallMarginal("RMySQL")
 
