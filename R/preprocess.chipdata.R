@@ -106,7 +106,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## GET OLIGO-PHYLOTYPE MAPPINGS
   ##################################
 
-  if (!use.precalculated.phylogeny || !chip == "HITChip") {
+  if (!use.precalculated.phylogeny || !params$chip == "HITChip") {
 
     message("Fetching Phylogeny from the database")
     phylogeny.full <- get.phylogeny.info(params$phylogeny, 
@@ -128,8 +128,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     phylogeny.filtered <- phylogeny.filtered[, 1:5]; 
 
     # Remove duplicate rows
-    phylogeny.full <- phylogeny.full[!duplicated(phylogeny.info.full),]
-    phylogeny.filtered <- phylogeny.filtered[!duplicated(phylogeny.info.filtered),]
+    phylogeny.full <- phylogeny.full[!duplicated(phylogeny.full),]
+    phylogeny.filtered <- phylogeny.filtered[!duplicated(phylogeny.filtered),]
 
     #write.table(phylogeny.full, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.full.tab", sep = "\t", quote = F, row.names = F)
     #write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.filtered.tab", sep = "\t", quote = F, row.names = F)
@@ -141,7 +141,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     data.directory <- system.file("extdata/", package = "microbiome")
     phylogeny.filtered <- microbiome::read.profiling(level = "phylogeny", data.dir = data.directory)
     phylogeny.full <- microbiome::read.profiling(level = "phylogeny.full", data.dir = data.directory)
-    if (!chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
+    if (!params$chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
     
   }
   phylogeny.info <- phylogeny.filtered
@@ -185,7 +185,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     }
   }
 
-  list(data = finaldata, phylogeny.info = phylogeny.info, phylogeny.info.full = phylogeny.full, naHybs = naHybs, params = params)
+  list(data = finaldata, phylogeny.info = phylogeny.info, phylogeny.full = phylogeny.full, naHybs = naHybs, params = params)
 
 }
 
