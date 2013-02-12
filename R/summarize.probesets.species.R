@@ -31,6 +31,14 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
   summarized.matrix <- array(NA, dim = c(length(probesets), ncol(oligo.data)), 
   		    	      dimnames = list(names(probesets), colnames(oligo.data))) 
 
+  probe.parameters <- list()
+  if (method == "frpa") {
+    if (verbose) {message("Loading pre-calculated preprocessing parameters")}
+    rpa.hitchip.species.probe.parameters <- list()
+    load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
+    probe.parameters <- rpa.hitchip.species.probe.parameters
+  }
+
   for (set in names(probesets)) {
 
     if (verbose) { message(set) }
@@ -44,12 +52,12 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
     rownames(dat) <- probes
     colnames(dat) <- colnames(oligo.data)
 
-    if (method == "rpa") {
+    if (method == "frpa") {
 
       # Summarize with pre-calculated variances
-      vec <- RPA::d.update.fast(dat, probe.parameters[[set]]$variances)
+      vec <- RPA::d.update.fast(dat, probe.parameters[[set]])
 
-    } else if (method == "rpa.full") {
+    } else if (method == "rpa") {
 
       # RPA is calculated in log domain
       # Downweigh non-specific probes with priors with 10% of virtual data and
