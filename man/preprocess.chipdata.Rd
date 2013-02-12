@@ -4,7 +4,7 @@
 \usage{
   preprocess.chipdata(dbuser, dbpwd, dbname,
     verbose = TRUE, host = NULL, port = NULL,
-    use.precalculated.phylogeny = TRUE)
+    use.precalculated.phylogeny = NULL)
 }
 \arguments{
   \item{dbuser}{MySQL username}

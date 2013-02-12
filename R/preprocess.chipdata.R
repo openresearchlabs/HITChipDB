@@ -32,7 +32,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = TRUE) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL) {
 
   # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
 
@@ -131,9 +131,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     phylogeny.full <- phylogeny.full[!duplicated(phylogeny.full),]
     phylogeny.filtered <- phylogeny.filtered[!duplicated(phylogeny.filtered),]
 
-    #write.table(phylogeny.full, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.full.tab", sep = "\t", quote = F, row.names = F)
-    #write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.filtered.tab", sep = "\t", quote = F, row.names = F)
-    #write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.tab", sep = "\t", quote = F, row.names = F)
+    #write.table(phylogeny.full, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.full.tab", sep = "\t", quote = F, row.names = F); write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.filtered.tab", sep = "\t", quote = F, row.names = F); write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.tab", sep = "\t", quote = F, row.names = F)
 
   } else {
 
