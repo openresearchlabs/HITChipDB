@@ -4,7 +4,9 @@
 \usage{
   preprocess.chipdata(dbuser, dbpwd, dbname,
     verbose = TRUE, host = NULL, port = NULL,
-    use.precalculated.phylogeny = NULL)
+    use.precalculated.phylogeny = NULL,
+    summarization.methods = c("nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "sum", "ave"),
+    which.projects = NULL)
 }
 \arguments{
   \item{dbuser}{MySQL username}
@@ -21,7 +23,14 @@
   \item{port}{port; needed with FTP connections}
 
   \item{use.precalculated.phylogeny}{use precalculated
-  phylogeny?
+  phylogeny?}
+
+  \item{summarization.methods}{List summarization methods
+  to be included in output}
+
+  \item{which.projects}{Optionally specify the projects to
+  extract. All samples from these projects will be
+  included.
 
   Returns:}
 }

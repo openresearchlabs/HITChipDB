@@ -2,12 +2,15 @@
 \alias{ReadParameters}
 \title{Description: Define parameters in select box}
 \usage{
-  ReadParameters(con)
+  ReadParameters(con, which.projects = NULL)
 }
 \arguments{
   \item{con}{Output from dbConnect(dbDriver("MySQL"),
   username = dbuser, password = dbpwd, dbname =
-  'PhyloArray')
+  'PhyloArray')}
+
+  \item{which.projects}{Optionally list which projects to
+  take. All samples returned.
 
   Returns:}
 }

@@ -71,6 +71,18 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       vec <- res$mu
       probe.parameters[[set]] <- res$tau2
 
+   } else if (method == "rpa.with.affinities") {
+
+      # Also include affinities in probe summarization
+
+      res <- rpa.fit(dat, tau2.method = "robust", 
+      	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
+			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2, 
+			  summarize.with.affinities = TRUE)
+
+      vec <- res$mu
+      probe.parameters[[set]] <- res$tau2
+
     } else if (method == "ave") {
 
       vec <- log10(colMeans((10^dat), na.rm = T))

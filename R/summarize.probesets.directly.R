@@ -29,6 +29,7 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
 
   probe.parameters <- list()
   if (method == "frpa") {
+    stop("fRPA not yet implement for direct summarization")
     if (verbose) {message("Loading pre-calculated preprocessing parameters")}
     rpa.hitchip.species.probe.parameters <- list()
     load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
@@ -61,6 +62,18 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
       	    res <- RPA::rpa.fit(dat, tau2.method = "robust", 
       	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
 			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)
+
+      	    vec <- res$mu
+      	    probe.parameters[[set]] <- res$tau2
+
+   } else if (method == "rpa.with.affinities") {
+
+     # Also include affinities in summarization
+
+      	    res <- RPA::rpa.fit(dat, tau2.method = "robust", 
+      	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
+			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2, 
+			  summarize.with.affinities = TRUE)
 
       	    vec <- res$mu
       	    probe.parameters[[set]] <- res$tau2

@@ -23,6 +23,8 @@
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
 #'   @param use.precalculated.phylogeny use precalculated phylogeny?
+#'   @param summarization.methods List summarization methods to be included in output
+#'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
 #'                                        
 #' Returns:
 #'   @return Preprocessed data and parameters
@@ -32,7 +34,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "sum", "ave"), which.projects = NULL) {
 
   # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
 
@@ -44,9 +46,9 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname, host = host, port = port)
   } else { 
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
-  }  
+  }
   
-  params <- ReadParameters(con)  
+  params <- ReadParameters(con, which.projects = which.projects)  
   params$chip <- detect.chip(dbname)
   params$rm.phylotypes <- phylotype.rm.list(params$chip) 
   # List oligos and phylotypes to remove by default
@@ -168,7 +170,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   if (params$chip == "MITChip" || params$chip == "PITChip") {levels <- c(levels, "L0")}
   for (level in levels) {
     finaldata[[level]] <- list()
-    for (method in c("sum", "rpa", "frpa", "nmf", "ave")) {
+    for (method in summarization.methods) {
 
         message(paste(level, method))
     	summarized.log10 <- summarize.probesets(

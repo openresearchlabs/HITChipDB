@@ -23,6 +23,7 @@
 #'   @param verbose verbose
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
+#'   @param summarization.methods List summarization methods to be included in output
 #'
 #' Returns:
 #'   @return Profiling parameters. Also writes output to the user-specified directory.
@@ -32,8 +33,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-
-run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL) {
+run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("sum", "ave", "nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "rpa.with.affinities", "rpa.with.affinities.direct")) {
 
   # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; verbose = T
   
@@ -41,7 +41,8 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname, 
   	       				verbose = verbose,
 					   host = host,
-					   port = port)
+					   port = port, 
+		 	  summarization.methods = summarization.methods)
 
   finaldata <- chipdata$data
   params    <- chipdata$params

@@ -191,7 +191,7 @@ choose.projects <- function (con, multi = TRUE, condition = NULL) {
 #' @param multi multiple selections allowed
 #' @param title title
 #' @param condition TBA
-#' 
+#'
 #' @return sample vector
 #' @export 
 #' @references See citation("microbiome")
@@ -201,10 +201,10 @@ choose.projects <- function (con, multi = TRUE, condition = NULL) {
 
 choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condition = NULL) {
 
-   smps <- fetch.samples(con, condition = condition)
-   samples <- select.list(smps$sampleID, multiple = multi, title = title)
-   smps <- fetch.samples(con, condition = list(list(field = 'sampleID', value = samples)))
-   return(smps)
+    smps <- fetch.samples(con, condition = condition)
+    samples <- select.list(smps$sampleID, multiple = multi, title = title)
+    smps <- fetch.samples(con, condition = list(list(field = 'sampleID', value = samples)))
+    return(smps)
 
 }
 
@@ -214,6 +214,7 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 #'
 #' Arguments:
 #'   @param con Output from dbConnect(dbDriver("MySQL"), username = dbuser, password = dbpwd, dbname = 'PhyloArray')
+#'   @param which.projects Optionally list which projects to take. All samples returned.
 #' 
 #' Returns:
 #'   @return list with defined parameters
@@ -223,7 +224,7 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-ReadParameters <- function (con) {
+ReadParameters <- function (con, which.projects = NULL) {
 
   microbiome::InstallMarginal("RMySQL")
 
@@ -231,12 +232,19 @@ ReadParameters <- function (con) {
   wdir <- tclvalue(tkchooseDirectory(title = "Save output files into directory:")) 
         
   ## Choose samples to display
-  prj <- HITChipDB::choose.projects(con, multi = TRUE, condition = NULL)
-
-  if(nrow(prj) < 1) { stop("Choose at least 1 project") }
-  samples <- choose.samples(con, multi=TRUE, title='Select samples', 
+  if (is.null(which.projects)) {
+    prj <- HITChipDB::choose.projects(con, multi = TRUE, condition = NULL)
+  
+    if(nrow(prj) < 1) { stop("Choose at least 1 project") }
+    samples <- choose.samples(con, multi=TRUE, title='Select samples', 
   	       			   condition=list(list(field='projectID', value=prj$projectID)))
-  if(nrow(samples) < 2) { stop("Choose at least 2 samples") }
+    if(nrow(samples) < 2) { stop("Choose at least 2 samples") }
+
+  } else {
+
+    samples <- fetch.samples(con, condition = list(list(field='projectID', value = which.projects)))$sampleID
+
+  }
 
   defaults <- list(phylogeny = "16S", remove.nonspecific.oligos = FALSE, normalization = "minmax")
   s <- NULL; for (nam in names(defaults)) {s <- paste(s, paste(nam, ":", defaults[[nam]], sep = ""), "; ", sep = "")}
