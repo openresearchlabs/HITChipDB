@@ -4,7 +4,8 @@
 \usage{
   run.profiling.script(dbuser, dbpwd, dbname,
     verbose = TRUE, host = NULL, port = NULL,
-    summarization.methods = c("sum", "ave", "nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "rpa.with.affinities", "rpa.with.affinities.direct"))
+    summarization.methods = c("sum", "ave", "nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "rpa.with.affinities", "rpa.with.affinities.direct"),
+    which.projects = NULL)
 }
 \arguments{
   \item{dbuser}{MySQL username}
@@ -22,7 +23,11 @@
   \item{port}{port; needed with FTP connections}
 
   \item{summarization.methods}{List summarization methods
-  to be included in output
+  to be included in output}
+
+  \item{which.projects}{Optionally specify the projects to
+  extract. All samples from these projects will be
+  included.
 
   Returns:}
 }

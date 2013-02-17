@@ -242,7 +242,9 @@ ReadParameters <- function (con, which.projects = NULL) {
 
   } else {
 
-    samples <- fetch.samples(con, condition = list(list(field='projectID', value = which.projects)))$sampleID
+    prjs <- fetch.projects(con)
+    prj <- prjs[match(which.projects, prjs$projectName), ]
+    samples <- fetch.samples(con, condition = list(list(field='projectID', value=prj$projectID)))
 
   }
 

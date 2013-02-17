@@ -24,6 +24,7 @@
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
 #'   @param summarization.methods List summarization methods to be included in output
+#'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
 #'
 #' Returns:
 #'   @return Profiling parameters. Also writes output to the user-specified directory.
@@ -33,7 +34,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("sum", "ave", "nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "rpa.with.affinities", "rpa.with.affinities.direct")) {
+run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("sum", "ave", "nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "rpa.with.affinities", "rpa.with.affinities.direct"), which.projects = NULL) {
 
   # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; verbose = T
   
@@ -42,7 +43,8 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   	       				verbose = verbose,
 					   host = host,
 					   port = port, 
-		 	  summarization.methods = summarization.methods)
+		 	  summarization.methods = summarization.methods, 
+			         which.projects = which.projects)
 
   finaldata <- chipdata$data
   params    <- chipdata$params
