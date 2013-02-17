@@ -5,6 +5,7 @@
 #'   @param phylogeny.info oligo - phylotype matching data.frame
 #'   @param oligo.data preprocessed probes x samples data matrix in log10 domain
 #'   @param method summarization method
+#'   @param verbose verbose
 #'
 #' Returns:
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
@@ -14,12 +15,11 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-summarize.probesets.through.species <- function (level, phylogeny.info, oligo.data, method) {
-
-  # level = level; phylogeny.info = phylogeny.info; oligo.data = oligo.data; method = gsub(".spe", "", method); probe.parameters = probe.parameters
+summarize.probesets.through.species <- function (level, phylogeny.info, oligo.data, method, verbose = FALSE) {
 
   # Get species-level summary first
-  probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = FALSE)
+  message("Summarizing at species level...")
+  probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = verbose)
 
   species.matrix   <- 10^probeset.summaries$summarized.matrix
   probe.parameters <- probeset.summaries$probe.parameters 
@@ -47,7 +47,7 @@ summarize.probesets.through.species <- function (level, phylogeny.info, oligo.da
 
     if (method == "ave") { vec <- colMeans(mat) }
     if (method == "sum") { vec <- colSums(mat)  } 
-    if (method %in% c("rpa", "frpa")) { vec <- colSums(mat) } # For RPA, use the sum for L1/L2
+    if (length(grep("rpa", method)) > 0) { vec <- colSums(mat) } # For RPA, use the sum for L1/L2
 
     summarized.matrix[pg, ] <- vec
 
@@ -56,3 +56,4 @@ summarize.probesets.through.species <- function (level, phylogeny.info, oligo.da
   list(summarized.matrix = log10(summarized.matrix), probe.parameters = probe.parameters)
 
 }
+

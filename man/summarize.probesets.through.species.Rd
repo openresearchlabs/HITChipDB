@@ -3,7 +3,7 @@
 \title{Description: summarize.probesets.through.species}
 \usage{
   summarize.probesets.through.species(level,
-    phylogeny.info, oligo.data, method)
+    phylogeny.info, oligo.data, method, verbose = FALSE)
 }
 \arguments{
   \item{level}{summarization level}
@@ -14,7 +14,9 @@
   \item{oligo.data}{preprocessed probes x samples data
   matrix in log10 domain}
 
-  \item{method}{summarization method
+  \item{method}{summarization method}
+
+  \item{verbose}{verbose
 
   Returns:}
 }

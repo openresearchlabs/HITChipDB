@@ -161,7 +161,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   rownames( oligo.abs ) <- rownames( oligo.log10 )
   colnames( oligo.abs ) <- colnames( oligo.log10 )
 
-  # fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
+  # fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}; fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; 
 
   # Oligo summarization
   finaldata <- list()
@@ -171,7 +171,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   for (level in levels) {
     finaldata[[level]] <- list()
     for (method in summarization.methods) {
-
+        #save(phylogeny.info, oligo.log10, method, level, file = "~/tmp/debugging.RData")
         message(paste(level, method))
     	summarized.log10 <- summarize.probesets(
 					phylogeny.info = phylogeny.info,		

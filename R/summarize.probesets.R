@@ -17,6 +17,8 @@
 #' @keywords utilities
 summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verbose = TRUE, species.matrix = NULL) {
 
+  if (level == "species") {method <- gsub(".through.species", "", method)} 
+
   if (method == "nmf") {
     # NMF is always straight from oligos to levels
     if (level == "species") {
@@ -27,10 +29,10 @@ summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verb
     summarized.matrix <- 1 + deconvolution.nonneg(10^oligo.data, phylogeny.info, level)
     res <- list(summarized.matrix = summarized.matrix, probe.parameters = list())
   
-  } else if (method %in% c("rpa", "frpa", "sum.through.species", "ave.through.species")) {
+  } else if (method %in% c("rpa", "frpa", "rpa.with.affinities", "sum.through.species", "ave.through.species")) {
 
     # Summarize probes through species level (default with RPA)
-    res <- summarize.probesets.through.species(level = level, phylogeny.info = phylogeny.info, oligo.data = oligo.data, method = gsub(".spe", "", method))
+    res <- summarize.probesets.through.species(level = level, phylogeny.info = phylogeny.info, oligo.data = oligo.data, method = gsub(".through.species", "", method), verbose = verbose)
 
   } else if (method %in% c("rpa.direct", "rpa.with.affinities.direct", "sum", "ave")) {
 
