@@ -17,6 +17,8 @@
 
 summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, method, verbose = TRUE) {
 
+  message("Direct summarization..")			     
+
   # Retrieve oligos for each taxonomic group
   probesets <- retrieve.probesets(phylogeny.info, level = level)
 
@@ -49,10 +51,14 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
 
     if (method == "frpa") {
 
+      print(method)
+
       # Summarize with pre-calculated variances
       vec <- RPA::d.update.fast(dat, probe.parameters[[set]])
 
     } else if (method == "rpa") {
+
+      print(method)
 
       	    # RPA is calculated in log domain
      	    # Downweigh non-specific probes with priors with 10% of virtual data and
@@ -67,6 +73,8 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
       	    probe.parameters[[set]] <- res$tau2
 
    } else if (method == "rpa.with.affinities") {
+
+      print(method)
 
      # Also include affinities in summarization
 

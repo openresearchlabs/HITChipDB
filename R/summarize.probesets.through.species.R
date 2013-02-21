@@ -18,7 +18,7 @@
 summarize.probesets.through.species <- function (level, phylogeny.info, oligo.data, method, verbose = FALSE) {
 
   # Get species-level summary first
-  message("Summarizing at species level...")
+  message("Summarizing through species...")
   probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = verbose)
 
   species.matrix   <- 10^probeset.summaries$summarized.matrix

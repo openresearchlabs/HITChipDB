@@ -41,7 +41,7 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
 
   for (set in names(probesets)) {
 
-    if (verbose) { message(set) }
+    # if (verbose) { message(set) }
 
     # Pick expression for particular probes
     probes <- probesets[[set]]
@@ -59,6 +59,8 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
 
     } else if (method == "rpa") {
 
+      #message(method)
+
       # RPA is calculated in log domain
       # Downweigh non-specific probes with priors with 10% of virtual data and
       # variances set according to number of matching probes
@@ -72,6 +74,8 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       probe.parameters[[set]] <- res$tau2
 
    } else if (method == "rpa.with.affinities") {
+     
+      #message(method)
 
       # Also include affinities in probe summarization
 
