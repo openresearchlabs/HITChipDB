@@ -40,4 +40,5 @@ Collate:
     'summarize.probesets.species.R'
     'summarize.rawdata.R'
     'summarize.probesets.through.species.R'
+    'get.probedata.R'
 Packaged: 2012-01-12 14:19:39 UTC; lei
