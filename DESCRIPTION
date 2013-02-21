@@ -21,7 +21,7 @@ Depends:
     RPA,
     svDialogs,
     tcltk
-URL: TBA
+URL: http://microbiome.github.com
 LazyLoad: yes
 Collate:
     'firstlib.R'
