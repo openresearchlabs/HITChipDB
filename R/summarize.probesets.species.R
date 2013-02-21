@@ -66,7 +66,7 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       # variances set according to number of matching probes
       # This will provide slight emphasis to downweigh potentially
       # cross-hybridizing probes
-      res <- rpa.fit(dat, tau2.method = "robust", 
+      res <- rpa.fit(dat, 
       	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
 			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)
 
@@ -79,7 +79,7 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
 
       # Also include affinities in probe summarization
 
-      res <- rpa.fit(dat, tau2.method = "robust", 
+      res <- rpa.fit(dat, 
       	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
 			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2, 
 			  summarize.with.affinities = TRUE)
