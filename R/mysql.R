@@ -50,20 +50,27 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
   }  
 
-
   # Fetch all data from the database
-   rs <- dbSendQuery(con, paste("SELECT p.projectName,p.projectID,s.subjectID,s.sampleID,s.samplingDate,s.normAlgVersion,h.hybridisationID,h.dye,a.arrayID,a.barcode,sl.designID,s.reproducibility,s.normalisationFinished,s.imageID,fe.extractionID,fe.extractionName,fe.noSampleNormalisation,h.isDiscarded,fe.hasReproCheck
+  # Main info
+   rs <- dbSendQuery(con, paste("SELECT p.projectName,p.projectID,s.subjectID,s.sampleID,s.samplingDate,s.normAlgVersion,h.hybridisationID,h.dye, h.arrayID ,s.reproducibility,s.normalisationFinished,s.imageID,fe.extractionID,fe.extractionName,fe.noSampleNormalisation,h.isDiscarded,fe.hasReproCheck
      FROM sample s               
      JOIN hybridisation h USING (sampleID) JOIN featureextraction fe USING (hybridisationID)
      JOIN project p USING (projectID)
-     JOIN array a USING (arrayID)
-     JOIN slide sl USING (barcode)
      ORDER BY s.projectID, s.sampleID, h.hybridisationID, fe.extractionID"))
 
   message("Fetch selected projects and samples")
   project.info.all <- fetch(rs, n = -1)
 
-  # If no chiptype specified, use all
+  # arrayID and barcode
+  rs <- dbSendQuery(con, paste("SELECT a.arrayID,a.barcode,sl.designID 
+     FROM array a               
+     JOIN slide sl USING (barcode)
+     WHERE arrayID in ('",paste(unique(project.info.all$arrayID),collapse="','"),"')",sep=""))
+  project.info.arrays <- fetch(rs, n = -1)
+  #combine 
+  project.info.all=cbind(project.info.all,project.info.arrays[match(project.info.all$arrayID,project.info.arrays$arrayID),c("barcode","designID")])
+   
+  # if no chiptype specified, use all
   if (is.null(chiptype)) {chiptype <- unique(project.info.all$designID)}
   if (is.null(selected.samples)) {selected.samples <- unique(project.info.all$sampleID)}
 
