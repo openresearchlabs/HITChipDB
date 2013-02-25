@@ -68,7 +68,7 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
      WHERE arrayID in ('",paste(unique(project.info.all$arrayID),collapse="','"),"')",sep=""))
   project.info.arrays <- fetch(rs, n = -1)
   #combine 
-  project.info.all=cbind(project.info.all,project.info.arrays[match(project.info.all$arrayID,project.info.arrays$arrayID),c("barcode","designID")])
+  project.info.all2=cbind(project.info.all,project.info.arrays[match(project.info.all$arrayID,project.info.arrays$arrayID),c("barcode","designID")])
    
   # if no chiptype specified, use all
   if (is.null(chiptype)) {chiptype <- unique(project.info.all$designID)}

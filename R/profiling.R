@@ -64,24 +64,29 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
     method <- "complete"
     dat <- finaldata[["oligo"]]
 	print(head(dat))
-    png(paste(params$wdir, "hclust_oligo_euclidean_log10.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
-    hc <- hclust(dist(t(log10(dat + 1))), method = method)
-    plot(hc, hang = -1, main = "hclust/euclid/oligo/log10", xlab = "Samples")
-    dev.off()
+    #png(paste(params$wdir, "hclust_oligo_euclidean_log10.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
+    #hc <- hclust(dist(t(log10(dat + 1))), method = method)
+    #plot(hc, hang = -1, main = "hclust/euclid/oligo/log10", xlab = "Samples")
+    #dev.off()
 
-    png(paste(params$wdir, "hclust_oligo_euclidean_absolute.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
-    hc <- hclust(dist(t(dat)), method = method)
-    plot(hc, hang = -1, main = "hclust/euclid/oligo/raw", xlab = "Samples")
-    dev.off()
+    #png(paste(params$wdir, "hclust_oligo_euclidean_absolute.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
+    #hc <- hclust(dist(t(dat)), method = method)
+    #plot(hc, hang = -1, main = "hclust/euclid/oligo/raw", xlab = "Samples")
+    #dev.off()
 
-    png(paste(params$wdir, "hclust_oligo_pearson_log10.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
-    hc <- hclust(as.dist(1 - cor(log10(dat + 1), use = "complete.obs")), method = method)
-    plot(hc, hang = -1, main = "hclust/pearson/oligo/log10", xlab = "Samples")
-    dev.off()
+    #png(paste(params$wdir, "hclust_oligo_pearson_log10.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
+    #hc <- hclust(as.dist(1 - cor(log10(dat + 1), use = "complete.obs")), method = method)
+    #plot(hc, hang = -1, main = "hclust/pearson/oligo/log10", xlab = "Samples")
+    #dev.off()
 
-    png(paste(params$wdir, "hclust_oligo_pearson_absolute.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
-    hc <- hclust(as.dist(1 - cor(dat, use = "complete.obs")), method = method)
-    plot(hc, hang = -1, main = "hclust/pearson/oligo/raw", xlab = "Samples")
+    #png(paste(params$wdir, "hclust_oligo_pearson_absolute.png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
+    #hc <- hclust(as.dist(1 - cor(dat, use = "complete.obs")), method = method)
+    #plot(hc, hang = -1, main = "hclust/pearson/oligo/raw", xlab = "Samples")
+    #dev.off()
+
+    png(paste(params$wdir, "hclust_oligo_spearman_", method, ".png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
+    hc <- hclust(as.dist(1 - cor(dat, use = "pairwise.complete.obs", method = "spearman")), method = method)
+    plot(hc, hang = -1, main = "hclust/spearman/oligo/complete", xlab = "Samples")
     dev.off()
 
   }
