@@ -51,14 +51,14 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
 
     if (method == "frpa") {
 
-      print(method)
+      message(method)
 
       # Summarize with pre-calculated variances
       vec <- RPA::d.update.fast(dat, probe.parameters[[set]])
 
     } else if (method == "rpa") {
 
-      print(method)
+      message(method)
 
       	    # RPA is calculated in log domain
      	    # Downweigh non-specific probes with priors with 10% of virtual data and
@@ -74,7 +74,7 @@ summarize.probesets.directly <- function (level, phylogeny.info, oligo.data, met
 
    } else if (method == "rpa.with.affinities") {
 
-      print(method)
+      message(method)
 
      # Also include affinities in summarization
 

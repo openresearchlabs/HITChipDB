@@ -78,7 +78,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       #message(method)
 
       # Also include affinities in probe summarization
-
       res <- rpa.fit(dat, 
       	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
 			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2, 
