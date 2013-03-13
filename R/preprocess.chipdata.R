@@ -34,7 +34,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "sum", "ave"), which.projects = NULL) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum", "ave", "nmf"), which.projects = NULL) {
 
   # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
 
@@ -60,7 +60,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   }
 
   # Minmax parameters hard-coded to standardize normalization;
-  # Using the parameters from HITChip atlas with 3200 samples
+  # Using the parameters from HITChip atlas 
   # params$minmax.points <- c(30.02459, 132616.91371)
   params$minmax.points <- c(30, 133000) 
   # TODO pre-calculated quantiles encoded here, too?
@@ -161,17 +161,21 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   rownames( oligo.abs ) <- rownames( oligo.log10 )
   colnames( oligo.abs ) <- colnames( oligo.log10 )
 
-  # fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}; fs <- list.files("~/Rpackages/microbiome/microbiome/R/", full.names = T); for (f in fs) {source(f)}; 
-
   # Oligo summarization
   finaldata <- list()
   finaldata[["oligo"]] <- oligo.abs
   levels <- c("species", "L2", "L1")
   if (params$chip == "MITChip" || params$chip == "PITChip") {levels <- c(levels, "L0")}
+
+  if (ncol(oligo.log10) == 1) { 
+    warning("Only a single sample selected - skipping NMF summarization")
+    summarization.methods <- setdiff(summarization.methods, "nmf")
+  }
+  
   for (level in levels) {
     finaldata[[level]] <- list()
     for (method in summarization.methods) {
-        #save(phylogeny.info, oligo.log10, method, level, file = "~/tmp/debugging.RData")
+
         message(paste(level, method))
     	summarized.log10 <- summarize.probesets(
 					phylogeny.info = phylogeny.info,		

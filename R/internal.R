@@ -238,7 +238,6 @@ ReadParameters <- function (con, which.projects = NULL) {
     if(nrow(prj) < 1) { stop("Choose at least 1 project") }
     samples <- choose.samples(con, multi=TRUE, title='Select samples', 
   	       			   condition=list(list(field='projectID', value=prj$projectID)))
-    if(nrow(samples) < 2) { stop("Choose at least 2 samples") }
 
   } else {
 

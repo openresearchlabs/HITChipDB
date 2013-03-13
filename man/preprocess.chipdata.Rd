@@ -5,7 +5,7 @@
   preprocess.chipdata(dbuser, dbpwd, dbname,
     verbose = TRUE, host = NULL, port = NULL,
     use.precalculated.phylogeny = NULL,
-    summarization.methods = c("nmf", "rpa", "frpa", "sum.through.species", "ave.through.species", "rpa.direct", "sum", "ave"),
+    summarization.methods = c("frpa", "sum", "ave", "nmf"),
     which.projects = NULL)
 }
 \arguments{
