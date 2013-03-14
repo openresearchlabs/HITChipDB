@@ -126,8 +126,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     phylogeny.filtered <- prune16S(phylogeny.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
 
     # Keep only relevant cols
-    phylogeny.full <- phylogeny.full[, 1:5]; 
-    phylogeny.filtered <- phylogeny.filtered[, 1:5]; 
+    phylogeny.full <- phylogeny.full[, 1:6]; 
+    phylogeny.filtered <- phylogeny.filtered[, 1:6]; 
 
     # Remove duplicate rows
     phylogeny.full <- phylogeny.full[!duplicated(phylogeny.full),]
@@ -165,7 +165,14 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   finaldata <- list()
   finaldata[["oligo"]] <- oligo.abs
   levels <- c("species", "L2", "L1")
-  if (params$chip == "MITChip" || params$chip == "PITChip") {levels <- c(levels, "L0")}
+  if (params$chip == "MITChip" || params$chip == "PITChip") {
+    levels <- c(levels, "L0")
+    if ("frpa" %in% summarization.methods) { 
+      warning("fRPA summarization not implemented for PITChip or MITChip - using RPA instead!")
+      summarization.methods[[which(summarization.methods == "frpa")]] <- "rpa" 
+      summarization.methods <- unique(summarization.methods)
+   }
+  }
 
   if (ncol(oligo.log10) == 1) { 
     warning("Only a single sample selected - skipping NMF summarization")
