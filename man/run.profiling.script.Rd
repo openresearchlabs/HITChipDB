@@ -4,7 +4,7 @@
 \usage{
   run.profiling.script(dbuser, dbpwd, dbname,
     verbose = TRUE, host = NULL, port = NULL,
-    summarization.methods = c("sum", "ave", "nmf", "rpa", "frpa"),
+    summarization.methods = c("frpa", "rpa", "sum", "ave", "nmf"),
     which.projects = NULL)
 }
 \arguments{
