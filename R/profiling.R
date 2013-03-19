@@ -23,7 +23,7 @@
 #'   @param verbose verbose
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
-#'   @param summarization.methods List summarization methods to be included in output
+#'   @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave, nmf.
 #'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
 #'
 #' Returns:
