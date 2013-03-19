@@ -60,11 +60,10 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
      JOIN project p USING (projectID)", 
      paste("WHERE projectName in ('", paste(unique(allowed.projects),collapse="','"), "')", sep = ""),
      "ORDER BY s.projectID, s.sampleID, h.hybridisationID, fe.extractionID", sep = " "))
+     #paste("WHERE sampleID in ('", paste(unique(selected.samples),collapse="','"), "')", sep = ""),
 
   message("Fetch selected projects and samples")
   project.info.all <- fetch(rs, n = -1)
-
-     
 
   # arrayID and barcode
   rs <- dbSendQuery(con, paste("SELECT a.arrayID,a.barcode,sl.designID 
@@ -80,19 +79,25 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
   if (is.null(chiptype)) {chiptype <- unique(project.info.all$designID)}
   if (is.null(selected.samples)) {selected.samples <- unique(project.info.all$sampleID)}
 
+  # Pick selected samples only
+  project.info.all <- project.info.all[project.info.all$sampleID %in% selected.samples,]
+
   # Close MySQL connection
   dbDisconnect(con) 
 
   # Filter out samples based on predefined criteria
-  rkeep <- project.info.all$projectName %in% allowed.projects &
-           !as.logical(project.info.all$isDiscarded) &
-           !as.logical(project.info.all$noSampleNormalisation) &
-           as.logical(project.info.all$normalisationFinished) &
-           project.info.all$hasReproCheck & 
-           project.info.all$designID %in% chiptype &
-           project.info.all$normAlgVersion == 1.1 &
-    	   project.info.all$sampleID %in% selected.samples
- 
+  filter.table <- cbind(allowed.project = (project.info.all$projectName %in% allowed.projects), 
+               	        notDiscarded = (!as.logical(project.info.all$isDiscarded)),
+           		sampleNormalized = (!as.logical(project.info.all$noSampleNormalisation)),
+           		normalisationFinished = (as.logical(project.info.all$normalisationFinished)),
+			hasReproCheck = (project.info.all$hasReproCheck),
+           		correctChip = (project.info.all$designID %in% chiptype),
+           		correctNormAlgVersion = (project.info.all$normAlgVersion == 1.1),
+    	   		selected.sample = (project.info.all$sampleID %in% selected.samples))
+
+  filter.table[is.na(filter.table)] <- 0
+  rkeep <- (rowMeans(filter.table == 1) == 1)
+
   # Remove annotations which are identical for all samples
   ckeep <- sapply(project.info.all, function (x) {!length(unique(x)) == 1})
 
