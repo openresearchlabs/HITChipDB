@@ -56,7 +56,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
-  hc.params <- add.heatmap(finaldata[["oligo"]], output.dir = params$wdir, phylogeny.info = phylogeny.info)
+  hc.params <- add.heatmap(log10(finaldata[["oligo"]]), output.dir = params$wdir, phylogeny.info = phylogeny.info)
 
   # Plot hierachical clustering trees into the output directory
   if (ncol(finaldata[["oligo"]]) > 2) { 
