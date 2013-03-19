@@ -59,6 +59,15 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     if (!params$chip == "HITChip") {use.precalculated.phylogeny <- FALSE}
   }
 
+  if (params$chip == "HITChip" && "rpa" %in% summarization.methods)  {
+    warning("Frozen-RPA (fRPA) used instead of RPA for HITChip.")
+    summarization.methods <- unique(gsub("^rpa", "frpa", summarization.methods))
+  } else if (!params$chip == "HITChip" && "frpa" %in% summarization.methods)  {
+    warning(paste("RPA used instead of frozen-RPA (fRPA) for", params$chip))
+    summarization.methods <- unique(gsub("frpa", "rpa", summarization.methods))
+  }
+
+
   # Minmax parameters hard-coded to standardize normalization;
   # Using the parameters from HITChip atlas 
   # params$minmax.points <- c(30.02459, 132616.91371)

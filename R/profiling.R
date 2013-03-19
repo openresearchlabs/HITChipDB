@@ -37,7 +37,7 @@
 run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "rpa", "sum", "ave", "nmf"), which.projects = NULL) {
 
   # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; verbose = T
-  
+
   # Fetch and preprocess the data		     
   chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname, 
   	       				verbose = verbose,
