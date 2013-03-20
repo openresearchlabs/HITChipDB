@@ -64,9 +64,9 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
     method <- "complete"
     dat <- finaldata[["oligo"]]
 
-    png(paste(params$wdir, "hclust_oligo_spearman_", method, ".png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
-    hc <- hclust(as.dist(1 - cor(dat, use = "pairwise.complete.obs", method = "spearman")), method = method)
-    plot(hc, hang = -1, main = "hclust/spearman/oligo/complete", xlab = "Samples")
+    png(paste(params$wdir, "hclust_oligo_pearson_", method, ".png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
+    hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
+    plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples")
     dev.off()
 
   }
