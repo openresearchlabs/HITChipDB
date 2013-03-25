@@ -20,7 +20,7 @@ summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo, oligo.i
   d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)[as.character(oligo.ids)] 
 
   # probes x hybs: oligo summary as means of log feature signals per oligo, hybs separate
-  message("probe summary as means of log feature signals per oligo, hybs separate")
+  message("Probe summarization with mean of log feature signals per oligo, hybs separate")
   oligo.data  <- t(sapply(d.oSplit, function(x) colMeans(fdat.log10[x,], na.rm = TRUE)))
 
   ## Average over all hybridisations/extractions associated with this sample

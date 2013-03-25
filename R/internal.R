@@ -490,9 +490,6 @@ WriteLog <- function (naHybs, params) {
 
 WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info.full, verbose = TRUE) {
 
-  ## featurelevel data
-  ## WriteMatrix(cbind(fdat.oligoinfo, d.scaled), paste("featureprofile_", scriptVersion, ".tab", sep = ""), params)
-
   ## Write oligoprofile in original (non-log) domain
   fname <- paste(output.dir, "/oligoprofile.tab", sep = "")
   mydat <- finaldata[["oligo"]]

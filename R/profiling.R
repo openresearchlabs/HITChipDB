@@ -34,7 +34,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "rpa", "sum", "ave", "nmf"), which.projects = NULL) {
+run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL) {
 
   # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; verbose = T
 
@@ -48,7 +48,10 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
   finaldata <- chipdata$data
   params    <- chipdata$params
+
+  # Phylogeny used for L1/L2/species summarization
   phylogeny.info <- chipdata$phylogeny.info
+  # Complete phylogeny before melting temperature etc. filters
   phylogeny.info.full <- chipdata$phylogeny.info.full
 
   ## Write preprocessed data in tab delimited file

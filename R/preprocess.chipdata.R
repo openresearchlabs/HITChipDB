@@ -34,7 +34,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum", "ave", "nmf"), which.projects = NULL) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL) {
 
   # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
 
@@ -142,8 +142,6 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     phylogeny.full <- phylogeny.full[!duplicated(phylogeny.full),]
     phylogeny.filtered <- phylogeny.filtered[!duplicated(phylogeny.filtered),]
 
-    #write.table(phylogeny.full, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.full.tab", sep = "\t", quote = F, row.names = F); write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.filtered.tab", sep = "\t", quote = F, row.names = F); write.table(phylogeny.filtered, file = "~/Rpackages/microbiome/microbiome/inst/extdata/phylogeny.tab", sep = "\t", quote = F, row.names = F)
-
   } else {
 
     message("Using pre-calculated phylogeny")
@@ -153,7 +151,6 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     if (!params$chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
     
   }
-  phylogeny.info <- phylogeny.filtered
 
   ####################
   ## COMPUTE SUMMARIES
@@ -163,10 +160,10 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   oligo.log10 <- summarize.rawdata(log10(d.scaled), 
   	      			   fdat.hybinfo, 
 				   fdat.oligoinfo = fdat.oligoinfo, 
-				   oligo.ids = sort(unique(phylogeny.info$oligoID)))
+				   oligo.ids = sort(unique(phylogeny.full$oligoID)))
 
   # Return to the original scale
-  oligo.abs <- matrix(10^oligo.log10, nrow = nrow(oligo.log10)) # - 1  
+  oligo.abs <- matrix(10^oligo.log10, nrow = nrow(oligo.log10))
   rownames( oligo.abs ) <- rownames( oligo.log10 )
   colnames( oligo.abs ) <- colnames( oligo.log10 )
 
@@ -193,8 +190,9 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     for (method in summarization.methods) {
 
         message(paste(level, method))
+	# For species/L1/L2 summarization use the filtered phylogeny: phylogeny.filtered!
     	summarized.log10 <- summarize.probesets(
-					phylogeny.info = phylogeny.info,		
+					phylogeny.info = phylogeny.filtered,		
 			    		  oligo.data = oligo.log10, 
       			       	          method = method, 
 					   level = level)$summarized.matrix
@@ -205,7 +203,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     }
   }
 
-  list(data = finaldata, phylogeny.info = phylogeny.info, phylogeny.full = phylogeny.full, naHybs = naHybs, params = params)
+  list(data = finaldata, phylogeny.info = phylogeny.filtered, phylogeny.full = phylogeny.full, naHybs = naHybs, params = params)
 
 }
 
