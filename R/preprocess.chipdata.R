@@ -134,6 +134,17 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     rm.oligos <- sync.rm.phylotypes(params$rm.phylotypes, phylogeny.full)$oligos
     phylogeny.filtered <- prune16S(phylogeny.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
 
+    # The standard database query returns 3631 unique oligoIDs for HITChip after explicitly excluding 
+    # 'UNI 515', 'HIT 5658', 'HIT 1503', 'HIT 1505', 'HIT 1506'.
+    # Then standard filters:
+    # pmTm.margin = 2.5 (260 oligoIDs discarded);
+    # complement = 1 (1 oligoID discarded);
+    # mismatch = 0 (260 oligoIDs discarded; only partially overlapping with other filters);
+    # -> The filtered phylogeny is used for species/L1/L2 summarization
+    # -> The full phylogeny is still OK for oligo-level analyses, as filtering controls mainly
+    #    for mismatches but otherwise the oligos are valid and indeed target some taxa that are
+    #    missing from the given phylogeny
+
     # Keep only relevant cols
     phylogeny.full <- phylogeny.full[, 1:6]; 
     phylogeny.filtered <- phylogeny.filtered[, 1:6]; 
