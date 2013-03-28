@@ -25,8 +25,8 @@ summarize.probesets.through.species <- function (level, phylogeny.info, oligo.da
   probe.parameters <- probeset.summaries$probe.parameters 
 
   if (level == "species") {
-     res <- list(summarized.matrix = log10(species.matrix), probe.parameters = probe.parameters)
-     return(res)
+    res <- list(summarized.matrix = log10(species.matrix), probe.parameters = probe.parameters)
+    return(res)
   }
 
   # List all species for the given level (L0 / L1 / L2)")

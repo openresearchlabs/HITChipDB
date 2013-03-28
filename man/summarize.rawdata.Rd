@@ -14,7 +14,9 @@
 
   \item{fdat.oligoinfo}{oligo info table}
 
-  \item{oligo.ids}{oligo.ids Returns:}
+  \item{oligo.ids}{oligo.ids
+
+  Returns:}
 }
 \value{
   probes x samples matrix in log10 scale

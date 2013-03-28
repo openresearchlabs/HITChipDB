@@ -40,6 +40,8 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
  # allowed.projects <- params$prj$projectName; chiptype = NULL; selected.samples = params$samples$sampleID
  # selected.samples = NULL
 
+
+
   if (!require(RMySQL)) {
     install.packages("RMySQL")
     require(RMySQL)

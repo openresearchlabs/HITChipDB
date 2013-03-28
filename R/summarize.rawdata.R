@@ -6,6 +6,7 @@
 #'   @param fdat.hybinfo hybridization info table
 #'   @param fdat.oligoinfo oligo info table
 #'   @param oligo.ids oligo.ids
+#' 
 #' Returns:
 #'   @return probes x samples matrix in log10 scale
 #'
@@ -19,7 +20,10 @@ summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo, oligo.i
   # List rows for each oligo (each oligo has multiple features which will be averaged)
   d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)[as.character(oligo.ids)] 
 
-  # probes x hybs: oligo summary as means of log feature signals per oligo, hybs separate
+  # Remove oligos with no data (probes discarded earlier from the data)
+  d.oSplit <- d.oSplit[!sapply(d.oSplit, is.null)]
+
+  # Probes x hybs: oligo summary as means of log feature signals per oligo, hybs separate
   message("Probe summarization with mean of log feature signals per oligo, hybs separate")
   oligo.data  <- t(sapply(d.oSplit, function(x) colMeans(fdat.log10[x,], na.rm = TRUE)))
 

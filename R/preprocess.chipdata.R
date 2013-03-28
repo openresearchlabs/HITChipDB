@@ -157,7 +157,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 
     message("Using pre-calculated phylogeny")
     data.directory <- system.file("extdata/", package = "microbiome")
-    phylogeny.filtered <- microbiome::read.profiling(level = "phylogeny", data.dir = data.directory)
+    phylogeny.filtered <- microbiome::read.profiling(level = "phylogeny.filtered", data.dir = data.directory)
     phylogeny.full <- microbiome::read.profiling(level = "phylogeny.full", data.dir = data.directory)
     if (!params$chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
     
