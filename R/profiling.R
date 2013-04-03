@@ -52,7 +52,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   # Phylogeny used for L1/L2/species summarization
   phylogeny.info <- chipdata$phylogeny.info
   # Complete phylogeny before melting temperature etc. filters
-  phylogeny.info.full <- chipdata$phylogeny.info.full
+  phylogeny.info.full <- chipdata$phylogeny.full
 
   ## Write preprocessed data in tab delimited file
   outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, verbose = verbose)

@@ -509,7 +509,7 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
 
   
   # Write phylogeny.info
-  fname <- paste(output.dir, "/phylogeny.tab", sep = "")
+  fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
   WriteMatrix(phylogeny.info, fname, verbose)
 
   # Write unfiltered phylogeny.info

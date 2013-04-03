@@ -19,6 +19,8 @@ detect.chip <- function (dbname) {
     chip <- "PITChip"
   } else if (dbname %in% c("PhyloArray_HIT", "phyloarray_hit", "Phyloarray_HIT", "Phyloarray", "phyloarray")) {
     chip <- "HITChip"
+  } else if (dbname %in% c("chickchipdb")) {
+    chip <- "ChickChip"
   } else {
     stop("Check database name (dbname)!")
   }
