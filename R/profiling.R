@@ -37,6 +37,7 @@
 run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL) {
 
   # dbuser = "root"; dbpwd = "fidipro"; dbname = "phyloarray"; host = '127.0.0.1'; port = 3307; verbose = T
+  # dbuser = "pit"; dbpwd = "passu"; dbname = "chickchipdb"; host = NULL; port = NULL; verbose = T; summarization.methods = c("frpa", "sum"); which.projects = NULL
 
   # Fetch and preprocess the data		     
   chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname, 
@@ -67,9 +68,12 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
     method <- "complete"
     dat <- finaldata[["oligo"]]
 
-    png(paste(params$wdir, "hclust_oligo_pearson_", method, ".png", sep = ""), width = 480, height = 480 * ncol(dat)/20)
+    # Clutering
     hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
-    plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples")
+
+    # Save into file
+    png(paste(params$wdir, "/hclust_oligo_pearson_", method, ".png", sep = ""), height = 480, width = 480 * ncol(dat)/20)
+    plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples", ylab = "1 - Correlation")
     dev.off()
 
   }

@@ -2,7 +2,8 @@
 \alias{ReadParameters}
 \title{Description: Define parameters in select box}
 \usage{
-  ReadParameters(con, which.projects = NULL)
+  ReadParameters(con, which.projects = NULL,
+    all.samples = TRUE)
 }
 \arguments{
   \item{con}{Output from dbConnect(dbDriver("MySQL"),
@@ -10,7 +11,10 @@
   'PhyloArray')}
 
   \item{which.projects}{Optionally list which projects to
-  take. All samples returned.
+  take. All samples returned.}
+
+  \item{all.samples}{Return all samples from the selected
+  projects: TRUE/FALSE
 
   Returns:}
 }

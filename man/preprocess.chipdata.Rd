@@ -6,7 +6,7 @@
     verbose = TRUE, host = NULL, port = NULL,
     use.precalculated.phylogeny = NULL,
     summarization.methods = c("frpa", "sum"),
-    which.projects = NULL)
+    which.projects = NULL, all.samples = TRUE)
 }
 \arguments{
   \item{dbuser}{MySQL username}
@@ -32,7 +32,10 @@
 
   \item{which.projects}{Optionally specify the projects to
   extract. All samples from these projects will be
-  included.
+  included.}
+
+  \item{all.samples}{Use all samples from the selected
+  project by default? TRUE / FALSE
 
   Returns:}
 }

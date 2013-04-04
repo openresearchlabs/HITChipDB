@@ -25,6 +25,7 @@
 #'   @param use.precalculated.phylogeny use precalculated phylogeny?
 #'   @param summarization.methods List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave", "nmf"
 #'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
+#'   @param all.samples Use all samples from the selected project by default? TRUE / FALSE
 #'                                        
 #' Returns:
 #'   @return Preprocessed data and parameters
@@ -34,7 +35,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, all.samples = TRUE) {
 
   # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
 
@@ -48,15 +49,15 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
   }
   
-  params <- ReadParameters(con, which.projects = which.projects)  
+  params <- ReadParameters(con, which.projects = which.projects, all.samples = all.samples)  
   params$chip <- detect.chip(dbname)
   params$rm.phylotypes <- phylotype.rm.list(params$chip) 
   # List oligos and phylotypes to remove by default
 
   # Use precalculated phylogeny with HITChip to speed up
   if (is.null(use.precalculated.phylogeny)) {
-    if (params$chip == "HITChip")  {use.precalculated.phylogeny <- TRUE}
-    if (!params$chip == "HITChip") {use.precalculated.phylogeny <- FALSE}
+    if ( params$chip == "HITChip") { use.precalculated.phylogeny <- TRUE  }
+    if (!params$chip == "HITChip") { use.precalculated.phylogeny <- FALSE }
   }
 
   if (params$chip == "HITChip" && "rpa" %in% summarization.methods)  {
@@ -66,7 +67,6 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     warning(paste("RPA used instead of frozen-RPA (fRPA) for", params$chip))
     summarization.methods <- unique(gsub("frpa", "rpa", summarization.methods))
   }
-
 
   # Minmax parameters hard-coded to standardize normalization;
   # Using the parameters from HITChip atlas 
@@ -97,7 +97,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   naHybs <- colnames(fdat.orig)[onlyNA]
   if(sum(onlyNA) > 0){
     message("Removing the following hybs, because they contain only NAs:\n")
-    message(naHybs,"\n\n")
+    message(naHybs,"\n")
     fdat.orig <- fdat.orig[, !onlyNA]
     fdat.hybinfo <- fdat.hybinfo[, !onlyNA]
   }
@@ -182,7 +182,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   finaldata <- list()
   finaldata[["oligo"]] <- oligo.abs
   levels <- c("species", "L2", "L1")
-  if (params$chip == "MITChip" || params$chip == "PITChip") {
+  if (params$chip %in% c("MITChip", "PITChip", "ChickChip")) {
     levels <- c(levels, "L0")
     if ("frpa" %in% summarization.methods) { 
       warning("fRPA summarization not implemented for PITChip or MITChip - using RPA instead!")
