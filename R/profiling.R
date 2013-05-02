@@ -68,7 +68,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
     method <- "complete"
     dat <- finaldata[["oligo"]]
 
-    # Clutering
+    # Clustering
     hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
 
     # Save into file
