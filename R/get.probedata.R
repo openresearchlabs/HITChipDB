@@ -33,13 +33,16 @@ get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, h
   } else { 
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
   }  
-
+  
+  #JS 16.5. correction for duplicate extractionIDs under same hybridisationID:
+  #choose the one which gets picked to sample normalisation (set during 
+  #manual quality control of the data). 
   rs <- dbSendQuery(con, statement = paste("SELECT featureID,extractionID,fe.hybridisationID,spatNormSignal,isOutlier
       		FROM featuremeasurement 
 		JOIN featureextraction fe USING (extractionID)
 		JOIN hybridisation h USING (hybridisationID)
                 JOIN arrayfeature af USE INDEX (PRIMARY) USING (featureID)
-		WHERE fe.hybridisationID IN", hids))
+		WHERE fe.hybridisationID IN", hids,"and NOT fe.noSampleNormalisation"))
   rawdata <- fetch(rs, n = -1)
 
   ## Check if there is any data
@@ -76,14 +79,9 @@ get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, h
   # LL 4.4.2012. With HITChip atlas we encountered some cases where the arrays had different number of entries
   # due to duplicates on some arrays. Now added automated handling here to avoid problems with other array types
   # that may have different natural number of elements on the array.
-  if (length(table(sapply(rawdata.esplit, nrow))) == 2) {
-    ntmp <- max(sapply(rawdata.esplit, nrow))
-    message(paste("Remove elements containing duplicated entries (", round(100*mean(!sapply(rawdata.esplit, nrow) == ntmp), 2), "%)", sep = ""))
-    
-    # ntmp == !10799 encountered with HITChip atlas, not yet elsewhere
-    rawdata.esplit <- rawdata.esplit[!sapply(rawdata.esplit, nrow) == ntmp]
-  } else if (length(table(sapply(rawdata.esplit, nrow))) > 2) {
-    stop("Error 10799. Arrays are not comparable. Contact R package admins.")
+  # JS 16.5. NOT duplicates, see above. 
+  if (max(sapply(rawdata.esplit,function(x) length(unique(x$extractionID))))>1){
+    stop("Error 10799. Several extraction IDs attached to same hybridisationID. Contact R package admins.")
   }
 
   # Form features x hybridizations matrix 
