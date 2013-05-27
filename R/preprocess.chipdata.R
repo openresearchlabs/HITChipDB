@@ -170,8 +170,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   # Summarize probes into oligos and hybridisations into samples
   oligo.log10 <- summarize.rawdata(log10(d.scaled), 
   	      			   fdat.hybinfo, 
-				   fdat.oligoinfo = fdat.oligoinfo, 
-				   oligo.ids = sort(unique(phylogeny.full$oligoID)))
+				   fdat.oligoinfo = fdat.oligoinfo)
 
   # Return to the original scale
   oligo.abs <- matrix(10^oligo.log10, nrow = nrow(oligo.log10))

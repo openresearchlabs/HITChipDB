@@ -5,7 +5,6 @@
 #'   @param fdat.log10 normalized raw data matrix oligos x hybridisations in log10 scale
 #'   @param fdat.hybinfo hybridization info table
 #'   @param fdat.oligoinfo oligo info table
-#'   @param oligo.ids oligo.ids
 #' 
 #' Returns:
 #'   @return probes x samples matrix in log10 scale
@@ -15,10 +14,12 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo, oligo.ids) {
+summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo) {
+
+  # fdat.log10 <- log10(d.scaled); fdat.hybinfo = fdat.hybinfo; fdat.oligoinfo = fdat.oligoinfo
 
   # List rows for each oligo (each oligo has multiple features which will be averaged)
-  d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)[as.character(oligo.ids)] 
+  d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)
 
   # Remove oligos with no data (probes discarded earlier from the data)
   d.oSplit <- d.oSplit[!sapply(d.oSplit, is.null)]
@@ -40,4 +41,5 @@ summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo, oligo.i
   oligo.data <- sapply(indlist, function(inds) { rowMeans(oligo.data[, inds]) } )
 
   oligo.data
+
 }

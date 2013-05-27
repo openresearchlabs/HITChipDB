@@ -4,7 +4,7 @@
              summarize oligos into probes and hybridisations into samples}
 \usage{
   summarize.rawdata(fdat.log10, fdat.hybinfo,
-    fdat.oligoinfo, oligo.ids)
+    fdat.oligoinfo)
 }
 \arguments{
   \item{fdat.log10}{normalized raw data matrix oligos x
@@ -12,9 +12,7 @@
 
   \item{fdat.hybinfo}{hybridization info table}
 
-  \item{fdat.oligoinfo}{oligo info table}
-
-  \item{oligo.ids}{oligo.ids
+  \item{fdat.oligoinfo}{oligo info table
 
   Returns:}
 }
