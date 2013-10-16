@@ -40,8 +40,6 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
  # allowed.projects <- params$prj$projectName; chiptype = NULL; selected.samples = params$samples$sampleID
  # selected.samples = NULL
 
-
-
   if (!require(RMySQL)) {
     install.packages("RMySQL")
     require(RMySQL)
@@ -192,6 +190,7 @@ get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbos
   
   ## Collect the full phylogenetic information for oligos
   message("Collect the full phylogeny")
+
   #excloligos <- ifelse(length(rmoligos>0),
   #                     paste('AND NOT (', paste("o.oligoID='",rmoligos,"'",sep="",collapse=" OR "), ') ', sep=''), '')
 

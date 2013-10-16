@@ -282,7 +282,7 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE) {
 
 
   # Extract samples
-  if (!all.samples) {
+  if (all.samples) {
     # Select samples manually
     samples <- choose.samples(con, multi=TRUE, title='Select samples', condition=list(list(field='projectID', value=prj$projectID)))
   } else {
