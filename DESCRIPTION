@@ -1,8 +1,8 @@
 Package: HITChipDB
 Type: Package
 Title: HITChipDB
-Version: 0.4.05
-Date: 2013-10-23
+Version: 0.4.06
+Date: 2013-11-20
 Author: Leo Lahti and Jarkko Salojarvi
 Maintainer: HITChipDB developer team <microbiome-admin@googlegroups.com>
 Description: R package for HITChipDB studies
@@ -41,4 +41,7 @@ Collate:
     'summarize.rawdata.R'
     'summarize.probesets.through.species.R'
     'get.probedata.R'
+    'brew.R'
+    'rda.R'
+    'utilities.R'
 Packaged: 2012-01-12 14:19:39 UTC; lei

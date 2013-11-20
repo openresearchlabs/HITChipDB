@@ -13,6 +13,53 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
+#' Description: List color scales
+#'
+#' Arguments:
+#'
+#' Returns:
+#'   @return list of color scales
+#'
+#' @export
+#' @references See citation("microbiome") 
+#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
+#' @keywords internal
+
+list.color.scales <- function () {
+  ## Different colour scales
+  list('white/blue'=colorRampPalette(c("white","darkblue"),interpolate='linear')(100),
+       'white/black'=colorRampPalette(c("white","black"),interpolate='linear')(100),
+       'black/yellow/white'=colorRampPalette(c("black","yellow","white"),bias=0.5,interpolate='linear')(100))
+
+}
+
+
+
+
+#' Description: Calculate species summaries and possibly update d.oligo2
+#'
+#' Arguments:
+#'   @param d.oligo2 d.oligo2
+#'   @param bgc.method background correction method
+#' Returns:
+#'   @return Background-corrected data matrix
+#'
+#' @export
+#' @references See citation("microbiome") 
+#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
+#' @keywords internal
+
+oligo.bg.correction <- function (d.oligo2, bgc.method) {
+
+  if ( bgc.method == "6*sd bkg intensity" ){ bgth <- 6 }
+
+  d.oligo2 <- threshold.data(d.oligo2, bgth)
+  d.oligo2 <- apply(d.oligo2, c(1,2), function(x) max(0, x))
+  
+  d.oligo2
+
+}
+
 # Database utilities for package-internal use only
 
 #' Tests whether the database connection is a phyloarray connection.
