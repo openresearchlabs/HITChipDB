@@ -17,16 +17,23 @@
 summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo) {
 
   # fdat.log10 <- log10(d.scaled); fdat.hybinfo = fdat.hybinfo; fdat.oligoinfo = fdat.oligoinfo
+  # fdat.log10 <- log10(d.scaled);
 
   # List rows for each oligo (each oligo has multiple features which will be averaged)
-  d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)
+  #d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)
+
+  if (any(duplicated(fdat.oligoinfo$featureID))) {stop(paste("Error: fdat.oligoinfo featureID should be unique!"))}
+
+  d.oSplit <- split(as.character(fdat.oligoinfo$featureID), fdat.oligoinfo$oligoID)
+  rownames(fdat.log10) <- fdat.oligoinfo$featureID
 
   # Remove oligos with no data (probes discarded earlier from the data)
   d.oSplit <- d.oSplit[!sapply(d.oSplit, is.null)]
 
   # Probes x hybs: oligo summary as means of log feature signals per oligo, hybs separate
   message("Probe summarization with mean of log feature signals per oligo, hybs separate")
-  oligo.data  <- t(sapply(d.oSplit, function(x) colMeans(fdat.log10[x,], na.rm = TRUE)))
+  oligo.data  <- t(sapply(d.oSplit, function(x) colMeans(matrix(fdat.log10[x,], nrow = length(x)), na.rm = TRUE)))
+  colnames(oligo.data) <- colnames(fdat.log10)
 
   ## Average over all hybridisations/extractions associated with this sample
   # List hybridisations associated with the same sample

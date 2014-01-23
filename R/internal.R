@@ -562,9 +562,11 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
   }
 
   
+  # Skipping for now; phylogeny.full shold be used by default and
+  # providing filtered version seems to cause confusion without adding much
   # Write phylogeny.info
-  fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
-  WriteMatrix(phylogeny.info, fname, verbose)
+  #fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
+  #WriteMatrix(phylogeny.info, fname, verbose)
 
   # Write unfiltered phylogeny.info
   fname <- paste(output.dir, "/phylogeny.full.tab", sep = "")

@@ -32,9 +32,8 @@ get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, h
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
   }  
   
-  #JS 16.5. correction for duplicate extractionIDs under same hybridisationID:
-  #choose the one which gets picked to sample normalisation (set during 
-  #manual quality control of the data). 
+  # JS 16.5. correction for duplicate extractionIDs under same hybridisationID:
+  # choose the one which gets picked to sample normalisation (set during manual quality control of the data):
   rs <- dbSendQuery(con, statement = paste("SELECT featureID,extractionID,fe.hybridisationID,spatNormSignal,isOutlier
       		FROM featuremeasurement 
 		JOIN featureextraction fe USING (extractionID)
@@ -75,19 +74,21 @@ get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, h
   rownames(ftab.info) <- ftab.info$featureID
 
   # LL 4.4.2012. With HITChip atlas we encountered some cases where the arrays had different number of entries
-  # due to duplicates on some arrays. Now added automated handling here to avoid problems with other array types
+  # due to duplicates on some arrays. Now added automated handling here to avoid problems with cases
   # that may have different natural number of elements on the array.
   # JS 16.5. NOT duplicates, see above. 
   if (max(sapply(rawdata.esplit,function(x) length(unique(x$extractionID))))>1){
     stop("Error 10799. Several extraction IDs attached to same hybridisationID. Contact R package admins.")
   }
 
-  # Form features x hybridizations matrix 
-  inds <- match(rownames(ftab.info), rawdata.esplit[[1]]$featureID)
+  # Form features x hybridizations matrix
   ftab <- matrix(NA, nrow = nrow(ftab.info), ncol = length(rawdata.esplit))
   rownames(ftab) <- rownames(ftab.info)
   colnames(ftab) <- names(rawdata.esplit)
-  for (hid in names(rawdata.esplit)) { ftab[, hid] <- I(rawdata.esplit[[hid]][inds, "spatNormSignal"]) }
+  for (hid in names(rawdata.esplit)) { 
+    inds <- match(ftab.info$featureID, rawdata.esplit[[hid]]$featureID)
+    ftab[, hid] <- I(rawdata.esplit[[hid]][inds, "spatNormSignal"]) 
+  }
 
   # Close MySQL connection
   dbDisconnect(con)
