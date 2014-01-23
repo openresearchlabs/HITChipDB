@@ -2,8 +2,8 @@
 \alias{read.profiling.010}
 \title{read.profiling.010}
 \usage{
-  read.profiling.010(level = NULL, method = "rpa",
-    data.dir = NULL, log10 = TRUE, impute = TRUE)
+read.profiling.010(level = NULL, method = "rpa", data.dir = NULL,
+  log10 = TRUE, impute = TRUE)
 }
 \arguments{
   \item{level}{phylogenetic level ("oligo" / "species" /
@@ -24,24 +24,24 @@
   Returns:}
 }
 \value{
-  data matrix (phylo x samples)
+data matrix (phylo x samples)
 }
 \description{
-  Description: read profiling script output from profiling
-  script v. 010 into R
+Description: read profiling script output from profiling
+script v. 010 into R
 }
 \details{
-  Arguments:
+Arguments:
 }
 \examples{
 # params <- read.profiling.010(...);
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

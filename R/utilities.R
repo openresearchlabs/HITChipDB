@@ -283,35 +283,3 @@ estimate.min.threshold <- function (dat) {
 }
 
 
-#' Description: determine detection threshold for the data
-#'
-#' Arguments:
-#'   @param dat data
-#'   @param sd.times standard deviation threshold
-#'
-#' Returns:
-#'   @return thresholded data matrix
-#'
-#' @export
-#' @references See citation("microbiome") 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords utilities
-
-threshold.data <- function(dat, sd.times = 6){
-
-  thr <- apply(dat, 2, function(x){
-      DD <- density(as.numeric(x), adjust = 1.2, na.rm = T);
-      noise_mode <- DD$x[which(DD$y==max(DD$y))[1]];
-      noise_sd   <- sd(x[x < noise_mode], na.rm = T);
-      low.thresh <- noise_mode + sd.times*noise_sd;
-      low.thresh 
-    })
-
-  # Subtract background from signal intensities in each sample
-  data.mat <- t(apply(dat, 1, function(Tr){ Tr-thr })) 
-  return(data.mat)
-}
-
-
-
-

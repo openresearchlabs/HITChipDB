@@ -23,25 +23,4 @@ Depends:
     tcltk
 URL: http://microbiome.github.com
 LazyLoad: yes
-Collate:
-    'firstlib.R'
-    'HITChipDB-package.R'
-    'show-methods.R'
-    'profiling.R'
-    'internal.R'
-    'mysql.R'
-    'nmf.R'
-    'toydata.R'
-    'preprocess.chipdata.R'
-    'prune16S.R'
-    'detect.chip.R'
-    'summarize.probesets.R'
-    'summarize.probesets.directly.R'
-    'summarize.probesets.species.R'
-    'summarize.rawdata.R'
-    'summarize.probesets.through.species.R'
-    'get.probedata.R'
-    'brew.R'
-    'rda.R'
-    'utilities.R'
 Packaged: 2012-01-12 14:19:39 UTC; lei

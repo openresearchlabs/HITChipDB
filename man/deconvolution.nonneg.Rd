@@ -2,8 +2,8 @@
 \alias{deconvolution.nonneg}
 \title{Description: Deconvolution}
 \usage{
-  deconvolution.nonneg(oligo.data, phylogeny.info, level,
-    block.solution = T, verbose = F, ...)
+deconvolution.nonneg(oligo.data, phylogeny.info, level, block.solution = T,
+  verbose = F, ...)
 }
 \arguments{
   \item{oligo.data}{oligo.data in absolute domain}
@@ -22,22 +22,22 @@
   Returns:}
 }
 \value{
-  list
+list
 }
 \description{
-  !OBSOLETE! Used nmf package (currently removed from CRAN)
-  for solving cross-hyb problem. Calls function ngp with
-  standard arguments (SEE: ngp).
+!OBSOLETE! Used nmf package (currently removed from CRAN)
+for solving cross-hyb problem. Calls function ngp with
+standard arguments (SEE: ngp).
 }
 \details{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Jarkko Salojarvi
-  \email{microbiome-admin@googlegroups.com}
+Contact: Jarkko Salojarvi
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

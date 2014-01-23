@@ -2,7 +2,7 @@
 \alias{GenerateSimulatedData}
 \title{Description: Generate toydata for the package}
 \usage{
-  GenerateSimulatedData(output.dir)
+GenerateSimulatedData(output.dir)
 }
 \arguments{
   \item{output.dir}{output directory name
@@ -10,17 +10,17 @@
   Returns:}
 }
 \value{
-  output file name
+output file name
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

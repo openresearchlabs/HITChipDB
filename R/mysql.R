@@ -40,11 +40,6 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
  # allowed.projects <- params$prj$projectName; chiptype = NULL; selected.samples = params$samples$sampleID
  # selected.samples = NULL
 
-  if (!require(RMySQL)) {
-    install.packages("RMySQL")
-    require(RMySQL)
-  }
-
   drv <- dbDriver("MySQL")
   if (!(is.null(host) && is.null(port))) {
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname, host = host, port = port)
@@ -129,11 +124,6 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
 
 list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL) { 
 
-  if (!require(RMySQL)) {
-    install.packages("RMySQL")
-    require(RMySQL)
-  }
-
   drv <- dbDriver("MySQL")
 
   if (!(is.null(host) && is.null(port))) {
@@ -176,8 +166,6 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #' @keywords utilities
 
 get.phylogeny.info <- function (phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE, chip = "HITChip", host = NULL, port = NULL, rmoligos = NULL) {   
-
-  microbiome::InstallMarginal("RMySQL")
 
   if (verbose) { message("Load phylogeny.info info") }
 
@@ -301,17 +289,14 @@ fetch.projects <- function (con, condition = NULL) {
 
    if (phyloarrayConnection(con)) {
 
-    if (!require(RMySQL)) {
-      install.packages("RMySQL")
-      require(RMySQL)
-    }
-
       stm <- paste("SELECT * FROM project", expandCondition(condition), sep='')
       rs <- dbSendQuery(con, stm)
       prjs <- fetch(rs, n=-1)
       return(prjs)
    } else {
+
      stop("Provide proper connection for fetch.projects")
+
    }
 }
 
@@ -346,16 +331,14 @@ fetch.projects <- function (con, condition = NULL) {
 fetch.samples <- function (con, condition = NULL) {
    if (phyloarrayConnection(con)) {
 
-      if (!require(RMySQL)) {
-        install.packages("RMySQL")
-        require(RMySQL)
-      }
-
       stm <- paste("SELECT * FROM sample", expandCondition(condition), sep='')
       rs <- dbSendQuery(con, stm)
       smps <- fetch(rs, n=-1)
       return(smps)
+
    } else {
+
      stop("Provide proper connection for fetch.samples")
+
    }
 }

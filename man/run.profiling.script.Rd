@@ -2,10 +2,9 @@
 \alias{run.profiling.script}
 \title{run.profiling.script}
 \usage{
-  run.profiling.script(dbuser, dbpwd, dbname,
-    verbose = TRUE, host = NULL, port = NULL,
-    summarization.methods = c("frpa", "sum"),
-    which.projects = NULL)
+run.profiling.script(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
+  port = NULL, summarization.methods = c("frpa", "sum"),
+  which.projects = NULL)
 }
 \arguments{
   \item{dbuser}{MySQL username}
@@ -34,21 +33,21 @@
   Returns:}
 }
 \value{
-  Profiling parameters. Also writes output to the
-  user-specified directory.
+Profiling parameters. Also writes output to the
+user-specified directory.
 }
 \description{
-  Description: Profiling main script
+Description: Profiling main script
 }
 \details{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

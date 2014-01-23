@@ -2,24 +2,24 @@
 \alias{expandElement}
 \title{Expands one element (one "field", "value" pair list) from a list of "field", "value" pair lists}
 \usage{
-  expandElement(elm)
+expandElement(elm)
 }
 \arguments{
   \item{elm}{TBA}
 }
 \value{
-  TBA
+TBA
 }
 \description{
-  Expands one element (one "field", "value" pair list) from
-  a list of "field", "value" pair lists
+Expands one element (one "field", "value" pair list) from a
+list of "field", "value" pair lists
 }
 \author{
-  Douwe Molenaar. Maintainer: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Douwe Molenaar. Maintainer: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

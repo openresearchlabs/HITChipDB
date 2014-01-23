@@ -2,8 +2,8 @@
 \alias{summarize.probesets.directly}
 \title{Description: summarize.probesets.directly}
 \usage{
-  summarize.probesets.directly(level, phylogeny.info,
-    oligo.data, method, verbose = TRUE)
+summarize.probesets.directly(level, phylogeny.info, oligo.data, method,
+  verbose = TRUE)
 }
 \arguments{
   \item{level}{summarization level}
@@ -21,19 +21,19 @@
   Returns:}
 }
 \value{
-  List with two elements: summarized.matrix (summarized
-  data matrix in log10 scale) and probe.parameters (only
-  used with rpa, probe-level parameter estimates)
+List with two elements: summarized.matrix (summarized data
+matrix in log10 scale) and probe.parameters (only used with
+rpa, probe-level parameter estimates)
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

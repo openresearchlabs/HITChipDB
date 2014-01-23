@@ -3,8 +3,8 @@
 \title{Description: brew embedded documentation helper function to include
 multiple figures}
 \usage{
-  include.figs(fnames, captiontext, width = "5cm",
-    height = "5cm", rotate = NULL)
+include.figs(fnames, captiontext, width = "5cm", height = "5cm",
+  rotate = NULL)
 }
 \arguments{
   \item{fnames}{Ouput file name}
@@ -20,17 +20,17 @@ multiple figures}
   Returns:}
 }
 \value{
-  Saves image in the output file
+Saves image in the output file
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

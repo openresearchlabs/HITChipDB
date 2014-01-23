@@ -872,37 +872,6 @@ ScaleProfile <- function (dat, method = 'minmax', bg.adjust = NULL, minmax.quant
 }
 
 
-#' Description: determine threshold for bg correction
-#'
-#' Arguments:
-#'   @param dat data matrix (in approximately normal scale ie. logged)
-#'
-#' Returns:
-#'   @return threshold value
-#'
-#' @export
-#' @references See citation("microbiome") 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords utilities
-
-estimate.min.threshold <- function (dat) {
-
-  #estimate min threshold 
-  DD <- density(as.numeric(unlist(dat)))
-
-  #find mode
-  noise_mode <- DD$x[[which.max(DD$y)]] # DD$x[which(diff(DD$y)<0)[1]]
-
-  #compute sd of noise
-  noise_sd <- sd(dat[dat < noise_mode])
-
-  #threshold
-  low.thresh <- noise_mode + 6*noise_sd
-
-  low.thresh
-}
-
-
 #' Description: determine detection threshold for the data
 #'
 #' Arguments:

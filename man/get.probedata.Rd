@@ -2,8 +2,8 @@
 \alias{get.probedata}
 \title{Description: Get probedata}
 \usage{
-  get.probedata(hybridization.ids, rmoligos, dbuser, dbpwd,
-    dbname, host = NULL, port = NULL)
+get.probedata(hybridization.ids, rmoligos, dbuser, dbpwd, dbname, host = NULL,
+  port = NULL)
 }
 \arguments{
   \item{hybridization.ids}{Specify the hybridizations to
@@ -22,18 +22,18 @@
   \item{port}{port; needed with FTP connections Returns:}
 }
 \value{
-  list with data (features x hybridizations matrix) and
-  info (features x info) fields
+list with data (features x hybridizations matrix) and info
+(features x info) fields
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

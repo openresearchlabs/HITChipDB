@@ -2,8 +2,8 @@
 \alias{ngp}
 \title{Description: ngp: Non-negative probabilistic solution to probe mixing problem.}
 \usage{
-  ngp(oligo.data, phylogeny.info, level, lambda = 0.001,
-    alpha = 1, beta = 1)
+ngp(oligo.data, phylogeny.info, level, lambda = 0.001, alpha = 1,
+  beta = 1)
 }
 \arguments{
   \item{oligo.data}{oligo.data in absolute domain}
@@ -23,22 +23,22 @@
   Returns:}
 }
 \value{
-  list
+list
 }
 \description{
-  Uses gamma prior to solve known cross-hybridisation
-  problems. Perfect probe targets are given in
-  phylogeny.info data frame.
+Uses gamma prior to solve known cross-hybridisation
+problems. Perfect probe targets are given in phylogeny.info
+data frame.
 }
 \details{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Jarkko Salojarvi
-  \email{microbiome-admin@googlegroups.com}
+Contact: Jarkko Salojarvi
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

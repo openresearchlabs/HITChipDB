@@ -1,4 +1,4 @@
-# Copyright (C) 2011-2012 Leo Lahti and Jarkko Salojarvi 
+# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
 # Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
 
 # This file is a part of the microbiome R package
@@ -125,7 +125,7 @@ ngp <- function(oligo.data, phylogeny.info, level, lambda=0.001, alpha=1,beta=1)
    oligo.data <- oligo.data[coms, ]
 
    # starting guess using pseudoinverse
-   require(MASS)
+   # require(MASS)
    W=t(M)%*%M
    X=t(oligo.data) %*% M
    A=ginv(W)%*%t(X)
