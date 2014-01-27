@@ -12,8 +12,8 @@
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-.onLoad <- function(lib, pkg)
+.onAttach <- function(lib, pkg)
 {
-  packageStartupMessage('\nHITChipDB R package (microbiome.github.com)\nCopyright (C) 2011-2013 Gut Group (University of Helsinki, Finland) and Molecular Ecology Group (Wageningen University, Netherlands).\nContact: Leo Lahti and Jarkko Salojarvi <microbiome-admin@googlegroups.com>\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under the FreeBSD open source license.\n')
+  packageStartupMessage('\nHITChipDB R package (microbiome.github.com)\n(C) 2011-2014 Leo Lahti and Jarkko Salojarvi <microbiome-admin@googlegroups.com>\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under the FreeBSD open source license.\n')
 
 }

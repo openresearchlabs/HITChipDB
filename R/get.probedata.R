@@ -76,11 +76,8 @@ get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, h
   # LL 4.4.2012. With HITChip atlas we encountered some cases where the arrays had different number of entries
   # due to duplicates on some arrays. Now added automated handling here to avoid problems with cases
   # that may have different natural number of elements on the array.
-  # JS 16.5. NOT duplicates, see above. 
-  if (max(sapply(rawdata.esplit,function(x) length(unique(x$extractionID))))>1){
-    stop("Error 10799. Several extraction IDs attached to same hybridisationID. Contact R package admins.")
-  }
-
+  # JS 16.5.2013 NOT duplicates, see above. 
+  # LL: 27.1.2014 fixed this part; in earlier version the probe matching was incorrect but this occurred only in few situations 
   # Form features x hybridizations matrix
   ftab <- matrix(NA, nrow = nrow(ftab.info), ncol = length(rawdata.esplit))
   rownames(ftab) <- rownames(ftab.info)
