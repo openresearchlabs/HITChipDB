@@ -9,19 +9,21 @@ Description: R package for HITChipDB studies
 License: BSD_2_clause + file LICENSE
 Depends:
     R (>= 2.12.1),
-    affy,
-    DBI,
-    MASS,
+    grDevices,
     methods,
     microbiome,
-    plyr,
-    preprocessCore,
-    reshape2,
-    RMySQL,
     RPA,
     svDialogs,
     tcltk,
     vegan
+Suggests:
+    affy,
+    DBI,
+    MASS,
+    plyr,
+    preprocessCore,
+    reshape2,
+    RMySQL
 URL: http://microbiome.github.com
 LazyLoad: yes
 Packaged: 2012-01-12 14:19:39 UTC; lei

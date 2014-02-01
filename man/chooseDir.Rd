@@ -18,8 +18,7 @@ Choosing (and creating) a directory
 }
 \author{
 Douwe Molenaar. Maintainer: Leo Lahti
-\email{microbiome-admin@googlegroups.com} importFrom
-svDialogs guiDlgDir importFrom svDialogs dir.create
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
 See citation("microbiome")

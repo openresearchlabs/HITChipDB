@@ -13,8 +13,6 @@
 #'   @return data matrix (phylo x samples)
 #'
 #' @export
-#' @importFrom svDialogs tk_choose.files
-#' @importFrom svDialogs tclServiceMode
 #'
 #' @examples # params <- read.profiling.010(...); 
 #' @references See citation("microbiome")
@@ -31,7 +29,7 @@ read.profiling.010 <- function(level = NULL, method = "rpa", data.dir = NULL, lo
   if (method == "ave") {method <- "log10Ave"}
   if (method == "nmf") {method <- "NMF"}
 
-  InstallMarginal("svDialogs")
+  # InstallMarginal("svDialogs")
 
   ##  Select file
   if (is.null(data.dir)) {

@@ -75,7 +75,7 @@ oligo.bg.correction <- function (d.oligo2, bgc.method) {
 
 phyloarrayConnection <- function (con) {
 
-   microbiome::InstallMarginal("RMySQL")
+   # microbiome::InstallMarginal("RMySQL")
 
    if (!(class(con)=='MySQLConnection')) {
       stop('Input must be a DBI connection to a phyloarray database')
@@ -274,14 +274,14 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 
 ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE) {
 
-  microbiome::InstallMarginal("RMySQL")
+  #microbiome::InstallMarginal("RMySQL")
 
   ## Determine the working directory
   wdir <- tclvalue(tkchooseDirectory(title = "Save output files into directory:")) 
         
   ## Choose samples to display
   if (is.null(which.projects)) {
-    prj <- HITChipDB::choose.projects(con, multi = TRUE, condition = NULL)
+    prj <- choose.projects(con, multi = TRUE, condition = NULL)
     if(nrow(prj) < 1) { stop("Choose at least 1 project") }
   } else {    
     prjs <- fetch.projects(con)
@@ -586,8 +586,9 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
 #'
 #' @references See citation("microbiome")
 #' @author Douwe Molenaar. Maintainer: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' importFrom svDialogs guiDlgDir
-#' importFrom svDialogs dir.create
+#'
+#' @import svDialogs
+#'
 #' @examples # mydir <- chooseDir()
 #' @keywords utilities
 
