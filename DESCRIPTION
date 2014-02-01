@@ -1,7 +1,7 @@
 Package: HITChipDB
 Type: Package
 Title: HITChipDB
-Version: 0.4.10
+Version: 0.4.11
 Date: 2014-02-01
 Author: Leo Lahti and Jarkko Salojarvi
 Maintainer: HITChipDB developer team <microbiome-admin@googlegroups.com>
@@ -20,7 +20,8 @@ Depends:
     RMySQL,
     RPA,
     svDialogs,
-    tcltk
+    tcltk,
+    vegan
 URL: http://microbiome.github.com
 LazyLoad: yes
 Packaged: 2012-01-12 14:19:39 UTC; lei

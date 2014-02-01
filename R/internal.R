@@ -1,4 +1,4 @@
-# Copyright (C) 2011-2013 Leo Lahti and Jarkko Salojarvi 
+# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
 # Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
 
 # This file is a part of the microbiome R package
@@ -594,11 +594,11 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
 chooseDir <- function (...) {
   choice <- ''
   while (choice == '') {
-    choice <- svDialogs::guiDlgDir(dir = '', ...)
+    choice <- guiDlgDir(dir = '', ...)
   }
   # create if not exist
   if (!file.exists(choice)) {
-    svDialogs::dir.create(choice, recursive = TRUE)
+    dir.create(choice, recursive = TRUE)
   }
   return(choice)
 }
@@ -647,7 +647,7 @@ mysql.format <- function (s) {
 
 FetchData <- function (params, con, scriptVersion, save.data, scaling, cmetrics) {
 
-  microbiome::InstallMarginal("RMySQL")
+  # microbiome::InstallMarginal("RMySQL")
 
   ## COLLECTING DATA FROM THE DATABASE
   message("Collecting data from the database\n")
