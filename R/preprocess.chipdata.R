@@ -31,6 +31,7 @@
 #'   @return Preprocessed data and parameters
 #'
 #' @export
+#' @import RMySQL
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities

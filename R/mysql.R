@@ -1,4 +1,4 @@
-# Copyright (C) 2011-2013 Leo Lahti and Jarkko Salojarvi 
+# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
 # Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
 
 # This file is a part of the microbiome R package
@@ -30,6 +30,7 @@
 #'   @return project.info data.frame
 #'
 #' @export
+#' @import RMySQL
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
@@ -118,6 +119,7 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
 #'   @return project names vector
 #'
 #' @export
+#' @import RMySQL
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
@@ -161,6 +163,7 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #'   @return phylogeny.info
 #'
 #' @export
+#' @import RMySQL
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
