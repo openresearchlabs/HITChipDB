@@ -83,6 +83,16 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 				    port = port,
   	       	  		    selected.samples = params$samples$sampleID)
 
+
+  # Let is require that all data is from a single chip; otherwise stop				    
+  if (length(unique(project.info$designID)) > 1) {
+    # message(table(project.info$designID, project.info$projectName))
+    stop("The selected projects are from different array versions! Combining these is not allowed.")
+    # Side note: Combining is possible by disabling this part, but
+    # should only be done by very experienced programmers who know
+    # exactly what they are doing - otherwise errors and confusion arise
+  }
+
   message("Get probe-level data for the selected hybridisations")
   tmp <- get.probedata(unique(project.info[["hybridisationID"]]), params$rm.phylotypes$oligos, dbuser, dbpwd, dbname, host = host, port = port)
   fdat.orig <- tmp$data       # features x hybs, original non-log scale

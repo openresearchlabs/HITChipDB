@@ -20,7 +20,7 @@ summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo) {
   # fdat.log10 <- log10(d.scaled);
 
   # List rows for each oligo (each oligo has multiple features which will be averaged)
-  #d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)
+  # d.oSplit <- split(1:nrow(fdat.log10), fdat.oligoinfo$oligoID)
 
   if (any(duplicated(fdat.oligoinfo$featureID))) {stop(paste("Error: fdat.oligoinfo featureID should be unique!"))}
 
