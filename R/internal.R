@@ -13,27 +13,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#' Description: List color scales
-#'
-#' Arguments:
-#'
-#' Returns:
-#'   @return list of color scales
-#'
-#' @export
-#' @references See citation("microbiome") 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords internal
-
-list.color.scales <- function () {
-  ## Different colour scales
-  list('white/blue'=colorRampPalette(c("white","darkblue"),interpolate='linear')(100),
-       'white/black'=colorRampPalette(c("white","black"),interpolate='linear')(100),
-       'black/yellow/white'=colorRampPalette(c("black","yellow","white"),bias=0.5,interpolate='linear')(100))
-
-}
-
-
 
 
 #' Description: Calculate species summaries and possibly update d.oligo2
