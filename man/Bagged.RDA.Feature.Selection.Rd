@@ -2,8 +2,8 @@
 \alias{Bagged.RDA.Feature.Selection}
 \title{Description: BAGGED RDA feature selection}
 \usage{
-Bagged.RDA.Feature.Selection(X, Y, sig.thresh = 0.1, nboot = 1000,
-  verbose = T)
+  Bagged.RDA.Feature.Selection(X, Y, sig.thresh = 0.1,
+    nboot = 1000, verbose = T)
 }
 \arguments{
   \item{X}{a matrix, samples on columns, variables
@@ -20,14 +20,14 @@ Bagged.RDA.Feature.Selection(X, Y, sig.thresh = 0.1, nboot = 1000,
   Returns:}
 }
 \value{
-List with items: loadings: bagged loadings scores: bagged
-scores significance: significances of X variables
-group.centers: group centers on latent space bootstrapped:
-bootstrapped loadings data: data set with non-significant
-components dropped out.
+  List with items: loadings: bagged loadings scores: bagged
+  scores significance: significances of X variables
+  group.centers: group centers on latent space
+  bootstrapped: bootstrapped loadings data: data set with
+  non-significant components dropped out.
 }
 \description{
-Arguments:
+  Arguments:
 }
 \examples{
 #
@@ -39,11 +39,11 @@ Arguments:
 # PlotBaggedRDA(Bag.res, y)
 }
 \author{
-Contact: Jarkko Salojarvi
-\email{microbiome-admin@googlegroups.com}
+  Contact: Jarkko Salojarvi
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

@@ -2,7 +2,8 @@
 \alias{summarize.oligos}
 \title{Description: summarize.oligos}
 \usage{
-summarize.oligos(oligo.matrix, phylogeny.info, level = "L2")
+  summarize.oligos(oligo.matrix, phylogeny.info,
+    level = "L2")
 }
 \arguments{
   \item{oligo.matrix}{oligo.matrix}
@@ -14,17 +15,17 @@ summarize.oligos(oligo.matrix, phylogeny.info, level = "L2")
   Returns:}
 }
 \value{
-list
+  list
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Jarkko Salojarvi
-\email{microbiome-admin@googlegroups.com}
+  Contact: Jarkko Salojarvi
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

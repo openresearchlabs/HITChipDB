@@ -2,7 +2,7 @@
 \alias{choose.projects}
 \title{Description: Select projects to analyze}
 \usage{
-choose.projects(con, multi = TRUE, condition = NULL)
+  choose.projects(con, multi = TRUE, condition = NULL)
 }
 \arguments{
   \item{con}{valid MySQL connection}
@@ -12,17 +12,17 @@ choose.projects(con, multi = TRUE, condition = NULL)
   \item{condition}{TBA Returns:}
 }
 \value{
-vector of project names
+  vector of project names
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

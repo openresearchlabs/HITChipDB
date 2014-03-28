@@ -2,7 +2,7 @@
 \alias{fetch.projects}
 \title{fetch.projects}
 \usage{
-fetch.projects(con, condition = NULL)
+  fetch.projects(con, condition = NULL)
 }
 \arguments{
   \item{con}{MySQL connection}
@@ -24,21 +24,21 @@ fetch.projects(con, condition = NULL)
   (projectName='A' OR projectName='B')}".}
 }
 \value{
-A dataframe with the selected records from the projects
-table
+  A dataframe with the selected records from the projects
+  table
 }
 \description{
-Fetch projects from the phyloarray database
+  Fetch projects from the phyloarray database
 }
 \examples{
 # TBA
 }
 \author{
-Douwe Molenaar. Maintainer: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Douwe Molenaar. Maintainer: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

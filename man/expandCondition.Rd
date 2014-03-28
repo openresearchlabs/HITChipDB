@@ -2,7 +2,7 @@
 \alias{expandCondition}
 \title{Expands a list of "field", "value" pair lists into an SQL condition}
 \usage{
-expandCondition(condition)
+  expandCondition(condition)
 }
 \arguments{
   \item{condition}{condition
@@ -10,20 +10,20 @@ expandCondition(condition)
   Returns:}
 }
 \value{
-TBA
+  TBA
 }
 \description{
-Arguments:
+  Arguments:
 }
 \examples{
 # TBA
 }
 \author{
-Douwe Molenaar. Maintainer: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Douwe Molenaar. Maintainer: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

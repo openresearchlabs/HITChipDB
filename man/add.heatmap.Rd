@@ -3,10 +3,11 @@
 \title{add.heatmap
 Description: Add oligprofile heatmap into output directory}
 \usage{
-add.heatmap(dat, output.dir, output.file = NULL, phylogeny.info, ppcm = 150,
-  hclust.method = "complete", palette = "white/black", level = "L1",
-  metric = "pearson", figureratio = 10, fontsize = 40,
-  tree.display = TRUE)
+  add.heatmap(dat, output.dir, output.file = NULL,
+    phylogeny.info, ppcm = 150, hclust.method = "complete",
+    palette = "white/black", level = "L1",
+    metric = "pearson", figureratio = 10, fontsize = 40,
+    tree.display = TRUE)
 }
 \arguments{
   \item{dat}{oligoprofile data in original (non-log)
@@ -38,20 +39,20 @@ add.heatmap(dat, output.dir, output.file = NULL, phylogeny.info, ppcm = 150,
   Returns:}
 }
 \value{
-Plotting parameters
+  Plotting parameters
 }
 \description{
-Arguments:
+  Arguments:
 }
 \examples{
 # data(peerj32); hc <- add.heatmap(peerj32$microbes[, 1:4])
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

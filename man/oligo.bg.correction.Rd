@@ -2,9 +2,9 @@
 \alias{oligo.bg.correction}
 \title{Description: Calculate species summaries and possibly update d.oligo2}
 \usage{
-oligo.bg.correction(d.oligo2, bgc.method)
+  oligo.bg.correction(d.oligo2, bgc.method)
 
-oligo.bg.correction(d.oligo2, bgc.method)
+  oligo.bg.correction(d.oligo2, bgc.method)
 }
 \arguments{
   \item{d.oligo2}{d.oligo2}
@@ -16,26 +16,26 @@ oligo.bg.correction(d.oligo2, bgc.method)
   \item{bgc.method}{background correction method Returns:}
 }
 \value{
-Background-corrected data matrix
+  Background-corrected data matrix
 
-Background-corrected data matrix
+  Background-corrected data matrix
 }
 \description{
-Arguments:
+  Arguments:
 
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{internal}
 \keyword{utilities}

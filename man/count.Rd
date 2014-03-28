@@ -2,7 +2,7 @@
 \alias{count}
 \title{Description: count}
 \usage{
-count(d)
+  count(d)
 }
 \arguments{
   \item{d}{TBA
@@ -10,20 +10,20 @@ count(d)
   Returns:}
 }
 \value{
-list
+  list
 }
 \description{
-For cross-hyb control
+  For cross-hyb control
 }
 \details{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Jarkko Salojarvi
-\email{microbiome-admin@googlegroups.com}
+  Contact: Jarkko Salojarvi
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

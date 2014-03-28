@@ -2,8 +2,8 @@
 \alias{summarize.probesets.through.species}
 \title{Description: summarize.probesets.through.species}
 \usage{
-summarize.probesets.through.species(level, phylogeny.info, oligo.data, method,
-  verbose = FALSE)
+  summarize.probesets.through.species(level,
+    phylogeny.info, oligo.data, method, verbose = FALSE)
 }
 \arguments{
   \item{level}{summarization level}
@@ -21,19 +21,19 @@ summarize.probesets.through.species(level, phylogeny.info, oligo.data, method,
   Returns:}
 }
 \value{
-List with two elements: summarized.matrix (summarized data
-matrix in log10 scale) and probe.parameters (only used with
-rpa, probe-level parameter estimates)
+  List with two elements: summarized.matrix (summarized
+  data matrix in log10 scale) and probe.parameters (only
+  used with rpa, probe-level parameter estimates)
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

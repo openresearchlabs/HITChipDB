@@ -24,3 +24,24 @@ Depends:
 URL: http://microbiome.github.com
 LazyLoad: yes
 Packaged: 2012-01-12 14:19:39 UTC; lei
+Collate:
+    'HITChipDB-package.R'
+    'brew.R'
+    'detect.chip.R'
+    'firstlib.R'
+    'get.probedata.R'
+    'internal.R'
+    'mysql.R'
+    'nmf.R'
+    'preprocess.chipdata.R'
+    'profiling.R'
+    'prune16S.R'
+    'rda.R'
+    'show-methods.R'
+    'summarize.probesets.R'
+    'summarize.probesets.directly.R'
+    'summarize.probesets.species.R'
+    'summarize.probesets.through.species.R'
+    'summarize.rawdata.R'
+    'toydata.R'
+    'utilities.R'

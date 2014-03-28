@@ -2,9 +2,10 @@
 \alias{PlotBaggedRDA}
 \title{Description: Bagged RDA visualization}
 \usage{
-PlotBaggedRDA(Bag.res, Y, which.bac = 1:nrow(Bag.res$loadings),
-  ptype = "spider", comp = 1:2, cex.bac = 0.5, plot.names = T,
-  group.cols = as.numeric(unique(Y)), ...)
+  PlotBaggedRDA(Bag.res, Y,
+    which.bac = 1:nrow(Bag.res$loadings), ptype = "spider",
+    comp = 1:2, cex.bac = 0.5, plot.names = T,
+    group.cols = as.numeric(unique(Y)), ...)
 }
 \arguments{
   \item{Bag.res}{Output from Bagged.RDA.Feature.Selection
@@ -29,10 +30,10 @@ PlotBaggedRDA(Bag.res, Y, which.bac = 1:nrow(Bag.res$loadings),
   Returns:}
 }
 \value{
-TBA
+  TBA
 }
 \description{
-Arguments:
+  Arguments:
 }
 \examples{
 #
@@ -44,11 +45,11 @@ Arguments:
   #PlotBaggedRDA(Bag.res, y)
 }
 \author{
-Contact: Jarkko Salojarvi
-\email{microbiome-admin@googlegroups.com}
+  Contact: Jarkko Salojarvi
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

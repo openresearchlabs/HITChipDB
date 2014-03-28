@@ -2,7 +2,8 @@
 \alias{ReadParameters}
 \title{Description: Define parameters in select box}
 \usage{
-ReadParameters(con, which.projects = NULL, all.samples = TRUE)
+  ReadParameters(con, which.projects = NULL,
+    all.samples = TRUE)
 }
 \arguments{
   \item{con}{Output from dbConnect(dbDriver("MySQL"),
@@ -18,17 +19,17 @@ ReadParameters(con, which.projects = NULL, all.samples = TRUE)
   Returns:}
 }
 \value{
-list with defined parameters
+  list with defined parameters
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

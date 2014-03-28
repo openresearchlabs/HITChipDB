@@ -2,8 +2,9 @@
 \alias{ScaleProfile}
 \title{Description: Between-arrays normalization}
 \usage{
-ScaleProfile(dat, method = "minmax", bg.adjust = NULL,
-  minmax.quantiles = c(0.005, 0.995), minmax.points = NULL)
+  ScaleProfile(dat, method = "minmax", bg.adjust = NULL,
+    minmax.quantiles = c(0.005, 0.995),
+    minmax.points = NULL)
 }
 \arguments{
   \item{dat}{data matrix in original absolute scale}
@@ -19,17 +20,17 @@ ScaleProfile(dat, method = "minmax", bg.adjust = NULL,
   Returns:}
 }
 \value{
-Normalized data matrix in absolute scale
+  Normalized data matrix in absolute scale
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

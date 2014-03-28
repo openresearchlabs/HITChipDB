@@ -2,8 +2,8 @@
 \alias{include.fig}
 \title{Description: brew embedded documentation helper function}
 \usage{
-include.fig(fname, captiontext, width = "5cm", height = "5cm",
-  rotate = NULL, include.figname = TRUE)
+  include.fig(fname, captiontext, width = "5cm",
+    height = "5cm", rotate = NULL, include.figname = TRUE)
 }
 \arguments{
   \item{fname}{Ouput file name}
@@ -19,17 +19,17 @@ include.fig(fname, captiontext, width = "5cm", height = "5cm",
   \item{include.figname}{Include figure name Returns:}
 }
 \value{
-Saves image in the output file
+  Saves image in the output file
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

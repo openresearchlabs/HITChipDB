@@ -2,8 +2,8 @@
 \alias{summarize.probesets}
 \title{Description: summarize.probesets}
 \usage{
-summarize.probesets(phylogeny.info, oligo.data, method, level, verbose = TRUE,
-  species.matrix = NULL)
+  summarize.probesets(phylogeny.info, oligo.data, method,
+    level, verbose = TRUE, species.matrix = NULL)
 }
 \arguments{
   \item{phylogeny.info}{oligo - phylotype matching
@@ -24,19 +24,19 @@ summarize.probesets(phylogeny.info, oligo.data, method, level, verbose = TRUE,
   Returns:}
 }
 \value{
-List with two elements: summarized.matrix (summarized data
-matrix in log10 scale) and probe.parameters (only used with
-rpa, probe-level parameter estimates)
+  List with two elements: summarized.matrix (summarized
+  data matrix in log10 scale) and probe.parameters (only
+  used with rpa, probe-level parameter estimates)
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

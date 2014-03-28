@@ -2,9 +2,10 @@
 \alias{PlotPhylochipHeatmap}
 \title{PlotPhylochipHeatmap}
 \usage{
-PlotPhylochipHeatmap(data, phylogeny.info, metric = "pearson", level = "L1",
-  tree.display = TRUE, palette = "white/black", fontsize = 40,
-  figureratio = 10, hclust.method = "complete")
+  PlotPhylochipHeatmap(data, phylogeny.info,
+    metric = "pearson", level = "L1", tree.display = TRUE,
+    palette = "white/black", fontsize = 40,
+    figureratio = 10, hclust.method = "complete")
 }
 \arguments{
   \item{data}{oligoprofile data in original (non-log)
@@ -33,21 +34,21 @@ PlotPhylochipHeatmap(data, phylogeny.info, metric = "pearson", level = "L1",
   Returns:}
 }
 \value{
-parameters
+  parameters
 }
 \description{
-Description: Plots heatmap of the oligo profiles together
-with phylotype grouping and sample clustering
+  Description: Plots heatmap of the oligo profiles together
+  with phylotype grouping and sample clustering
 }
 \details{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

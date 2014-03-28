@@ -2,27 +2,27 @@
 \alias{chooseDir}
 \title{Choosing (and creating) a directory}
 \usage{
-chooseDir(...)
+  chooseDir(...)
 }
 \arguments{
   \item{...}{parameters to pass}
 }
 \value{
-choice
+  choice
 }
 \description{
-Choosing (and creating) a directory
+  Choosing (and creating) a directory
 }
 \examples{
 # mydir <- chooseDir()
 }
 \author{
-Douwe Molenaar. Maintainer: Leo Lahti
-\email{microbiome-admin@googlegroups.com} importFrom
-svDialogs guiDlgDir importFrom svDialogs dir.create
+  Douwe Molenaar. Maintainer: Leo Lahti
+  \email{microbiome-admin@googlegroups.com} importFrom
+  svDialogs guiDlgDir importFrom svDialogs dir.create
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

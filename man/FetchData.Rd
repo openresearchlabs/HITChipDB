@@ -2,7 +2,8 @@
 \alias{FetchData}
 \title{Description: Fetch data from the database}
 \usage{
-FetchData(params, con, scriptVersion, save.data, scaling, cmetrics)
+  FetchData(params, con, scriptVersion, save.data, scaling,
+    cmetrics)
 }
 \arguments{
   \item{params}{params}
@@ -20,17 +21,17 @@ FetchData(params, con, scriptVersion, save.data, scaling, cmetrics)
   Returns:}
 }
 \value{
-data
+  data
 }
 \description{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 

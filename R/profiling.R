@@ -69,7 +69,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
     hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
 
     # Save into file
-    png(paste(params$wdir, "/hclust_oligo_pearson_", method, ".png", sep = ""), height = 480, width = 480 * ncol(dat)/20)
+    pdf(paste(params$wdir, "/hclust_oligo_pearson_", method, ".pdf", sep = ""), height = 800, width = 800 * ncol(dat)/20)
     plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples", ylab = "1 - Correlation")
     dev.off()
 
@@ -123,7 +123,7 @@ add.heatmap <- function (dat, output.dir, output.file = NULL, phylogeny.info, pp
   #output.dir = "~/tmp/";  output.file = NULL; phylogeny.info = phylogeny.info; ppcm = 150; hclust.method = "complete"; palette = "white/blue"; level = "L2"; metric = "pearson"; figureratio = 12; fontsize = 12; tree.display = TRUE
 
   if (is.null(output.file)) {
-    output.file <- paste(output.dir,"/", gsub(" ", "", level), "-oligoprofileClustering.png",sep="")
+    output.file <- paste(output.dir,"/", gsub(" ", "", level), "-oligoprofileClustering.pdf",sep="")
   }		 
 
   hc.params <- list()
@@ -135,7 +135,7 @@ add.heatmap <- function (dat, output.dir, output.file = NULL, phylogeny.info, pp
 
     # PLOT THE HEATMAP
     # figure width as a function of the number of the samples
-    plotdev <- png(filename = output.file, 
+    plotdev <- pdf(filename = output.file, 
   	    width = max(trunc(ppcm*21), trunc(ppcm*21*ncol(dat)/70)), 
 	    height = trunc(ppcm*29.7)) 
     try(hc.params <- PlotPhylochipHeatmap(data = dat,

@@ -2,8 +2,9 @@
 \alias{get.phylogeny.info}
 \title{get.phylogeny.info}
 \usage{
-get.phylogeny.info(phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE,
-  chip = "HITChip", host = NULL, port = NULL, rmoligos = NULL)
+  get.phylogeny.info(phylogeny = "16S", dbuser, dbpwd,
+    dbname, verbose = TRUE, chip = "HITChip", host = NULL,
+    port = NULL, rmoligos = NULL)
 }
 \arguments{
   \item{phylogeny}{phylogeny (default: 16S)}
@@ -27,20 +28,20 @@ get.phylogeny.info(phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE,
   Returns:}
 }
 \value{
-phylogeny.info
+  phylogeny.info
 }
 \description{
-Description: Get phylogeny
+  Description: Get phylogeny
 }
 \details{
-Arguments:
+  Arguments:
 }
 \author{
-Contact: Leo Lahti
-\email{microbiome-admin@googlegroups.com}
+  Contact: Leo Lahti
+  \email{microbiome-admin@googlegroups.com}
 }
 \references{
-See citation("microbiome")
+  See citation("microbiome")
 }
 \keyword{utilities}
 
