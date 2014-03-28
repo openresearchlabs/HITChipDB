@@ -1,4 +1,4 @@
-# Copyright (C) 2011-2013 Leo Lahti and Jarkko Salojarvi 
+# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
 # Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
 
 # This file is a part of the microbiome R package
@@ -11,27 +11,6 @@
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-
-#' Description: List color scales
-#'
-#' Arguments:
-#'
-#' Returns:
-#'   @return list of color scales
-#'
-#' @export
-#' @references See citation("microbiome") 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords internal
-
-list.color.scales <- function () {
-  ## Different colour scales
-  list('white/blue'=colorRampPalette(c("white","darkblue"),interpolate='linear')(100),
-       'white/black'=colorRampPalette(c("white","black"),interpolate='linear')(100),
-       'black/yellow/white'=colorRampPalette(c("black","yellow","white"),bias=0.5,interpolate='linear')(100))
-
-}
 
 
 
@@ -75,7 +54,7 @@ oligo.bg.correction <- function (d.oligo2, bgc.method) {
 
 phyloarrayConnection <- function (con) {
 
-   microbiome::InstallMarginal("RMySQL")
+   # microbiome::InstallMarginal("RMySQL")
 
    if (!(class(con)=='MySQLConnection')) {
       stop('Input must be a DBI connection to a phyloarray database')
@@ -274,14 +253,14 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 
 ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE) {
 
-  microbiome::InstallMarginal("RMySQL")
+  #microbiome::InstallMarginal("RMySQL")
 
   ## Determine the working directory
   wdir <- tclvalue(tkchooseDirectory(title = "Save output files into directory:")) 
         
   ## Choose samples to display
   if (is.null(which.projects)) {
-    prj <- HITChipDB::choose.projects(con, multi = TRUE, condition = NULL)
+    prj <- choose.projects(con, multi = TRUE, condition = NULL)
     if(nrow(prj) < 1) { stop("Choose at least 1 project") }
   } else {    
     prjs <- fetch.projects(con)
@@ -586,19 +565,20 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
 #'
 #' @references See citation("microbiome")
 #' @author Douwe Molenaar. Maintainer: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' importFrom svDialogs guiDlgDir
-#' importFrom svDialogs dir.create
+#'
+#' @import svDialogs
+#'
 #' @examples # mydir <- chooseDir()
 #' @keywords utilities
 
 chooseDir <- function (...) {
   choice <- ''
   while (choice == '') {
-    choice <- svDialogs::guiDlgDir(dir = '', ...)
+    choice <- guiDlgDir(dir = '', ...)
   }
   # create if not exist
   if (!file.exists(choice)) {
-    svDialogs::dir.create(choice, recursive = TRUE)
+    dir.create(choice, recursive = TRUE)
   }
   return(choice)
 }
@@ -647,7 +627,7 @@ mysql.format <- function (s) {
 
 FetchData <- function (params, con, scriptVersion, save.data, scaling, cmetrics) {
 
-  microbiome::InstallMarginal("RMySQL")
+  # microbiome::InstallMarginal("RMySQL")
 
   ## COLLECTING DATA FROM THE DATABASE
   message("Collecting data from the database\n")

@@ -14,6 +14,8 @@
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
 #'
 #' @export
+#' @importFrom RPA d.update.fast
+#'
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
@@ -55,7 +57,7 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
     if (method == "frpa") {
 
       # Summarize with pre-calculated variances
-      vec <- RPA::d.update.fast(dat, probe.parameters[[set]])
+      vec <- d.update.fast(dat, probe.parameters[[set]])
 
     } else if (method == "rpa") {
 

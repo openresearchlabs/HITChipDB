@@ -18,6 +18,8 @@
 #' 	     etc. TBA.	    
 #'
 #' @export
+#' @importFrom vegan scores
+#' @importFrom vegan procrustes
 #'
 #' @examples # NOT RUN data(peerj32); x <- as.matrix(peerj32$microbes)[1:20, 1:6]; y <- rnorm(nrow(x)); names(y) <- rownames(x); res <- Bagged.RDA(x, y , boot = 5)
 #'
@@ -30,7 +32,7 @@ Bagged.RDA <- function(X, Y, boot = 1000){
   ## Jarkko Salojärvi 7.8.2012
   ##  #17.8.2012 fixed problem with multiclass RDA  
 
-   require(vegan)
+   # require(vegan)
    if (is.numeric(boot)){
       class.split=split(names(Y),Y)
 
@@ -38,11 +40,11 @@ Bagged.RDA <- function(X, Y, boot = 1000){
    }
    nboot=length(boot)
    n.lev=length(levels(Y))
-   TT=vegan::scores(rda(t(X)~Y),choices=1:max(n.lev-1,2),display="sites")
+   TT=scores(rda(t(X)~Y),choices=1:max(n.lev-1,2),display="sites")
    nRDA=ncol(TT) 
    # rotate 
    rotateMat=function(M,TT,x){
-      M.rot=vegan::procrustes(TT[x,],M)
+      M.rot=procrustes(TT[x,],M)
       return(M.rot$Yrot)
    }
    nearest.centers=function(xx,cc){
@@ -59,7 +61,7 @@ Bagged.RDA <- function(X, Y, boot = 1000){
       nC=length(levels(Y[x]))
       M=rda(t(X[,x])~Y[x])
       # get scores
-      TT.m=vegan::scores(M,choices=1:max(nC-1,2),display="sites")
+      TT.m=scores(M,choices=1:max(nC-1,2),display="sites")
       # bootstrap error
       testset=setdiff(colnames(X),x)
       err=NA
@@ -240,7 +242,10 @@ PlotBaggedRDA <- function(Bag.res, Y, which.bac = 1:nrow(Bag.res$loadings),
   if (ptype=="spider")
     s.class(scaled.scores,factor(Y),grid=F,col=group.cols,cellipse=0.5,cpoint=0,add.plot=T)
   if (ptype=="hull"){
-    require(grDevices)
+
+    #require(grDevices) # instead use importFrom in the Roxygen fields, or set
+    # this as dependency
+
     ll=split(rownames(scaled.scores),Y)
     hulls=lapply(ll,function(ii) ii[chull(scaled.scores[ii,])])
     for (i in 1:length(hulls))

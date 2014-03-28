@@ -12,6 +12,7 @@
 #'   @return list with data (features x hybridizations matrix) and info (features x info) fields 
 #'
 #' @export
+#' @import RMySQL
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities

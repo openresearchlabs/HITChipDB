@@ -1,4 +1,4 @@
-# Copyright (C) 2011-2013 Leo Lahti and Jarkko Salojarvi 
+# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
 # Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
 
 # This file is a part of the microbiome R package
@@ -31,6 +31,7 @@
 #'   @return Preprocessed data and parameters
 #'
 #' @export
+#' @import RMySQL
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
@@ -39,7 +40,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 
   # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
 
-  microbiome::InstallMarginal("RMySQL")
+  # microbiome::InstallMarginal("RMySQL")
 
   ## ask parameters or read from R-file
   drv <- dbDriver("MySQL")
@@ -82,6 +83,16 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 				    host = host, 
 				    port = port,
   	       	  		    selected.samples = params$samples$sampleID)
+
+
+  # Let is require that all data is from a single chip; otherwise stop				    
+  if (length(unique(project.info$designID)) > 1) {
+    # message(table(project.info$designID, project.info$projectName))
+    stop("The selected projects are from different array versions! Combining these is not allowed.")
+    # Side note: Combining is possible by disabling this part, but
+    # should only be done by very experienced programmers who know
+    # exactly what they are doing - otherwise errors and confusion arise
+  }
 
   message("Get probe-level data for the selected hybridisations")
   tmp <- get.probedata(unique(project.info[["hybridisationID"]]), params$rm.phylotypes$oligos, dbuser, dbpwd, dbname, host = host, port = port)

@@ -13,6 +13,7 @@
 #'   @return data matrix (phylo x samples)
 #'
 #' @export
+#'
 #' @examples # params <- read.profiling.010(...); 
 #' @references See citation("microbiome")
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
@@ -28,12 +29,12 @@ read.profiling.010 <- function(level = NULL, method = "rpa", data.dir = NULL, lo
   if (method == "ave") {method <- "log10Ave"}
   if (method == "nmf") {method <- "NMF"}
 
-  InstallMarginal("svDialogs")
+  # InstallMarginal("svDialogs")
 
   ##  Select file
   if (is.null(data.dir)) {
 
-    f <- svDialogs::tk_choose.files(multi = F)
+    f <- tk_choose.files(multi = F)
 
     # Recognize level and method from the file name 
     level <- NULL; method <- NULL
@@ -48,7 +49,7 @@ read.profiling.010 <- function(level = NULL, method = "rpa", data.dir = NULL, lo
     if (!length(grep("Ave", f)) == 0) { method <- "log10Ave"}
     if (!length(grep("NMF", f)) == 0) { method <- "NMF"}
 
-    svDialogs::tclServiceMode(FALSE)
+    tclServiceMode(FALSE)
 
   } else {
     if (level %in% c("level0", "level1", "level2", "species")) {

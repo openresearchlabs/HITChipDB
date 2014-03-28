@@ -1,4 +1,4 @@
-# Copyright (C) 2011-2013 Leo Lahti and Jarkko Salojarvi 
+# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
 # Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
 
 # This file is a part of the microbiome R package
@@ -22,6 +22,7 @@
 #'   @return output file name
 #'
 #' @export
+#' @importFrom microbiome read.profiling
 #'
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
@@ -31,7 +32,7 @@ GenerateSimulatedData <- function (output.dir) {
 
   data.directory <- system.file("extdata/", package = "microbiome")
 
-  phylogeny.info <- microbiome::read.profiling(level = "phylogeny.info", data.dir = data.directory)
+  phylogeny.info <- read.profiling(level = "phylogeny.info", data.dir = data.directory)
 
   oligo.matrix.nolog.simulated <- read.profiling(level = "oligo", data.dir = data.directory, log10 = FALSE)
   N <- ncol(oligo.matrix.nolog.simulated)
