@@ -221,6 +221,11 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
         # Store the data in absolute scale					
         finaldata[[level]][[method]] <- 10^summarized.log10
 
+	# Finish this later
+	#if (level == "L2") {
+	#  rownames(finaldata[[level]][[method]]) <- gsub("^Clostridia$", "Clostridium (sensu stricto)", rownames(finaldata[[level]][[method]]))
+	#}
+
     }
   }
 
