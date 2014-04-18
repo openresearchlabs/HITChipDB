@@ -557,35 +557,6 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
 }
 
 
-#' Choosing (and creating) a directory
-#' 
-#' @param ... parameters to pass
-#'
-#' @return choice
-#'
-#' @references See citation("microbiome")
-#' @author Douwe Molenaar. Maintainer: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#'
-#' @import svDialogs
-#'
-#' @examples # mydir <- chooseDir()
-#' @keywords utilities
-
-chooseDir <- function (...) {
-  choice <- ''
-  while (choice == '') {
-    choice <- guiDlgDir(dir = '', ...)
-  }
-  # create if not exist
-  if (!file.exists(choice)) {
-    dir.create(choice, recursive = TRUE)
-  }
-  return(choice)
-}
-
-
-
-
 
 
 #' Description: Format string vector to mysql query format

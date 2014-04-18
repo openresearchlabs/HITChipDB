@@ -2,7 +2,7 @@
 \alias{mysql.format}
 \title{Description: Format string vector to mysql query format}
 \usage{
-  mysql.format(s)
+mysql.format(s)
 }
 \arguments{
   \item{s}{string vector
@@ -10,17 +10,17 @@
   Returns:}
 }
 \value{
-  mysql query version
+mysql query version
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

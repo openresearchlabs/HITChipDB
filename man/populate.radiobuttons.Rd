@@ -2,8 +2,7 @@
 \alias{populate.radiobuttons}
 \title{Description: populate radiobuttons}
 \usage{
-  populate.radiobuttons(tt, title, var.names, var.values,
-    var.init)
+populate.radiobuttons(tt, title, var.names, var.values, var.init)
 }
 \arguments{
   \item{tt}{TBA}
@@ -19,17 +18,17 @@
   Returns:}
 }
 \value{
-  A list.
+A list.
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

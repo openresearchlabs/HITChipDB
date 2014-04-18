@@ -134,7 +134,7 @@ add.heatmap <- function (dat, output.dir, output.file = NULL, phylogeny.info, pp
 
     # PLOT THE HEATMAP
     # figure width as a function of the number of the samples
-    plotdev <- pdf(filename = output.file, 
+    plotdev <- pdf(output.file, 
   	    width = max(trunc(ppcm*21), trunc(ppcm*21*ncol(dat)/70)), 
 	    height = trunc(ppcm*29.7)) 
     try(hc.params <- PlotPhylochipHeatmap(data = dat,

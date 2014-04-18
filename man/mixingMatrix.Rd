@@ -2,7 +2,7 @@
 \alias{mixingMatrix}
 \title{Description: mixingMatrix}
 \usage{
-  mixingMatrix(phylogeny.info, level)
+mixingMatrix(phylogeny.info, level)
 }
 \arguments{
   \item{phylogeny.info}{phylogeny.info}
@@ -12,20 +12,20 @@
   Returns:}
 }
 \value{
-  oligos x phylotypes mixing matrix
+oligos x phylotypes mixing matrix
 }
 \description{
-  For cross-hyb control
+For cross-hyb control
 }
 \details{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Jarkko Salojarvi
-  \email{microbiome-admin@googlegroups.com}
+Contact: Jarkko Salojarvi
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

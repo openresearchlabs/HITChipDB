@@ -5,7 +5,7 @@ Jack-knife estimation of PLS by Martens and Martens, 2000.  Solves
 rotational invariance of latent space by orthogonal procrustes
 rotations}
 \usage{
-  Bagged.RDA(X, Y, boot = 1000)
+Bagged.RDA(X, Y, boot = 1000)
 }
 \arguments{
   \item{X}{a matrix, samples on columns, variables
@@ -18,22 +18,21 @@ rotations}
   Returns:}
 }
 \value{
-  List with items: loadings: bagged loadings scores: bagged
-  scores significance: significances of X variables etc.
-  TBA.
+List with items: loadings: bagged loadings scores: bagged
+scores significance: significances of X variables etc. TBA.
 }
 \description{
-  Arguments:
+Arguments:
 }
 \examples{
 # NOT RUN data(peerj32); x <- as.matrix(peerj32$microbes)[1:20, 1:6]; y <- rnorm(nrow(x)); names(y) <- rownames(x); res <- Bagged.RDA(x, y , boot = 5)
 }
 \author{
-  Contact: Jarkko Salojarvi
-  \email{microbiome-admin@googlegroups.com}
+Contact: Jarkko Salojarvi
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

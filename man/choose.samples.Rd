@@ -2,8 +2,8 @@
 \alias{choose.samples}
 \title{choose.samples}
 \usage{
-  choose.samples(con, multi = TRUE,
-    title = "Select samples:", condition = NULL)
+choose.samples(con, multi = TRUE, title = "Select samples:",
+  condition = NULL)
 }
 \arguments{
   \item{con}{MySQL connection}
@@ -15,20 +15,20 @@
   \item{condition}{TBA}
 }
 \value{
-  sample vector
+sample vector
 }
 \description{
-  choose.samples
+choose.samples
 }
 \examples{
 # TBA
 }
 \author{
-  Douwe Molenaar. Maintainer: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Douwe Molenaar. Maintainer: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

@@ -2,7 +2,7 @@
 \alias{calculate.rpa}
 \title{Description: RPA for HITChip}
 \usage{
-  calculate.rpa(level, phylo, oligo.data)
+calculate.rpa(level, phylo, oligo.data)
 }
 \arguments{
   \item{level}{level}
@@ -14,17 +14,17 @@
   Returns:}
 }
 \value{
-  RPA preprocessed data
+RPA preprocessed data
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

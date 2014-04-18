@@ -2,11 +2,10 @@
 \alias{preprocess.chipdata}
 \title{Description: Profiling preprocessing script}
 \usage{
-  preprocess.chipdata(dbuser, dbpwd, dbname,
-    verbose = TRUE, host = NULL, port = NULL,
-    use.precalculated.phylogeny = NULL,
-    summarization.methods = c("frpa", "sum"),
-    which.projects = NULL, all.samples = TRUE)
+preprocess.chipdata(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
+  port = NULL, use.precalculated.phylogeny = NULL,
+  summarization.methods = c("frpa", "sum"), which.projects = NULL,
+  all.samples = TRUE)
 }
 \arguments{
   \item{dbuser}{MySQL username}
@@ -40,17 +39,17 @@
   Returns:}
 }
 \value{
-  Preprocessed data and parameters
+Preprocessed data and parameters
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

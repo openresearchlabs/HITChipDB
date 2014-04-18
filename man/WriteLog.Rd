@@ -2,7 +2,7 @@
 \alias{WriteLog}
 \title{Description: Write log file}
 \usage{
-  WriteLog(naHybs, params)
+WriteLog(naHybs, params)
 }
 \arguments{
   \item{naHybs}{hybridisation that were removed due to NAs}
@@ -12,17 +12,17 @@
   Returns:}
 }
 \value{
-  List of scaling methods
+List of scaling methods
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

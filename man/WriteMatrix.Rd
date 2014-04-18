@@ -2,7 +2,7 @@
 \alias{WriteMatrix}
 \title{Description: Write matrix in tab file}
 \usage{
-  WriteMatrix(dat, filename, verbose = FALSE)
+WriteMatrix(dat, filename, verbose = FALSE)
 }
 \arguments{
   \item{dat}{data matrix}
@@ -12,17 +12,17 @@
   \item{verbose}{verbose Returns:}
 }
 \value{
-  output file location
+output file location
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 
