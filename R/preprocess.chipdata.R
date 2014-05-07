@@ -38,7 +38,7 @@
 
 preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, all.samples = TRUE) {
 
-  # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}
+  # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "pit"; dbpwd = "passu"; dbname = "pitchipdb"; verbose = TRUE; host = NULL; port = NULL; use.precalculated.phylogeny = NULL; summarization.methods = c("frpa", "sum"); which.projects = NULL; all.samples = TRUE
 
   # microbiome::InstallMarginal("RMySQL")
 
@@ -139,6 +139,13 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 			     port = port,
 			     verbose = verbose, 
 			     chip = params$chip)
+
+
+    # Fix an issue with PITChip2:	
+    #> table(phylogeny.full[grep("Ignatzschineria", phylogeny.full$L2),"L2"])
+    #Ignatzschineria et al. Ignatzschineria et rel. 
+    #                 64                      61 
+    phylogeny.full[grep("Ignatzschineria et al.", phylogeny.full$L2),"L2"] <- "Ignatzschineria et rel."
 
     # This handles also pmTm, complement and mismatch filtering
     # This is the phylogeny used in probe summarization into taxonomic levels
