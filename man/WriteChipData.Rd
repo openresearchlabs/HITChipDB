@@ -2,8 +2,8 @@
 \alias{WriteChipData}
 \title{Description: Writed data into the output directory}
 \usage{
-  WriteChipData(finaldata, output.dir, phylogeny.info,
-    phylogeny.info.full, verbose = TRUE)
+WriteChipData(finaldata, output.dir, phylogeny.info, phylogeny.info.full,
+  verbose = TRUE)
 }
 \arguments{
   \item{finaldata}{preprocessed data matrices in absolute
@@ -22,18 +22,18 @@
   Returns:}
 }
 \value{
-  Preprocessed data in absolute scale, phylogeny.info, and
-  parameters
+Preprocessed data in absolute scale, phylogeny.info, and
+parameters
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

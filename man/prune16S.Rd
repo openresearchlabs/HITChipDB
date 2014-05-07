@@ -2,9 +2,8 @@
 \alias{prune16S}
 \title{Description: filter 16S data}
 \usage{
-  prune16S(full16S, pmTm.margin = 2.5, complement = 1,
-    mismatch = 0, rmoligos = NULL,
-    remove.nonspecific.oligos = FALSE)
+prune16S(full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0,
+  rmoligos = NULL, remove.nonspecific.oligos = FALSE)
 }
 \arguments{
   \item{full16S}{full16S}
@@ -23,17 +22,17 @@
   Returns:}
 }
 \value{
-  filtered 16S data
+filtered 16S data
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

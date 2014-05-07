@@ -147,6 +147,10 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     #                 64                      61 
     phylogeny.full[grep("Ignatzschineria et al.", phylogeny.full$L2),"L2"] <- "Ignatzschineria et rel."
 
+    # Fix the Clostridia name			     
+    phylogeny.full$L2 <- gsub("Clostridia", "Clostridium (sensu stricto)", as.character(phylogeny.full$L2))
+
+
     # This handles also pmTm, complement and mismatch filtering
     # This is the phylogeny used in probe summarization into taxonomic levels
     rm.oligos <- sync.rm.phylotypes(params$rm.phylotypes, phylogeny.full)$oligos
@@ -174,9 +178,13 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   } else {
 
     message("Using pre-calculated phylogeny")
+
     data.directory <- system.file("extdata/", package = "microbiome")
+
     phylogeny.filtered <- read.profiling(level = "phylogeny.filtered", data.dir = data.directory)
+
     phylogeny.full <- read.profiling(level = "phylogeny.full", data.dir = data.directory)
+
     if (!params$chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
     
   }
@@ -227,6 +235,11 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 
         # Store the data in absolute scale					
         finaldata[[level]][[method]] <- 10^summarized.log10
+
+	# Finish this later
+	if (level == "L2") {
+	  rownames(finaldata[[level]][[method]]) <- gsub("^Clostridia$", "Clostridium (sensu stricto)", rownames(finaldata[[level]][[method]]))
+	}
 
     }
   }

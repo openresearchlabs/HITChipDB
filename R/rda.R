@@ -222,6 +222,7 @@ Bagged.RDA.Feature.Selection <- function(X,Y,sig.thresh=0.1,nboot=1000, verbose 
 #'   #PlotBaggedRDA(Bag.res, y)
 #'
 #' @export
+#' @importFrom ade4 s.class
 #'
 #' @references See citation("microbiome") 
 #' @author Contact: Jarkko Salojarvi \email{microbiome-admin@@googlegroups.com}

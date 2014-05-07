@@ -2,8 +2,7 @@
 \alias{list.mysql.projects}
 \title{list.mysql.projects}
 \usage{
-  list.mysql.projects(dbuser, dbpwd, dbname, host = NULL,
-    port = NULL)
+list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
 }
 \arguments{
   \item{dbuser}{MySQL user}
@@ -17,20 +16,20 @@
   \item{port}{port; needed with FTP connections Returns:}
 }
 \value{
-  project names vector
+project names vector
 }
 \description{
-  Description: List projects in MySQL database
+Description: List projects in MySQL database
 }
 \details{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

@@ -2,7 +2,7 @@
 \alias{detect.chip}
 \title{Description: Detect the chip type (H/M/PITChip) from database name}
 \usage{
-  detect.chip(dbname)
+detect.chip(dbname)
 }
 \arguments{
   \item{dbname}{MySQL database name
@@ -10,17 +10,17 @@
   Returns:}
 }
 \value{
-  chip name
+chip name
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

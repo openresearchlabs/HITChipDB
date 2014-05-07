@@ -3,8 +3,7 @@
 \title{Description: Compress normalized raw data matrix into final probe-level matrix:
              summarize oligos into probes and hybridisations into samples}
 \usage{
-  summarize.rawdata(fdat.log10, fdat.hybinfo,
-    fdat.oligoinfo)
+summarize.rawdata(fdat.log10, fdat.hybinfo, fdat.oligoinfo)
 }
 \arguments{
   \item{fdat.log10}{normalized raw data matrix oligos x
@@ -17,17 +16,17 @@
   Returns:}
 }
 \value{
-  probes x samples matrix in log10 scale
+probes x samples matrix in log10 scale
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

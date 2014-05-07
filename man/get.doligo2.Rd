@@ -2,7 +2,7 @@
 \alias{get.doligo2}
 \title{Description: Calculate d.oligo2}
 \usage{
-  get.doligo2(featuretab, d.scaled, oligo.ids)
+get.doligo2(featuretab, d.scaled, oligo.ids)
 }
 \arguments{
   \item{featuretab}{featuretab}
@@ -12,17 +12,17 @@
   \item{oligo.ids}{oligo.ids Returns:}
 }
 \value{
-  d.oligo2
+d.oligo2
 }
 \description{
-  Arguments:
+Arguments:
 }
 \author{
-  Contact: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Contact: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 

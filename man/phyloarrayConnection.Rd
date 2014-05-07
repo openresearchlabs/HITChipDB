@@ -4,25 +4,25 @@
 Expands one element (one "field", "value" pair list) from a list
 of "field", "value" pair lists}
 \usage{
-  phyloarrayConnection(con)
+phyloarrayConnection(con)
 }
 \arguments{
   \item{con}{a MySQL database connection.}
 }
 \value{
-  TRUE when the test succeeds. Otherwise a program halt.
+TRUE when the test succeeds. Otherwise a program halt.
 }
 \description{
-  Tests whether the database connection is a phyloarray
-  connection. Expands one element (one "field", "value"
-  pair list) from a list of "field", "value" pair lists
+Tests whether the database connection is a phyloarray
+connection. Expands one element (one "field", "value" pair
+list) from a list of "field", "value" pair lists
 }
 \author{
-  Douwe Molenaar. Maintainer: Leo Lahti
-  \email{microbiome-admin@googlegroups.com}
+Douwe Molenaar. Maintainer: Leo Lahti
+\email{microbiome-admin@googlegroups.com}
 }
 \references{
-  See citation("microbiome")
+See citation("microbiome")
 }
 \keyword{utilities}
 
