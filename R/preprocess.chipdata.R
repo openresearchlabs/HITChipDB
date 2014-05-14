@@ -40,8 +40,6 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 
   # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "pit"; dbpwd = "passu"; dbname = "pitchipdb"; verbose = TRUE; host = NULL; port = NULL; use.precalculated.phylogeny = NULL; summarization.methods = c("frpa", "sum"); which.projects = NULL; all.samples = TRUE
 
-  # microbiome::InstallMarginal("RMySQL")
-
   ## ask parameters or read from R-file
   drv <- dbDriver("MySQL")
   if (!(is.null(host) && is.null(port))) {    
@@ -148,8 +146,9 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     phylogeny.full[grep("Ignatzschineria et al.", phylogeny.full$L2),"L2"] <- "Ignatzschineria et rel."
 
     # Fix the Clostridia name			     
-    phylogeny.full$L2 <- gsub("Clostridia", "Clostridium (sensu stricto)", as.character(phylogeny.full$L2))
-
+    if ( params$chip == "HITChip") { 
+      phylogeny.full$L2 <- gsub("Clostridia", "Clostridium (sensu stricto)", as.character(phylogeny.full$L2))
+    }
 
     # This handles also pmTm, complement and mismatch filtering
     # This is the phylogeny used in probe summarization into taxonomic levels
