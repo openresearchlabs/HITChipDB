@@ -48,10 +48,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     con <- dbConnect(drv, username = dbuser, password = dbpwd, dbname = dbname)
   }
   
-  params <- ReadParameters(con, which.projects = which.projects, all.samples = all.samples)  
-  params$chip <- detect.chip(dbname)
-  params$rm.phylotypes <- phylotype.rm.list(params$chip) 
-  # List oligos and phylotypes to remove by default
+  chip <- detect.chip(dbname)
+  params <- ReadParameters(con, which.projects = which.projects, all.samples = all.samples, chip = chip)  
 
   # Use precalculated phylogeny with HITChip to speed up
   if (is.null(use.precalculated.phylogeny)) {

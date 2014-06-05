@@ -242,6 +242,7 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 #'   @param con Output from dbConnect(dbDriver("MySQL"), username = dbuser, password = dbpwd, dbname = 'PhyloArray')
 #'   @param which.projects Optionally list which projects to take. All samples returned.
 #'   @param all.samples Return all samples from the selected projects: TRUE/FALSE
+#'   @param chip chip
 #' 
 #' Returns:
 #'   @return list with defined parameters
@@ -251,7 +252,7 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE) {
+ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip = NULL) {
 
   #microbiome::InstallMarginal("RMySQL")
 
@@ -269,6 +270,10 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE) {
 
   defaults <- list(phylogeny = "16S", remove.nonspecific.oligos = FALSE, normalization = "minmax", all.samples = TRUE)
   s <- NULL; for (nam in names(defaults)) {s <- paste(s, paste(nam, ":", defaults[[nam]], sep = ""), "; ", sep = "")}
+
+  if (chip == "MITChip") {
+    defaults[["remove.nonspecific.oligos"]] <- TRUE
+  }
 
   use.default.parameters <- tk_select.list(c(paste("Yes, use the defaults:", s), "No, proceed to parameter selection"), preselect = paste("Yes, use the defaults:", s), multiple = FALSE, title = paste('Use default parameters?'))
 
@@ -320,7 +325,10 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE) {
   # bgc.method <- select.list(c("2*sd bkg intensity", "6*sd bkg intensity"), multiple = FALSE, preselect = "6*sd bkg intensity", title = "Select background correction method:")
   bgc.method <- NULL # Intentional
 
-  list(wdir = wdir, prj = prj, samples = samples, phylogeny = phylogeny, normalization = scal, bgc.method = bgc.method, remove.nonspecific.oligos = remove.nonspecific.oligos)
+  # List oligos and phylotypes to remove by default
+  rm.phylotypes <- phylotype.rm.list(chip) 
+
+  list(wdir = wdir, prj = prj, samples = samples, phylogeny = phylogeny, normalization = scal, bgc.method = bgc.method, remove.nonspecific.oligos = remove.nonspecific.oligos, chip = chip, rm.phylotypes = rm.phylotypes)
 
 }
 
@@ -544,8 +552,8 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
   # Skipping for now; phylogeny.full shold be used by default and
   # providing filtered version seems to cause confusion without adding much
   # Write phylogeny.info
-  #fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
-  #WriteMatrix(phylogeny.info, fname, verbose)
+  fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
+  WriteMatrix(phylogeny.info, fname, verbose)
 
   # Write unfiltered phylogeny.info
   fname <- paste(output.dir, "/phylogeny.full.tab", sep = "")
