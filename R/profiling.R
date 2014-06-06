@@ -60,23 +60,29 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   hc.params <- add.heatmap(log10(finaldata[["oligo"]]), output.dir = params$wdir, phylogeny.info = phylogeny.info)
 
   # Plot hierachical clustering trees into the output directory
+  dat <- finaldata[["oligo"]]
+
   if (ncol(finaldata[["oligo"]]) > 2) { 
 
     method <- "complete"
-    dat <- finaldata[["oligo"]]
+
+    if (params$chip == "MITChip") {
+      # With MITChip, use the filtere phylogeny for hierarchical clustering
+      dat <- dat[unique(phylogeny.info$oligoID),]
+    }
 
     # Clustering
     hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
 
     # Save into file
-    pdf(paste(params$wdir, "/hclust_oligo_pearson_", method, ".pdf", sep = ""), height = 800, width = 800 * ncol(dat)/20)
+    pdf(paste(params$wdir, "/hclust_oligo_pearson_", method, "_", nrow(dat), "probes", ".pdf", sep = ""), height = 800, width = 800 * ncol(dat)/20)
     plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples", ylab = "1 - Correlation")
     dev.off()
 
   }
 
   # Plot hclust trees on screen
-  tmp <- htree.plot(finaldata[["oligo"]])
+  tmp <- htree.plot(dat)
 
   # Write parameters into log file
   tmp <- WriteLog(chipdata$naHybs, params)
