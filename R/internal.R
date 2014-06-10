@@ -268,7 +268,7 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip
     prj <- prjs[match(which.projects, prjs$projectName), ]
   }
 
-  defaults <- list(phylogeny = "16S", remove.nonspecific.oligos = FALSE, normalization = "minmax", all.samples = TRUE)
+  defaults <- list(phylogeny = "16S", remove.nonspecific.oligos = FALSE, normalization = "minmax", all.samples = "Use all samples")
   s <- NULL; for (nam in names(defaults)) {s <- paste(s, paste(nam, ":", defaults[[nam]], sep = ""), "; ", sep = "")}
 
   if (chip == "MITChip") {
@@ -300,7 +300,7 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip
     scal <- tk_select.list(c("none", "minmax", "quantile"), preselect = defaults$normalization, multiple = FALSE, title = "Select normalization method")
 
     ## Sample selection
-    all.samples <- tk_select.list(c(TRUE, FALSE), preselect = defaults$all.samples, multiple = FALSE, title = "Select samples manually?")
+    all.samples <- tk_select.list(c("Select samples manually", "Use all samples"), preselect = defaults$all.samples, multiple = FALSE, title = "Select samples manually?")
 
   } else {
 
@@ -312,7 +312,7 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip
   }
 
   # Extract samples
-  if (!all.samples) {
+  if (all.samples == "Select samples manually") {
     # Select samples manually
     samples <- choose.samples(con, multi=TRUE, title='Select samples', condition=list(list(field='projectID', value=prj$projectID)))
   } else {
