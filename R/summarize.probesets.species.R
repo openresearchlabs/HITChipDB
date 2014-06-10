@@ -39,6 +39,12 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
     rpa.hitchip.species.probe.parameters <- list()
     load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
     probe.parameters <- rpa.hitchip.species.probe.parameters
+
+    # Ensure we use only those parameters that are in the filtered phylogeny
+    for (bac in names(probe.parameters)) {
+      probe.parameters[[bac]] <- probe.parameters[[bac]][intersect(names(probe.parameters[[bac]]), probesets[[bac]])]
+    }
+
   }
 
   for (set in names(probesets)) {

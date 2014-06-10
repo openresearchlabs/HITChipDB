@@ -294,7 +294,7 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip
     # Exclude non-specific oligos?
     remove.nonspecific.oligos <- tk_select.list(c("Yes", "No"), multiple = FALSE, preselect = defaults$remove.nonspecific.oligos, title = "Remove non-specific oligos?")
     if (remove.nonspecific.oligos == "Yes") {remove.nonspecific.oligos <- TRUE}
-    if (remove.nonspecific.oligos == "No") {remove.nonspecific.oligos <- FALSE}
+    if (remove.nonspecific.oligos == "No")  {remove.nonspecific.oligos <- FALSE}
    
     ## Normalization method
     scal <- tk_select.list(c("none", "minmax", "quantile"), preselect = defaults$normalization, multiple = FALSE, title = "Select normalization method")
@@ -859,7 +859,19 @@ threshold.data <- function(dat, sd.times = 6){
 }
 
 
-
+#' Description: List oligos associated with removed phylotypes from different levels
+#'
+#' Arguments:
+#'   @param rm.phylotypes rm.phylotypes
+#'   @param phylogeny.info phylogeny.info
+#'
+#' Returns:
+#'   @return probe name vector
+#'
+#' @export
+#' @references See citation("microbiome") 
+#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
+#' @keywords utilities
 
 sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
 
