@@ -79,6 +79,7 @@ get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, h
   # that may have different natural number of elements on the array.
   # JS 16.5.2013 NOT duplicates, see above. 
   # LL: 27.1.2014 fixed this part; in earlier version the probe matching was incorrect but this occurred only in few situations 
+
   # Form features x hybridizations matrix
   ftab <- matrix(NA, nrow = nrow(ftab.info), ncol = length(rawdata.esplit))
   rownames(ftab) <- rownames(ftab.info)
