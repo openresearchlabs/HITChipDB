@@ -21,7 +21,7 @@ get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, h
 
   #hybridization.ids <- unique(project.info[["hybridisationID"]]); rmoligos <- params$rm.phylotypes$oligos
 
-  microbiome::InstallMarginal("RMySQL")
+  # microbiome::InstallMarginal("RMySQL")
 
   # List unique hybridisations for the selected samples
   hids <- mysql.format(hybridization.ids)
