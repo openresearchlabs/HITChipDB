@@ -12,6 +12,7 @@ Depends:
     ade4,
     grDevices,
     microbiome,
+    multicore,
     RMySQL,
     RPA,
     tcltk,

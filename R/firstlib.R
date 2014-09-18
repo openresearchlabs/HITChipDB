@@ -12,6 +12,8 @@
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+#' @import multicore
+
 .onAttach <- function(lib, pkg)
 {
   packageStartupMessage('\nHITChipDB R package (microbiome.github.com)\n(C) 2011-2014 Leo Lahti and Jarkko Salojarvi <microbiome-admin@googlegroups.com>\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under the FreeBSD open source license.\n')
