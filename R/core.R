@@ -127,6 +127,32 @@ plot_cumulative <- function(d.sub, writedir, fname, i.set = NULL, type = "cumula
 }
 
 
+#' Description: core.which
+#'
+#' Arguments:
+#'   @param data data matrix; phylotypes vs. samples
+#'   @param intTr intTr
+#'   @param prevalenceTr prevalenceTr
+#'
+#' Returns:
+#'   @return TBA
+#'
+#' @references 
+#'   A Salonen et al. The adult intestinal core microbiota is determined by 
+#'   analysis depth and health status. Clinical Microbiology and Infection 
+#'   18(S4):16 20, 2012. 
+#'   To cite the microbiome R package, see citation('microbiome') 
+#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
+#' @keywords utilities
+
+core.which <- function(data, intTr, prevalenceTr) {
+    d.bin <- data >= intTr
+    prevalences <- rowSums(d.bin)
+    nOTUs <- as.numeric(prevalences >= prevalenceTr)
+    return(nOTUs)
+}
+
+
 #' bootstrap.microbes
 #'
 #' Description: bootstrap.microbes
@@ -146,6 +172,7 @@ plot_cumulative <- function(d.sub, writedir, fname, i.set = NULL, type = "cumula
 #' 	     bs <- bootstrap.microbes(t(peerj32$microbes), Nboot = 5)
 #'
 #' @export 
+#' @import multicore
 #' 
 #' @references See citation("microbiome") 
 #' @author Contact: Jarkko Salojarvi \email{microbiome-admin@@googlegroups.com}
@@ -155,7 +182,8 @@ bootstrap.microbes <- function(D, Nsample = NULL, minPrev = 2, Nboot = 100, I.th
 
    if (is.null(Nsample)) {Nsample <- ncol(D)}
 
-   # multicore is not available for windows
+   # FIXME multicore is not available for windows
+   # but parallel package has all necessary functionality! Change.
    multicore.available <- try(require(multicore))
 
    boot <- replicate(Nboot, sample(ncol(D), Nsample, replace = T), simplify = F)
