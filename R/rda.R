@@ -32,7 +32,6 @@ Bagged.RDA <- function(X, Y, boot = 1000){
   ## Jarkko Salojärvi 7.8.2012
   ##  #17.8.2012 fixed problem with multiclass RDA  
 
-   # require(vegan)
    if (is.numeric(boot)){
       class.split=split(names(Y),Y)
 
@@ -243,9 +242,6 @@ PlotBaggedRDA <- function(Bag.res, Y, which.bac = 1:nrow(Bag.res$loadings),
   if (ptype=="spider")
     s.class(scaled.scores,factor(Y),grid=F,col=group.cols,cellipse=0.5,cpoint=0,add.plot=T)
   if (ptype=="hull"){
-
-    #require(grDevices) # instead use importFrom in the Roxygen fields, or set
-    # this as dependency
 
     ll=split(rownames(scaled.scores),Y)
     hulls=lapply(ll,function(ii) ii[chull(scaled.scores[ii,])])

@@ -168,11 +168,11 @@ core.which <- function(data, intTr, prevalenceTr) {
 #' Returns:
 #'   @return TBA
 #'
-#' @examples data(peerj32); 
-#' 	     bs <- bootstrap.microbes(t(peerj32$microbes), Nboot = 5)
+#' @examples \dontrun{data(peerj32); 
+#' 	     bs <- bootstrap.microbes(t(peerj32$microbes), Nboot = 5)}
 #'
 #' @export 
-#' @import multicore
+#' @import parallel
 #' 
 #' @references See citation("microbiome") 
 #' @author Contact: Jarkko Salojarvi \email{microbiome-admin@@googlegroups.com}
@@ -182,15 +182,12 @@ bootstrap.microbes <- function(D, Nsample = NULL, minPrev = 2, Nboot = 100, I.th
 
    if (is.null(Nsample)) {Nsample <- ncol(D)}
 
-   # FIXME multicore is not available for windows
+   # multicore is not available for windows
    # but parallel package has all necessary functionality! Change.
-   multicore.available <- try(require(multicore))
-
    boot <- replicate(Nboot, sample(ncol(D), Nsample, replace = T), simplify = F)
 
    # choose intensity such that there is at least one bacteria fulfilling prevalence criterion
-
-   if (multicore.available) {
+   if (ncore > 1) {
      boot.which <- mclapply(boot, function(x){ 
        Prev = round(runif(1, minPrev, length(x)));
        Imax = max(apply(D[,x], 1, function(xx) quantile(xx, probs = (1 - Prev/length(x)))));
@@ -231,8 +228,8 @@ bootstrap.microbes <- function(D, Nsample = NULL, minPrev = 2, Nboot = 100, I.th
 #' Returns:
 #'   @return TBA
 #'
-#' @examples data(peerj32); 
-#' 	     tmp <- bootstrap.microbecount(t(peerj32$microbes),	Nboot = 5)
+#' @examples \dontrun{data(peerj32); 
+#' 	     tmp <- bootstrap.microbecount(t(peerj32$microbes),	Nboot = 5)}
 #'
 #' @export 
 #' 
@@ -244,18 +241,16 @@ bootstrap.microbecount <- function(D, Nsample = NULL, minprev = 1, Nboot = 100, 
 
   if (is.null(Nsample)) {Nsample <- ncol(D)}
 
-   multicore.available <- try(require("multicore"))
-
    boot <- replicate(Nboot,sample(ncol(D),Nsample,replace=T),simplify=F)
 
    # below:choose intensity such that there is at least one bacteria fulfilling prevalence criterion
-   if (Nsample>1 && multicore.available) {
+   if (Nsample>1 && ncore > 1) {
      boot.which=mclapply(boot,function(x){ 
         Imax=max(apply(D[,x],1,min))
         Insty=runif(1,I.thr,Imax)
         sum(rowSums(D[,x]>Insty) >= minprev)
      }, mc.cores = ncore)
-   } else if (Nsample>1 && !multicore.available) {
+   } else if (Nsample>1 && ncore == 1) {
      boot.which=lapply(boot,function(x){ 
         Imax=max(apply(D[,x],1,min))
         Insty=runif(1,I.thr,Imax)

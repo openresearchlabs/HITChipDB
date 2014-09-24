@@ -125,7 +125,6 @@ ngp <- function(oligo.data, phylogeny.info, level, lambda=0.001, alpha=1,beta=1)
    oligo.data <- oligo.data[coms, ]
 
    # starting guess using pseudoinverse
-   # require(MASS)
    W=t(M)%*%M
    X=t(oligo.data) %*% M
    A=ginv(W)%*%t(X)

@@ -31,8 +31,8 @@ Description: bootstrap.microbes
 Arguments:
 }
 \examples{
-data(peerj32);
-	     bs <- bootstrap.microbes(t(peerj32$microbes), Nboot = 5)
+\dontrun{data(peerj32);
+	     bs <- bootstrap.microbes(t(peerj32$microbes), Nboot = 5)}
 }
 \author{
 Contact: Jarkko Salojarvi \email{microbiome-admin@googlegroups.com}
