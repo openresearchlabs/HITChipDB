@@ -34,9 +34,9 @@ data(peerj32);
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
 }
 \references{
-A Salonen et al. The adult intestinal core microbiota is determined by
-  analysis depth and health status. Clinical Microbiology and Infection
-  18(S4):16 20, 2012.
+Jalanka-Tuovinen et al. Intestinal Microbiota in Healthy Adults: Temporal
+  Analysis Reveals Individual and Common Core and Relation to Intestinal
+  Symptoms. PLoS ONE 6(7):e23035, 2012.
   To cite the microbiome R package, see citation('microbiome')
 }
 \keyword{utilities}

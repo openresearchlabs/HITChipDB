@@ -21,7 +21,7 @@ TBA
 Arguments:
 }
 \author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+Contact: Jarkko Salojarvi \email{microbiome-admin@googlegroups.com}
 }
 \references{
 A Salonen et al. The adult intestinal core microbiota is determined by
