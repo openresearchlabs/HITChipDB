@@ -59,6 +59,25 @@ project.info <- fetch.sample.info(proj, dbuser = dbuser, dbpwd = dbpwd, dbname =
 projs <- list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
 ```
 
+## Retrieving microarray data
+
+**HITChip** Use virtual machine or WUR database computer through FTP
+  connection to Helsinki database. Once you have opened the
+  connection, see the instructions above on how to read the data in R.
+
+  To access HITChip FTP database from your own computer, install the
+  virtual machine. For further instructions, contact the admins.
+
+  After installing the virtual machine, see R instructions for
+  HITChip.
+
+**MITChip, PITChip, ChickChip** Use WUR database computer
+  ([instructions](wurcomputer))
+
+
+
+
+
 ### Further SQL functions to be documented
 
 The following functions are also available:
