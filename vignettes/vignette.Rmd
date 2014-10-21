@@ -1,0 +1,91 @@
+---
+title: "microbiome vignette"
+author: "Leo Lahti and Jarkko Salojarvi"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    number_sections: true
+    theme: united
+    highlight: pygments
+---
+
+<!--
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{microbiome tutorial}
+  %\usepackage[utf8]{inputenc}
+-->
+
+
+
+HITChipDB R package
+===========
+
+## Installation
+
+### Installing and loading the release version
+
+
+```{r install2, eval=FALSE}
+install.packages("devtools")
+library(devtools)
+install_github("microbiome/HITChipDB")
+```
+
+### Update R packages
+
+Always [update R packages](update) before the analysis.
+
+### Read data from SQL database
+
+Read MySQL data for specified projects (request usernames, passwords, etc. from the admins):
+
+```{r reading-example4, eval=FALSE, warning=FALSE, message=FALSE}
+library(HITChipDB) 
+
+proj <- c("MetaHIT") # List projects to be extracted; see list.mysql.projects for a complete list
+dbuser = "myusername"; # Request username from the admins
+dbpwd = "mypasswd";    # Request password from the admins
+host <- NULL; # Used with HITChip FTP server; ask details from admins
+port <- NULL; # Used with HITChip FTP server; ask details from admins
+
+# Get sample information matrix for the selected projects	
+project.info <- fetch.sample.info(proj, dbuser = dbuser, dbpwd = dbpwd, dbname = "Phyloarray", host = host, port = port)
+```
+
+### List projects in MySQL database
+
+```{r reading-example5, eval=FALSE, warning=FALSE, message=FALSE}
+projs <- list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
+```
+
+### Further SQL functions to be documented
+
+The following functions are also available:
+
+* get.phylogeny.info: from the MySQL db
+* fetch.projects: Fetch projects from the phyloarray MySQL database
+* fetch.samples: Fetch samples from the phyloarray MySQL database
+* fetch.sample.info: Fetch sample information from HITChip atlas
+
+
+### Licensing and Citations
+
+This work can be freely used, modified and distributed under the 
+[Two-clause FreeBSD license](http://en.wikipedia.org/wiki/BSD\_licenses).
+
+Kindly cite the work as 'Leo Lahti and Jarkko Salojarvi
+(2014). microbiome R package. URL: http://microbiome.github.com'.
+
+
+### Session info
+
+This vignette was created with
+
+```{r sessioninfo}
+sessionInfo()
+```
+
+
+
+
