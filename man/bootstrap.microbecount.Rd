@@ -3,7 +3,7 @@
 \alias{bootstrap.microbecount}
 \title{bootstrap.microbecount}
 \usage{
-bootstrap.microbecount(D, Nsample = NULL, minprev = 1, Nboot = 100,
+bootstrap.microbecount(D, Nsample = NULL, minprev = 1, Nboot = 1000,
   I.thr = 1.8, ncore = 1)
 }
 \arguments{
@@ -22,7 +22,7 @@ bootstrap.microbecount(D, Nsample = NULL, minprev = 1, Nboot = 100,
 Returns:}
 }
 \value{
-TBA
+median microbe count in bootstrapped cores
 }
 \description{
 Description: bootstrap.microbecount

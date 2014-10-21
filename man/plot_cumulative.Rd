@@ -3,13 +3,11 @@
 \alias{plot_cumulative}
 \title{plot_cumulative}
 \usage{
-plot_cumulative(d.sub, writedir, fname, i.set = NULL, type = "cumulative",
+plot_cumulative(d.sub, fname, i.set = NULL, type = "cumulative",
   ylim = NULL, phylogeny.info)
 }
 \arguments{
 \item{d.sub}{d.sub}
-
-\item{writedir}{output directory}
 
 \item{fname}{output file name}
 
@@ -22,6 +20,8 @@ plot_cumulative(d.sub, writedir, fname, i.set = NULL, type = "cumulative",
 \item{phylogeny.info}{phylogeny.info matrix
 
 Returns:}
+
+\item{writedir}{output directory}
 }
 \value{
 TBA
@@ -38,10 +38,10 @@ Arguments:
 		      			phylogeny.info = phylogeny.info)}
 }
 \author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+Contact: Jarkko Salojarvi \email{microbiome-admin@googlegroups.com}
 }
 \references{
-A Salonen et al. The adult intestinal core microbiota is determined by analysis depth and health status. Clinical Microbiology and Infection 18(S4):16 20, 2012.
+TBA.
   To cite the microbiome R package, see citation("microbiome")
 }
 \keyword{utilities}
