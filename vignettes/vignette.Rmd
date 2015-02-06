@@ -1,18 +1,13 @@
 ---
-title: "microbiome vignette"
+title: "HITChipDB vignette"
 author: "Leo Lahti and Jarkko Salojarvi"
 date: "`r Sys.Date()`"
-output:
-  html_document:
-    toc: true
-    number_sections: true
-    theme: united
-    highlight: pygments
+output: md_document
 ---
 
 <!--
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{microbiome tutorial}
+  %\VignetteIndexEntry{HITChipDB tutorial}
   %\usepackage[utf8]{inputenc}
 -->
 
