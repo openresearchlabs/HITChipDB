@@ -31,6 +31,7 @@ Bagged.RDA <- function(X, Y, boot = 1000){
 
   ## Jarkko Salojärvi 7.8.2012
   ##  #17.8.2012 fixed problem with multiclass RDA  
+  rda <- NULL
 
    if (is.numeric(boot)){
       class.split=split(names(Y),Y)

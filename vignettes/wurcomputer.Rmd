@@ -30,7 +30,7 @@ the projects, samples, and preprocessing parameters. For further
 instructions, contact the [admins](contact).
 
 
-```{r prof, message=FALSE, warning=FALSE, eval=FALSE}
+```{r prof, message=FALSE, warning=FALSE, eval=FALSE, fig.path = "figure/"}
 # Load the package
 library(HITChipDB)
 
@@ -52,7 +52,7 @@ To extract HITChip data, see [these instructions](Hitchip).
 
 To extract MITChip data, give the command in R:
 
-```{r prof, message=FALSE, warning=FALSE, eval=FALSE}
+```{r prof2b, message=FALSE, warning=FALSE, eval=FALSE, fig.path = "figure/"}
 library(HITChipDB) 
 params <- run.profiling.script(dbuser = "mit", dbpwd = "passu", dbname = "phyloarray_mit")
 ```
@@ -97,8 +97,7 @@ library(HITChipDB)
 params <- run.profiling.script(dbuser = "mit", dbpwd = "passu", dbname = "chickchipdb")
 ```
 
-This prompts you through profiling options described in [full
-instructions](protocol).
+This prompts you through profiling options described in [full instructions](Protocol).
 
 
 

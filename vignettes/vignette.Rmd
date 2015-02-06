@@ -22,7 +22,7 @@ HITChipDB R package
 
 It is advisable to run this before every analysis to use the latest version:
 
-```{r install2, eval=FALSE}
+```{r install2, eval=FALSE, fig.path = "figure/"}
 install.packages("devtools")
 library(devtools)
 install_github("microbiome/HITChipDB")
@@ -40,7 +40,7 @@ To reproduce the oligo-level heatmap from the profiling script, modify [this exa
 
 Read MySQL data for specified projects (request usernames, passwords, etc. from the admins):
 
-```{r reading-example4, eval=FALSE, warning=FALSE, message=FALSE}
+```{r reading-example4, eval=FALSE, warning=FALSE, message=FALSE, fig.path = "figure/"}
 library(HITChipDB) 
 
 proj <- c("MetaHIT") # List projects to be extracted; see list.mysql.projects for a complete list
@@ -55,7 +55,7 @@ project.info <- fetch.sample.info(proj, dbuser = dbuser, dbpwd = dbpwd, dbname =
 
 ### List projects in MySQL database
 
-```{r reading-example5, eval=FALSE, warning=FALSE, message=FALSE}
+```{r reading-example5, eval=FALSE, warning=FALSE, message=FALSE, fig.path = "figure/"}
 projs <- list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
 ```
 
