@@ -18,8 +18,9 @@ HITChipDB R package
 
 ## Installation
 
-### Installing and loading the release version
+### Install/upload and loading the release version
 
+It is advisable to run this before every analysis to use the latest version:
 
 ```{r install2, eval=FALSE}
 install.packages("devtools")
@@ -27,9 +28,13 @@ library(devtools)
 install_github("microbiome/HITChipDB")
 ```
 
-### Update R packages
+### Extracting HITChip data from the MySQL database ('profiling')
 
-Always [update R packages](update) before the analysis.
+[Instructions to extract data from database](wurcomputer) (HIT/MIT/PIT/ChickChip)
+
+### Oligo heatmap
+
+To reproduce the oligo-level heatmap from the profiling script, modify [this example](Oligoheatmap.md)
 
 ### Read data from SQL database
 
@@ -70,7 +75,13 @@ projs <- list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
   ([instructions](wurcomputer))
 
 
+### Probe-level operations 
 
+[Probe-level preprocessing](Probelevel.md)
+
+### Robust Probabilistic Averaging
+
+[RPA](RPA.md)
 
 
 ### Further SQL functions to be documented
