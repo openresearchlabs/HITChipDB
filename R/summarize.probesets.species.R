@@ -14,7 +14,8 @@
 #'   @return List with two elements: summarized.matrix (summarized data matrix in log10 scale) and probe.parameters (only used with rpa, probe-level parameter estimates)
 #'
 #' @export
-#' @importFrom RPA d.update.fast
+#' @importFrom RPA d.update.fast 
+#' @importFrom microbiome retrieve.probesets
 #'
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}

@@ -1,18 +1,3 @@
-# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
-# Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
-
-# This file is a part of the microbiome R package
-# http://microbiome.github.com/
-
-# This program is open source software; you can redistribute it and/or
-# modify it under the terms of the FreeBSD License (keep this notice):
-# http://en.wikipedia.org/wiki/BSD_licenses
-
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-
 #' Description: count
 #'
 #' For cross-hyb control
@@ -45,6 +30,7 @@ count <- function(d){
 #'   @return list
 #'
 #' @export
+#' @importFrom microbiome polish.phylogeny.info
 #' @references See citation("microbiome") 
 #' @author Contact: Jarkko Salojarvi \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
@@ -118,6 +104,9 @@ mixingMatrix <- function(phylogeny.info, level){
 
 ngp <- function(oligo.data, phylogeny.info, level, lambda=0.001, alpha=1,beta=1){
 
+   # Avoid NOTE in buildcheck
+   ginv <- NULL
+
    # oligos x phylotypes mixing matrix for the given level
    M <- mixingMatrix(phylogeny.info, level)
    coms <- intersect(rownames(oligo.data), rownames(M))
@@ -125,10 +114,10 @@ ngp <- function(oligo.data, phylogeny.info, level, lambda=0.001, alpha=1,beta=1)
    oligo.data <- oligo.data[coms, ]
 
    # starting guess using pseudoinverse
-   W=t(M)%*%M
-   X=t(oligo.data) %*% M
-   A=ginv(W)%*%t(X)
-   A[which(A<0)]=0
+   W <- t(M)%*%M
+   X <- t(oligo.data) %*% M
+   A <- ginv(W)%*%t(X)
+   A[which(A<0)] <- 0
 
    for (i in 1:ncol(oligo.data)){
       Acol=A[,i]
