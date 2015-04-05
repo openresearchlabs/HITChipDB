@@ -1,6 +1,3 @@
-
-
-
 #' PlotPhylochipHeatmap
 #'
 #' Description: Plots heatmap of the oligo profiles together with phylotype grouping and sample clustering
@@ -36,6 +33,8 @@ PlotPhylochipHeatmap <- function (data,
 			 hclust.method = "complete") {
 
   # data = dat; metric = "pearson"; level = "L2"; tree.display = TRUE; palette = "white/black"; fontsize = 40; figureratio = 10; hclust.method = "complete"
+
+  list.color.scales <- NULL
 
   if (is.null(hclust.method) || hclust.method == "none") {hclust.method <- NULL}
 
