@@ -22,8 +22,7 @@ fetch.sample.info(allowed.projects, chiptype = NULL, dbuser, dbpwd, dbname,
 
 \item{host}{host; needed with FTP connections}
 
-\item{port}{port; needed with FTP connections
-Returns:}
+\item{port}{port; needed with FTP connections}
 }
 \value{
 project.info data.frame
@@ -33,6 +32,10 @@ Description: Fetch sample information from HITChip atlas
 }
 \details{
 Arguments:
+}
+\examples{
+# info <- fetch.sample.info(allowed.projects, dbuser, dbpwd,
+         # dbname, selected.samples = NULL, host = NULL, port = NULL)
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

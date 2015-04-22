@@ -116,8 +116,6 @@ expandElement <- function (elm) {
 #' @author Douwe Molenaar. Maintainer: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @examples # TBA
 #' @keywords utilities
-
-
 expandCondition <- function (condition) {
    if (is.null(condition)) {
       return(NULL)
@@ -147,7 +145,6 @@ expandCondition <- function (condition) {
 #' See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 populate.radiobuttons <- function(tt, title, var.names, var.values, var.init) {
 
   title.font <- tkfont.create(weight = "bold", size = 10)
@@ -185,7 +182,6 @@ populate.radiobuttons <- function(tt, title, var.names, var.values, var.init) {
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 choose.projects <- function (con, multi = TRUE, condition = NULL) {
    prjs <- fetch.projects(con, condition = condition)
    projects <- select.list(sort(prjs$projectName), multiple = multi, title = "Select studies:")
@@ -207,7 +203,6 @@ choose.projects <- function (con, multi = TRUE, condition = NULL) {
 #' @author Douwe Molenaar. Maintainer: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @examples # TBA
 #' @keywords utilities
-
 choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condition = NULL) {
 
     smps <- fetch.samples(con, condition = condition)
@@ -234,7 +229,6 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip = NULL) {
 
   #microbiome::InstallMarginal("RMySQL")
@@ -328,7 +322,6 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 get.doligo2 <- function (featuretab, d.scaled, oligo.ids) {
 
   d.oSplit <- split(cbind(featuretab[,1:3],d.scaled), featuretab$oligoID)
@@ -360,7 +353,6 @@ get.doligo2 <- function (featuretab, d.scaled, oligo.ids) {
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 get.sampleid <- function (d.oligo) {
 
   sampleID <- sapply(colnames(d.oligo), function(z) { # edit by S.Tims
@@ -398,7 +390,6 @@ get.sampleid <- function (d.oligo) {
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 scaling.minmax <- function (dat, quantile.points = NULL, minmax.points = NULL, robust = FALSE) {
 
   if ( is.null(minmax.points) ) {
@@ -772,13 +763,12 @@ oligo.bg.correction <- function (d.oligo2, bgc.method) {
 #'   @return Normalized data matrix in absolute scale
 #'
 #' @export
+#' @importFrom preprocessCore normalize.quantiles
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
 ScaleProfile <- function (dat, method = 'minmax', bg.adjust = NULL, minmax.quantiles = c(0.005, 0.995), minmax.points = NULL) {
-
-  normalize.quantiles <- NULL
 
   # d.scaled <- ScaleProfile(fdat.orig, params$normalization, bg.adjust = NULL, minmax.points = params$minmax.points) 
   # dat <- fdat.orig; method = params$normalization; bg.adjust = NULL; minmax.quantiles = c(0.005, 0.995); minmax.points = NULL

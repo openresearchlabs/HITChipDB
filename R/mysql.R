@@ -1,18 +1,3 @@
-# Copyright (C) 2011-2014 Leo Lahti and Jarkko Salojarvi 
-# Contact: <microbiome-admin@googlegroups.com>. All rights reserved.
-
-# This file is a part of the microbiome R package
-# http://microbiome.github.com/
-
-# This program is open source software; you can redistribute it and/or
-# modify it under the terms of the FreeBSD License (keep this notice):
-# http://en.wikipedia.org/wiki/BSD_licenses
-
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-
 #' fetch.sample.info
 #'
 #' Description: Fetch sample information from HITChip atlas
@@ -26,17 +11,19 @@
 #'   @param selected.samples Sample to investigate. By default all.
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
-#' Returns:
 #'   @return project.info data.frame
 #'
+#' @examples # info <- fetch.sample.info(allowed.projects, dbuser, dbpwd, 
+#'          # dbname, selected.samples = NULL, host = NULL, port = NULL)
 #' @export
 #' @import RMySQL
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 fetch.sample.info <- function (allowed.projects, chiptype = NULL, 
-		  dbuser, dbpwd, dbname, selected.samples = NULL, host = NULL, port = NULL) { 
+		  dbuser, dbpwd, dbname, 
+		  selected.samples = NULL, 
+		  host = NULL, port = NULL) { 
 
  # allowed.projects <- params$prj$projectName; chiptype = NULL; selected.samples = params$samples$sampleID
  # selected.samples = NULL
