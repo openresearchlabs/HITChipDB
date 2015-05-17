@@ -16,7 +16,7 @@
 #'   @return Preprocessed data and parameters
 #'
 #' @export
-#' @import RMySQL
+#' @importFrom RMySQL dbDriver
 #' @importFrom microbiome levelmap
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
@@ -171,9 +171,9 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 
     data.directory <- system.file("extdata/", package = "microbiome")
 
-    phylogeny.filtered <- read.profiling(level = "phylogeny.filtered", data.dir = data.directory)
+    phylogeny.filtered <- GetPhylogeny("HITChip", "filtered")
 
-    phylogeny.full <- read.profiling(level = "phylogeny.full", data.dir = data.directory)
+    phylogeny.full <- GetPhylogeny("HITChip", "full")
 
     if (!params$chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
     

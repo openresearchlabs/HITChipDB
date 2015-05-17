@@ -15,7 +15,6 @@
 #'
 #' @export
 #' @importFrom RPA d.update.fast 
-#' @importFrom microbiome retrieve.probesets
 #'
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}

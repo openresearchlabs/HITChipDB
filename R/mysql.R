@@ -16,7 +16,7 @@
 #' @examples # info <- fetch.sample.info(allowed.projects, dbuser, dbpwd, 
 #'          # dbname, selected.samples = NULL, host = NULL, port = NULL)
 #' @export
-#' @import RMySQL
+#' @importFrom RMySQL dbDriver
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
@@ -106,7 +106,7 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
 #'   @return project names vector
 #'
 #' @export
-#' @import RMySQL
+#' @importFrom RMySQL dbDriver
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
@@ -150,7 +150,7 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #'   @return phylogeny.info
 #'
 #' @export
-#' @import RMySQL
+#' @importFrom RMySQL dbDriver
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
