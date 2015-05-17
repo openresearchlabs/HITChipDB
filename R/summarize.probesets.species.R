@@ -24,7 +24,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
 
   level <- "species"			    
 
-  if (method == "nmf") {warning("nmf oligo summarization method not implemented at species level"); return(NULL)}
   probesets <- retrieve.probesets(phylogeny.info, level = level)
   probesets <- probesets[setdiff(names(probesets), rm.species)]
   nPhylotypesPerOligo <- n.phylotypes.per.oligo(phylogeny.info, level) 

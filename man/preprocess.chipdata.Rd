@@ -24,7 +24,7 @@ preprocess.chipdata(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
 
 \item{use.precalculated.phylogeny}{use precalculated phylogeny?}
 
-\item{summarization.methods}{List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave", "nmf"}
+\item{summarization.methods}{List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave"}
 
 \item{which.projects}{Optionally specify the projects to extract. All samples from these projects will be included.}
 

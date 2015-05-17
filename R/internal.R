@@ -513,12 +513,9 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
   ## Write the other levels in log domain
   for (level in setdiff(names(finaldata), "oligo")) {
     for (method in names(finaldata[[level]])) {
-      # Skip species-nmf as not validated
-      if (!(level == "species" && method == "nmf")) {      
         fname <- paste(output.dir, "/", level, "-", method, ".tab", sep = "")
         mydat <- finaldata[[level]][[method]]
         WriteMatrix(cbind(rownames(mydat), mydat), fname, verbose)
-      }
     }
   }
 

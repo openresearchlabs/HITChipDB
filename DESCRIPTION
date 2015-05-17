@@ -10,6 +10,7 @@ License: BSD_2_clause + file LICENSE
 Depends:
     R (>= 3.0.1),
     ade4,
+    DBI,
     grDevices,
     microbiome,
     parallel,
@@ -20,7 +21,6 @@ Depends:
     vegan
 Suggests:
     affy,
-    DBI,
     MASS,
     plyr,
     reshape,

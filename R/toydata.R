@@ -8,6 +8,7 @@
 #'
 #' @export
 #' @importFrom microbiome read.profiling
+#' @importFrom microbiome GetPhylogeny
 #'
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
@@ -20,7 +21,7 @@ GenerateSimulatedData <- function (output.dir) {
   #phylogeny.info <- read.profiling(level = "phylogeny.info", data.dir = data.directory)
   phylogeny.info <- as.data.frame(GetPhylogeny("HITChip", "filtered"))
 
-  oligo.matrix.nolog.simulated <- read.profiling(level = "oligo", data.dir = data.directory, log10 = FALSE)
+  oligo.matrix.nolog.simulated <- read.profiling(data.dir = data.directory, log10 = FALSE)
   N <- ncol(oligo.matrix.nolog.simulated)
   colnames(oligo.matrix.nolog.simulated) <- paste("Sample.", 1:N, sep = "")
 
@@ -30,7 +31,7 @@ GenerateSimulatedData <- function (output.dir) {
   levels <- c("species", "L2", "L1")
   for (level in levels) {
     finaldata[[level]] <- list()
-    for (method in c("sum", "rpa", "nmf")) {
+    for (method in c("sum", "rpa")) {
 
         message(paste(level, method))
     	summarized.log10 <- summarize.probesets(phylogeny.info, log10(oligo.matrix.nolog.simulated), method = method, level = level)$summarized.matrix
@@ -42,7 +43,7 @@ GenerateSimulatedData <- function (output.dir) {
   }
 
   # Write summary matrices into the output directory
-  outd <- HITChipDB::WriteChipData(finaldata, output.dir, phylogeny.info)
+  outd <- WriteChipData(finaldata, output.dir, phylogeny.info)
 
   set.seed(344)
   metadata.simulated <- data.frame(list(

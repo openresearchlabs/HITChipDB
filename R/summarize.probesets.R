@@ -17,29 +17,23 @@
 #' @keywords utilities
 summarize.probesets <- function (phylogeny.info, oligo.data, method, level, verbose = TRUE, species.matrix = NULL) {
 
-  if (level == "species") {method <- gsub(".through.species", "", method)} 
+  if (level == "species") {
+    method <- gsub(".through.species", "", method)
+  } 
 
-  if (method == "nmf") {
-    # NMF is always straight from oligos to levels
-    if (level == "species") {
-      warning("nmf oligo summarization method not implemented at species level");     return(NULL)
-    }
-  
-    # Add +1 to avoid taking log10 for 0
-    summarized.matrix <- 1 + deconvolution.nonneg(10^oligo.data, phylogeny.info, level)
-    res <- list(summarized.matrix = summarized.matrix, probe.parameters = list())
-  
-  } else if (method %in% c("rpa", "frpa", "rpa.with.affinities", "sum.through.species", "ave.through.species")) {
+  if (method %in% c("rpa", "frpa", "rpa.with.affinities", "sum.through.species", "ave.through.species")) {
 
     # Summarize probes through species level (default with RPA)
     res <- summarize.probesets.through.species(level = level, phylogeny.info = phylogeny.info, oligo.data = oligo.data, method = gsub(".through.species", "", method), verbose = verbose)
 
-  } else if (method %in% c("rpa.direct", "rpa.with.affinities.direct", "sum", "ave")) {
+    } else if (method %in% c("rpa.direct", "rpa.with.affinities.direct", "sum", "ave")) {
 
     # Option 2: Summarize from oligos to all levels directly (default with SUM and AVE)
     res <- summarize.probesets.directly(level, phylogeny.info, oligo.data, gsub(".direct", "", method))
 
-  } 
+  } else {
+    stop(paste("method", method, "not implemented in HITChipDB"))
+  }
   
   res
 

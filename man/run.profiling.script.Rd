@@ -21,7 +21,7 @@ run.profiling.script(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
 
 \item{port}{port; needed with FTP connections}
 
-\item{summarization.methods}{List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave, nmf.}
+\item{summarization.methods}{List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave}
 
 \item{which.projects}{Optionally specify the projects to extract. All samples from these projects will be included.
 
