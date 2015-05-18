@@ -30,7 +30,7 @@ summarize.probesets.through.species <- function (level, phylogeny.info, oligo.da
   }
 
   # List all species for the given level (L0 / L1 / L2)")
-  phylogroups <- levelmap(phylotypes = NULL, level.from = level, level.to = "species", phylogeny.info)
+  phylogroups <- levelmap(phylotypes = NULL, from = level, to = "species", phylogeny.info)
 
   # Remove specified phylogroups
   # phylogroups <- phylogroups[setdiff(names(phylogroups), rm.phylotypes[[level]])]

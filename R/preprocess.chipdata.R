@@ -141,7 +141,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     phylogeny.filtered <- prune16S(phylogeny.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
 
     # Remove 66 probes that target multiple L1 groups
-    lmap <- levelmap(NULL, level.from = "oligoID", level.to = "L1", phylogeny.info = phylogeny.info.filtered)
+    lmap <- levelmap(NULL, level = "oligoID", to = "L1", phylogeny.info = phylogeny.info.filtered)
     hits <- sapply(lmap, length)
     oligoID <- NULL
     phylogeny.info.filtered <- subset(phylogeny.info.filtered, oligoID %in% names(which(hits <= 1)))

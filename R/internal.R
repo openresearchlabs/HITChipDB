@@ -851,8 +851,8 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
   if (!is.null(rm.phylotypes$L0)) {
     rm.phylotypes$L1 <- c(rm.phylotypes$L1,
   		unlist(levelmap(phylotypes = rm.phylotypes$L0, 
-				level.from = "L0", 
-				level.to = "L1", 
+				from = "L0", 
+				to = "L1", 
 				phylogeny.info = phylogeny.info)))
 
     rm.phylotypes$L1 <- unique(rm.phylotypes$L1)
@@ -862,7 +862,7 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
   if (!is.null(rm.phylotypes$L1)) {
     rm.phylotypes$L2 <- c(rm.phylotypes$L2,
   			unlist(levelmap(phylotypes = rm.phylotypes$L1, 
-			level.from = "L1", level.to = "L2", 
+			from = "L1", to = "L2", 
 			phylogeny.info = phylogeny.info)))
 
     rm.phylotypes$L2 <- unique(rm.phylotypes$L2)
@@ -872,8 +872,8 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
   if (!is.null(rm.phylotypes$L2)) {
     rm.phylotypes$species <- c(rm.phylotypes$species,
   			unlist(levelmap(phylotypes = rm.phylotypes$L2, 
-				level.from = "L2", 
-				level.to = "species", 
+				from = "L2", 
+				to = "species", 
 				phylogeny.info = phylogeny.info)))
 
     rm.phylotypes$species <- unique(rm.phylotypes$species)

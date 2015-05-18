@@ -17,7 +17,7 @@
 #' input tables for tests, the actual tests outputs, and the full
 #' phylogenetic mapping information for the given list.
 #' Changes: Version 1 computed two-tailed p-values also for single
-#' occurrences on origlevel.
+#' occurrences on orig
 #' v2: two-tailed p-values, but not for single occurrences
 #' v3: one-tailed p-values (enrichments), if wanted, outputting only
 #' enrichments under the given p-value
