@@ -2,7 +2,7 @@
 #'
 #' Arguments:
 #'   @param level summarization level
-#'   @param phylogeny.info oligo - phylotype matching data.frame
+#'   @param taxonomy oligo - phylotype matching data.frame
 #'   @param oligo.data preprocessed probes x samples data matrix in log10 domain
 #'   @param method summarization method
 #'   @param verbose verbose
@@ -15,11 +15,11 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-summarize.probesets.through.species <- function (level, phylogeny.info, oligo.data, method, verbose = FALSE) {
+summarize.probesets.through.species <- function (level, taxonomy, oligo.data, method, verbose = FALSE) {
 
   # Get species-level summary first
   message("Summarizing through species...")
-  probeset.summaries <- summarize.probesets.species(phylogeny.info, oligo.data, method, verbose = verbose)
+  probeset.summaries <- summarize.probesets.species(taxonomy, oligo.data, method, verbose = verbose)
 
   species.matrix   <- 10^probeset.summaries$summarized.matrix
   probe.parameters <- probeset.summaries$probe.parameters 
@@ -30,7 +30,7 @@ summarize.probesets.through.species <- function (level, phylogeny.info, oligo.da
   }
 
   # List all species for the given level (L0 / L1 / L2)")
-  phylogroups <- levelmap(phylotypes = NULL, from = level, to = "species", phylogeny.info)
+  phylogroups <- levelmap(phylotypes = NULL, from = level, to = "species", taxonomy)
 
   # Remove specified phylogroups
   # phylogroups <- phylogroups[setdiff(names(phylogroups), rm.phylotypes[[level]])]

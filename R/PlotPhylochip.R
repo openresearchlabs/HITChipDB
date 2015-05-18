@@ -34,7 +34,7 @@ list.color.scales <- function() {
 #'
 #' Arguments:
 #'   @param data oligoprofile data in original (non-log) domain
-#'   @param phylogeny.info oligo-phylotype mappings
+#'   @param taxonomy oligo-phylotype mappings
 #'   @param metric clustering metric
 #'   @param level taxonomic level to show (L0 / L1 / L2 / species)
 #'   @param tree.display tree.display
@@ -53,7 +53,7 @@ list.color.scales <- function() {
 #' @keywords utilities
 
 PlotPhylochipHeatmap <- function (data,
-                         phylogeny.info,
+                         taxonomy,
                          metric = "pearson", 
                          level = "L1", 
                          tree.display = TRUE, 
@@ -84,17 +84,17 @@ PlotPhylochipHeatmap <- function (data,
    paper <- par("din")
 
    if (level == "oligo") { level <- "oligoID" }
-   tax.order <- order(as.character(phylogeny.info[[level]]), na.last = FALSE)
+   tax.order <- order(as.character(taxonomy[[level]]), na.last = FALSE)
 
-   nainds <- is.na(phylogeny.info[, level])
+   nainds <- is.na(taxonomy[, level])
    if (sum(nainds) > 0) {
-     phylogeny.info[nainds, level] <- '-'  # replace empty maps
+     taxonomy[nainds, level] <- '-'  # replace empty maps
    }
 
-   levs <- unlist(lapply(split(phylogeny.info[[level]], as.factor(phylogeny.info[[level]])), length))
-   # order the rows in phylogeny.info by level
-   phylogeny.info <- phylogeny.info[tax.order,]
-   phylogeny.info <- phylogeny.info[phylogeny.info$oligoID %in% rownames(data), ]
+   levs <- unlist(lapply(split(taxonomy[[level]], as.factor(taxonomy[[level]])), length))
+   # order the rows in taxonomy by level
+   taxonomy <- taxonomy[tax.order,]
+   taxonomy <- taxonomy[taxonomy$oligoID %in% rownames(data), ]
 
    annwidth <- max(strwidth(names(levs),units="inch"))*2.54*1.2
    profilewidth <- max(strheight(names(levs),units="inch"))*2.54*dim(data)[2]*1.6
@@ -141,7 +141,7 @@ PlotPhylochipHeatmap <- function (data,
 
    par(mar = c(1,1,0,0), oma = c(0,0,0,0))
    
-   img <- as.matrix(rev(as.data.frame(t(data[as.character(phylogeny.info$oligoID),]))))
+   img <- as.matrix(rev(as.data.frame(t(data[as.character(taxonomy$oligoID),]))))
    image(z = img, col = palette, axes = FALSE, frame.plot = TRUE, zlim = limits)
    plot.new()
    par(mar = c(1, 0, 0, 1), usr = c(0, 1, 0, 1), xaxs = 'i', yaxs = 'i')
