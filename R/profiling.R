@@ -37,11 +37,17 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
   # Phylogeny used for L1/L2/species summarization
   phylogeny.info <- chipdata$phylogeny.info
+
   # Complete phylogeny before melting temperature etc. filters
   phylogeny.info.full <- chipdata$phylogeny.full
 
+  # Create sample metadata template
+  meta <- data.frame(list(index = 1:ncol(finaldata$oligo), 
+       	                  sample = colnames(finaldata$oligo)), 
+			  stringsAsFactors = FALSE)
+
   ## Write preprocessed data in tab delimited file
-  outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, verbose = verbose)
+  outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, meta, verbose = verbose)
 
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
