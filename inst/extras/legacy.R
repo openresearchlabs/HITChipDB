@@ -1,3 +1,38 @@
+probe.summarization <- function (probedata, taxonomy, levels, summarization.methods) {
+
+  # Ensure we have all levels
+  levels <- intersect(levels, colnames(taxonomy))
+
+  # Oligo summarization
+  finaldata <- list()
+  finaldata$oligo <- probedata
+
+  for (level in levels) {
+
+    finaldata[[level]] <- list()
+
+    for (method in summarization.methods) {
+
+        message(paste(level, method))
+	# For species/L1/L2 summarization use the filtered phylogeny: phylogeny.filtered!
+    	summarized.log10 <- summarize.probesets(
+					taxonomy = taxonomy,		
+			    		  oligo.data = log10(probedata), 
+      			       	          method = method, 
+					   level = level)$summarized.matrix
+
+        # Store the data in absolute scale					
+        finaldata[[level]][[method]] <- 10^summarized.log10
+
+    }
+  }
+
+  finaldata
+
+}
+
+
+
 #' Description: summarize.probesets.through.species
 #'
 #' Arguments:
