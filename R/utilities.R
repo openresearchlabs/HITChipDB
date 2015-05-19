@@ -113,23 +113,6 @@ Phylogeneticenrichments <- function(x, phylogeny.info, origlevel = colnames(phyl
     list(pvalues=1, tables=NULL, tests=NULL, phylogeny.info=phyloM) 
 }
 
-#' Description: Check number of matching phylotypes for each probe
-#' 
-#' Arguments:
-#'   @param phylogeny.info oligo - phylotype matching data.frame
-#'   @param level phylotype level
-#'
-#' Returns:
-#'   @return number of matching phylotypes for each probe
-#'
-#' @export
-#' @references See citation("microbiome") 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords utilities
-
-n.phylotypes.per.oligo <- function (phylogeny.info, level) {
-  sapply(split(phylogeny.info[, c("oligoID", level)], phylogeny.info$oligoID), function(x) length(unique(x[[level]])))
-}
 
 #' Description: Write matrix in tab file
 #'

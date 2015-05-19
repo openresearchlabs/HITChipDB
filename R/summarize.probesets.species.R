@@ -23,7 +23,6 @@
 summarize.probesets.species <- function (phylogeny.info, oligo.data, method, verbose = TRUE, rm.species = c("Victivallis vadensis"), probe.parameters = list()) {
 
   level <- "species"			    
-
   probesets <- retrieve.probesets(phylogeny.info, level = level)
   probesets <- probesets[setdiff(names(probesets), rm.species)]
   nPhylotypesPerOligo <- n.phylotypes.per.oligo(phylogeny.info, level) 
@@ -43,7 +42,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
     for (bac in names(probe.parameters)) {
       probe.parameters[[bac]] <- probe.parameters[[bac]][intersect(names(probe.parameters[[bac]]), probesets[[bac]])]
     }
-
   }
 
   for (set in names(probesets)) {
@@ -66,8 +64,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
 
     } else if (method == "rpa") {
 
-      #message(method)
-
       # RPA is calculated in log domain
       # Downweigh non-specific probes with priors with 10% of virtual data and
       # variances set according to number of matching probes
@@ -76,19 +72,6 @@ summarize.probesets.species <- function (phylogeny.info, oligo.data, method, ver
       res <- rpa.fit(dat, 
       	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
 			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2)
-
-      vec <- res$mu
-      probe.parameters[[set]] <- res$tau2
-
-   } else if (method == "rpa.with.affinities") {
-     
-      #message(method)
-
-      # Also include affinities in probe summarization
-      res <- rpa.fit(dat, 
-      	     		  alpha = 1 + 0.1*ncol(oligo.data)/2, 
-			  beta  = 1 + 0.1*ncol(oligo.data)*nPhylotypesPerOligo[probes]^2, 
-			  summarize.with.affinities = TRUE)
 
       vec <- res$mu
       probe.parameters[[set]] <- res$tau2

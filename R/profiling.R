@@ -46,34 +46,40 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
        	                  sample = colnames(probedata)), 
 			  stringsAsFactors = FALSE)
 
-  # Write preprocessed data in tab delimited file
-  outd <- WriteChipData(list(oligo = probedata), params$wdir, taxonomy, taxonomy.full, meta, verbose = verbose)
+  # Write preprocessed probe-level data, taxonomy and 
+  # metadata template in tab-delimited file
+  outd <- WriteChipData(list(oligo = probedata), params$wdir, 
+       	  	taxonomy, taxonomy.full, meta, verbose = verbose)
+
 
   # Summarize the probes into higher taxonomic levels		
   levels <- c("L0", "L1", "L2", "species")	  
-  finaldata <- probe.summarization(probedata, taxonomy, levels, summarization.methods) 
-  outd <- WriteChipData(finaldata, params$wdir, taxonomy, taxonomy.full, meta, verbose = verbose)
+  finaldata <- probe.summarization(probedata, taxonomy, levels, 
+  	       				      summarization.methods) 
+
+  # Write also the higher-level taxonomic summaries into output
+  outd <- WriteChipData(finaldata, params$wdir, taxonomy, 
+       	  			   taxonomy.full, meta, verbose = verbose)
 
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
-  hc.params <- add.heatmap(log10(finaldata[["oligo"]]), output.dir = params$wdir, taxonomy = taxonomy)
+  hc.params <- add.heatmap(log10(finaldata[["oligo"]]), 
+  	          output.dir = params$wdir, taxonomy = taxonomy)
 
   # Plot hierachical clustering trees into the output directory
   dat <- finaldata[["oligo"]]
 
   if (ncol(dat) > 2) { 
 
-    method <- "complete"
-
     if (params$chip == "MITChip") {
-      # With MITChip, use the filtere phylogeny for hierarchical clustering
+      # With MITChip, use the filtered phylogeny for hierarchical clustering
       dat <- dat[unique(taxonomy$oligoID),]
     }
 
     # Clustering
-    hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
-
     # Save into file
+    method <- "complete"
+    hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
     pdf(paste(params$wdir, "/hclust_oligo_pearson_", method, "_", nrow(dat), "probes", ".pdf", sep = ""), height = 800, width = 800 * ncol(dat)/20)
     plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples", ylab = "1 - Correlation")
     dev.off()
