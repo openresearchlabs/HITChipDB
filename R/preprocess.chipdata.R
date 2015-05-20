@@ -135,12 +135,17 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   }
   params$summarization.methods <- summarization.methods
 
+<<<<<<< HEAD
   list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params)
+=======
+  list(probedata = oligo.abs, taxonomy = phylogeny.filtered, taxonomy.full = phylogeny.full, naHybs = naHybs, params = params)
+>>>>>>> ffec31b300c1477e53b1cd410be91b5408ce2a37
 
 }
 
 
 
+<<<<<<< HEAD
 probe.summarization <- function (probedata, taxonomy, levels, summarization.methods) {
 
   # Ensure we have all levels
@@ -175,3 +180,5 @@ probe.summarization <- function (probedata, taxonomy, levels, summarization.meth
 
 }
 
+=======
+>>>>>>> ffec31b300c1477e53b1cd410be91b5408ce2a37

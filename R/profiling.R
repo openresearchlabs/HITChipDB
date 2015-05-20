@@ -5,7 +5,8 @@
 #' Arguments:
 #'   @param dbuser MySQL username
 #'   @param dbpwd  MySQL password
-#'   @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT"; PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")
+#'   @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT";
+#'                                PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")
 #'   @param verbose verbose
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
@@ -46,34 +47,48 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
        	                  sample = colnames(probedata)), 
 			  stringsAsFactors = FALSE)
 
-  # Write preprocessed data in tab delimited file
-  outd <- WriteChipData(list(oligo = probedata), params$wdir, taxonomy, taxonomy.full, meta, verbose = verbose)
+  # Write preprocessed probe-level data, taxonomy and 
+  # metadata template in tab-delimited file
+  outd <- WriteChipData(list(oligo = probedata), params$wdir, 
+       	  	taxonomy, taxonomy.full, meta, verbose = verbose)
 
-  # Summarize the probes into higher taxonomic levels		
-  levels <- c("L0", "L1", "L2", "species")	  
-  finaldata <- probe.summarization(probedata, taxonomy, levels, summarization.methods) 
-  outd <- WriteChipData(finaldata, params$wdir, taxonomy, taxonomy.full, meta, verbose = verbose)
+  # Metadata template
+  meta <- data.frame(sample = colnames(finaldata$oligo))
 
+  # Summarize probes into species abundance table
+  abundance.tables <- list()
+  abundance.tables$oligo <- probedata
+  for (method in summarization.methods) {
+    abundance.tables[["species"]][[method]] <- summarize_probedata(params$wdir, probedata = probedata, taxonomy = taxonomy,
+      	 		     level = "species", method = method)
+    for (level in setdiff(names(taxonomy), c("species", "oligoID"))) {
+      spec <- abundance.tables[["species"]][[method]] 
+      abundance.tables[[level]][[method]]  <- species2higher(spec, taxonomy, level, method)
+    }
+  }   
+
+  ## Write preprocessed data in tab delimited file
+  outd <- WriteChipData(abundance.tables, params$wdir, taxonomy, taxonomy.full, meta, verbose = verbose)
+  
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
-  hc.params <- add.heatmap(log10(finaldata[["oligo"]]), output.dir = params$wdir, taxonomy = taxonomy)
+  hc.params <- add.heatmap(log10(finaldata[["oligo"]]), 
+  	          output.dir = params$wdir, taxonomy = taxonomy)
 
   # Plot hierachical clustering trees into the output directory
-  dat <- finaldata[["oligo"]]
+  dat <- abundance.tables[["oligo"]]
 
   if (ncol(dat) > 2) { 
 
-    method <- "complete"
-
     if (params$chip == "MITChip") {
-      # With MITChip, use the filtere phylogeny for hierarchical clustering
+      # With MITChip, use the filtered phylogeny for hierarchical clustering
       dat <- dat[unique(taxonomy$oligoID),]
     }
 
     # Clustering
-    hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
-
     # Save into file
+    method <- "complete"
+    hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
     pdf(paste(params$wdir, "/hclust_oligo_pearson_", method, "_", nrow(dat), "probes", ".pdf", sep = ""), height = 800, width = 800 * ncol(dat)/20)
     plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples", ylab = "1 - Correlation")
     dev.off()

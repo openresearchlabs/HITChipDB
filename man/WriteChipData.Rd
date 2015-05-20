@@ -4,7 +4,7 @@
 \alias{WriteChipData}
 \title{Description: Writed data into the output directory}
 \usage{
-WriteChipData(finaldata, output.dir, phylogeny.info, phylogeny.info.full,
+WriteChipData(finaldata, output.dir, tax.table, tax.table.full, meta,
   verbose = TRUE)
 }
 \arguments{
@@ -12,16 +12,18 @@ WriteChipData(finaldata, output.dir, phylogeny.info, phylogeny.info.full,
 
 \item{output.dir}{output directory}
 
-\item{phylogeny.info}{phylogeny.info used in summarization}
+\item{tax.table}{tax.table used in summarization}
 
-\item{phylogeny.info.full}{phylogeny.info.full unfiltered phylogenyinfo}
+\item{tax.table.full}{tax.table.full unfiltered phylogenyinfo}
+
+\item{meta}{sample metadata samples x features}
 
 \item{verbose}{verbose
 
 Returns:}
 }
 \value{
-Preprocessed data in absolute scale, phylogeny.info, and parameters
+Preprocessed data in absolute scale, tax.table, and parameters
 }
 \description{
 Arguments:
