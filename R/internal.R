@@ -231,8 +231,6 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 #' @keywords utilities
 ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip = NULL) {
 
-  #microbiome::InstallMarginal("RMySQL")
-
   ## Determine the working directory
   wdir <- tclvalue(tkchooseDirectory(title = "Save output files into directory:")) 
         
@@ -588,8 +586,6 @@ mysql.format <- function (s) {
 
 FetchData <- function (params, con, scriptVersion, save.data, scaling, cmetrics) {
 
-  # microbiome::InstallMarginal("RMySQL")
-
   ## COLLECTING DATA FROM THE DATABASE
   message("Collecting data from the database\n")
 
@@ -619,10 +615,9 @@ FetchData <- function (params, con, scriptVersion, save.data, scaling, cmetrics)
   rs <- dbSendQuery(con, 'SELECT * FROM tmp1')
 
   rawdata <- fetch(rs, n = -1)
-  rawdataDim <- dim(rawdata)
 
   ## Check if there is any data
-  if(rawdataDim[1]==0)
+  if(nrow(rawdata) == 0)
     stop("No data found for these samples (perhaps they are not normalized yet?).\n\n")
 
   ## Create the data matrix (featuretab) for clustering based on all array features, 

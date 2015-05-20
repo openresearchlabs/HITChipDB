@@ -9,22 +9,13 @@ Description: Tools for HITChipDB preprocessing.
 License: BSD_2_clause + file LICENSE
 Depends:
     R (>= 3.0.1),
-    ade4,
     DBI,
-    grDevices,
+    grDevices,    
     microbiome,
-    parallel,
     preprocessCore,    
     RMySQL,
-    RPA,
-    tcltk,
-    vegan
+    tcltk
 Suggests:
-    affy,
-    MASS,
-    plyr,
-    reshape,
-    svDialogs,
     knitr,
     rmarkdown
 URL: http://microbiome.github.com
