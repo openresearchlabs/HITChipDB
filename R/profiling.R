@@ -9,7 +9,7 @@
 #'   @param verbose verbose
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
-#'   @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave, nmf.
+#'   @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave
 #'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
 #'
 #' Returns:
@@ -32,40 +32,50 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 		 	  summarization.methods = summarization.methods, 
 			         which.projects = which.projects)
 
-  finaldata <- chipdata$data
+  probedata <- chipdata$probedata
   params    <- chipdata$params
 
   # Phylogeny used for L1/L2/species summarization
-  phylogeny.info <- chipdata$phylogeny.info
-  # Complete phylogeny before melting temperature etc. filters
-  phylogeny.info.full <- chipdata$phylogeny.full
+  taxonomy <- chipdata$phylogeny.info
 
+  # Complete phylogeny before melting temperature etc. filters
+  taxonomy.full <- chipdata$phylogeny.full
+
+  # Create sample metadata template
+  meta <- data.frame(list(index = 1:ncol(probedata), 
+       	                  sample = colnames(probedata)), 
+			  stringsAsFactors = FALSE)
+
+  # Write preprocessed probe-level data, taxonomy and 
+  # metadata template in tab-delimited file
+  outd <- WriteChipData(list(oligo = probedata), params$wdir, 
+       	  	taxonomy, taxonomy.full, meta, verbose = verbose)
+
+<<<<<<< HEAD
   # Metadata template
   meta <- data.frame(sample = colnames(finaldata$oligo))
   
   ## Write preprocessed data in tab delimited file
   outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, meta, verbose = verbose)
-
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
-  hc.params <- add.heatmap(log10(finaldata[["oligo"]]), output.dir = params$wdir, phylogeny.info = phylogeny.info)
+  hc.params <- add.heatmap(log10(finaldata[["oligo"]]), 
+  	          output.dir = params$wdir, taxonomy = taxonomy)
 
   # Plot hierachical clustering trees into the output directory
   dat <- finaldata[["oligo"]]
 
-  if (ncol(finaldata[["oligo"]]) > 2) { 
-
-    method <- "complete"
+  if (ncol(dat) > 2) { 
 
     if (params$chip == "MITChip") {
-      # With MITChip, use the filtere phylogeny for hierarchical clustering
-      dat <- dat[unique(phylogeny.info$oligoID),]
+      # With MITChip, use the filtered phylogeny for hierarchical clustering
+      dat <- dat[unique(taxonomy$oligoID),]
     }
 
     # Clustering
-    hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
-
     # Save into file
+    method <- "complete"
+    hc <- hclust(as.dist(1 - cor(log10(dat), use = "pairwise.complete.obs", method = "pearson")), method = method)
     pdf(paste(params$wdir, "/hclust_oligo_pearson_", method, "_", nrow(dat), "probes", ".pdf", sep = ""), height = 800, width = 800 * ncol(dat)/20)
     plot(hc, hang = -1, main = "hclust/pearson/oligo/log10/complete", xlab = "Samples", ylab = "1 - Correlation")
     dev.off()
@@ -92,7 +102,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 #'   @param dat oligoprofile data in original (non-log) domain
 #'   @param output.dir output data directory
 #'   @param output.file output file name
-#'   @param phylogeny.info oligo-phylotype mappings
+#'   @param taxonomy oligo-phylotype mappings
 #'   @param ppcm figure size
 #'   @param hclust.method hierarchical clustering method
 #'   @param palette color palette ("white/black" / "white/blue" / "black/yellow/white")
@@ -111,12 +121,12 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-add.heatmap <- function (dat, output.dir, output.file = NULL, phylogeny.info, ppcm = 150, 
+add.heatmap <- function (dat, output.dir, output.file = NULL, taxonomy, ppcm = 150, 
 	         hclust.method = "complete", palette = "white/black", level = "L1", metric = "pearson", 
   		 figureratio = 10, fontsize = 40, tree.display = TRUE) {
 
-  # dat <- finaldata[["oligo"]]; output.dir = params$wdir;  output.file = NULL; phylogeny.info = phylogeny.info; ppcm = 150; hclust.method = "complete"; palette = "white/blue"; level = "L2"; metric = "pearson"; figureratio = 12; fontsize = 12; tree.display = TRUE
-  #output.dir = "~/tmp/";  output.file = NULL; phylogeny.info = phylogeny.info; ppcm = 150; hclust.method = "complete"; palette = "white/blue"; level = "L2"; metric = "pearson"; figureratio = 12; fontsize = 12; tree.display = TRUE
+  # dat <- finaldata[["oligo"]]; output.dir = params$wdir;  output.file = NULL; taxonomy = taxonomy; ppcm = 150; hclust.method = "complete"; palette = "white/blue"; level = "L2"; metric = "pearson"; figureratio = 12; fontsize = 12; tree.display = TRUE
+  #output.dir = "~/tmp/";  output.file = NULL; taxonomy = taxonomy; ppcm = 150; hclust.method = "complete"; palette = "white/blue"; level = "L2"; metric = "pearson"; figureratio = 12; fontsize = 12; tree.display = TRUE
 
   if (is.null(output.file)) {
     output.file <- paste(output.dir,"/", gsub(" ", "", level), "-oligoprofileClustering.pdf",sep="")
@@ -135,7 +145,7 @@ add.heatmap <- function (dat, output.dir, output.file = NULL, phylogeny.info, pp
   	    width = max(trunc(ppcm*21), trunc(ppcm*21*ncol(dat)/70)), 
 	    height = trunc(ppcm*29.7)) 
     try(hc.params <- PlotPhylochipHeatmap(data = dat,
-                phylogeny.info = phylogeny.info,
+                taxonomy = taxonomy,
                 metric = metric,
                 level = level,
                 tree.display = tree.display,

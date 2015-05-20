@@ -4,11 +4,11 @@
 \alias{summarize.probesets}
 \title{Description: summarize.probesets}
 \usage{
-summarize.probesets(phylogeny.info, oligo.data, method, level, verbose = TRUE,
+summarize.probesets(taxonomy, oligo.data, method, level, verbose = TRUE,
   species.matrix = NULL)
 }
 \arguments{
-\item{phylogeny.info}{oligo - phylotype matching data.frame}
+\item{taxonomy}{oligo - phylotype matching data.frame}
 
 \item{oligo.data}{preprocessed probes x samples data matrix in log10 domain}
 

@@ -8,7 +8,7 @@
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
 #'   @param use.precalculated.phylogeny use precalculated phylogeny?
-#'   @param summarization.methods List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave", "nmf"
+#'   @param summarization.methods List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave"
 #'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
 #'   @param all.samples Use all samples from the selected project by default? TRUE / FALSE
 #'                                        
@@ -16,15 +16,13 @@
 #'   @return Preprocessed data and parameters
 #'
 #' @export
-#' @import RMySQL
+#' @importFrom DBI dbDriver
 #' @importFrom microbiome levelmap
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
 preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, all.samples = TRUE) {
-
-  # library(HITChipDB); library(microbiome); fs <- list.files("~/Rpackages/microbiome/HITChipDB/R/", full.names = T); for (f in fs) {source(f)}; dbuser = "pit"; dbpwd = "passu"; dbname = "pitchipdb"; verbose = TRUE; host = NULL; port = NULL; use.precalculated.phylogeny = NULL; summarization.methods = c("frpa", "sum"); which.projects = NULL; all.samples = TRUE
 
   ## ask parameters or read from R-file
   drv <- dbDriver("MySQL")
@@ -37,12 +35,6 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   chip <- detect.chip(dbname)
   params <- ReadParameters(con, which.projects = which.projects, all.samples = all.samples, chip = chip)  
 
-  # Use precalculated phylogeny with HITChip to speed up
-  if (is.null(use.precalculated.phylogeny)) {
-    if ( params$chip == "HITChip") { use.precalculated.phylogeny <- TRUE  }
-    if (!params$chip == "HITChip") { use.precalculated.phylogeny <- FALSE }
-  }
-
   if (params$chip == "HITChip" && "rpa" %in% summarization.methods)  {
     warning("Frozen-RPA (fRPA) used instead of RPA for HITChip.")
     summarization.methods <- unique(gsub("^rpa", "frpa", summarization.methods))
@@ -51,13 +43,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     summarization.methods <- unique(gsub("frpa", "rpa", summarization.methods))
   }
 
-  # Minmax parameters hard-coded to standardize normalization;
-  # Using the parameters from HITChip atlas 
-  # params$minmax.points <- c(30.02459, 132616.91371)
-  params$minmax.points <- c(30, 133000) 
-  # TODO pre-calculated quantiles encoded here, too?
-
-  # Get sample information matrix for the selected projects	
+  message("Get sample information matrix for the selected projects")
   project.info <- fetch.sample.info(params$prj$projectName, chiptype = NULL, 
   	       	  		    dbuser = dbuser, 
 				    dbpwd = dbpwd, 
@@ -67,13 +53,10 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   	       	  		    selected.samples = params$samples$sampleID)
 
 
-  # Let is require that all data is from a single chip; otherwise stop				    
+  # Let us require that all data is from a unique chip design; otherwise stop				    
   if (length(unique(project.info$designID)) > 1) {
     # message(table(project.info$designID, project.info$projectName))
-    stop("The selected projects are from different array versions! Combining these is not allowed.")
-    # Side note: Combining is possible by disabling this part, but
-    # should only be done by very experienced programmers who know
-    # exactly what they are doing - otherwise errors and confusion arise
+    stop("The selected projects are from different array versions or missing the array design info! Combining these is not allowed.")
   }
 
   message("Get probe-level data for the selected hybridisations")
@@ -94,10 +77,15 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     fdat.orig <- fdat.orig[, !onlyNA]
     fdat.hybinfo <- fdat.hybinfo[, !onlyNA]
   }
-  
+
   ##############################
   ## Between-array normalization
   ##############################
+
+  # Minmax parameters hard-coded to standardize normalization;
+  # Using the parameters from HITChip atlas 
+  # params$minmax.points <- c(30.02459, 132616.91371)
+  params$minmax.points <- c(30, 133000) 
 
   # selected scaling for featurelevel data
   # Background correction after this step, if any. 
@@ -110,10 +98,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## GET OLIGO-PHYLOTYPE MAPPINGS
   ##################################
 
-  if (!use.precalculated.phylogeny || !params$chip == "HITChip") {
-
-    message("Fetching Phylogeny from the database")
-    phylogeny.full <- get.phylogeny.info(params$phylogeny, 
+  ph <- ReadPhylogeny(params$phylogeny, params$rm.phylotypes, params$remove.nonspecific.oligos,
 	    		     dbuser = dbuser, 
 			     dbpwd = dbpwd, 
 			     dbname = dbname, 
@@ -122,62 +107,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 			     verbose = verbose, 
 			     chip = params$chip)
 
-
-    # Fix an issue with PITChip2:	
-    #> table(phylogeny.full[grep("Ignatzschineria", phylogeny.full$L2),"L2"])
-    #Ignatzschineria et al. Ignatzschineria et rel. 
-    #                 64                      61 
-    phylogeny.full[grep("Ignatzschineria et al.", phylogeny.full$L2),"L2"] <- "Ignatzschineria et rel."
-
-    # Fix the Clostridia name			     
-    if ( params$chip == "HITChip") { 
-      phylogeny.full$L2 <- gsub("Clostridia", "Clostridium (sensu stricto)", as.character(phylogeny.full$L2))
-    }
-
-    # This handles also pmTm, complement and mismatch filtering
-    # This is the phylogeny used in probe summarization into taxonomic levels
-    rm.oligos <- sync.rm.phylotypes(params$rm.phylotypes, phylogeny.full)$oligos
-
-    phylogeny.filtered <- prune16S(phylogeny.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = params$rm.phylotypes$oligos, remove.nonspecific.oligos = params$remove.nonspecific.oligos)
-
-    # Remove 66 probes that target multiple L1 groups
-    lmap <- levelmap(NULL, level.from = "oligoID", level.to = "L1", phylogeny.info = phylogeny.info.filtered)
-    hits <- sapply(lmap, length)
-    oligoID <- NULL
-    phylogeny.info.filtered <- subset(phylogeny.info.filtered, oligoID %in% names(which(hits <= 1)))
-
-    # The standard database query returns 3631 unique oligoIDs for HITChip after explicitly excluding 
-    # 'UNI 515', 'HIT 5658', 'HIT 1503', 'HIT 1505', 'HIT 1506'.
-    # Then standard filters:
-    # pmTm.margin = 2.5 (260 oligoIDs discarded);
-    # complement = 1 (1 oligoID discarded);
-    # mismatch = 0 (260 oligoIDs discarded; only partially overlapping with other filters);
-    # -> The filtered phylogeny is used for species/L1/L2 summarization
-    # -> The full phylogeny is still OK for oligo-level analyses, as filtering controls mainly
-    #    for mismatches but otherwise the oligos are valid and indeed target some taxa that are
-    #    missing from the given phylogeny
-
-    # Keep only relevant cols
-    phylogeny.full <- phylogeny.full[, 1:6]; 
-    phylogeny.filtered <- phylogeny.filtered[, 1:6]; 
-
-    # Remove duplicate rows
-    phylogeny.full <- phylogeny.full[!duplicated(phylogeny.full),]
-    phylogeny.filtered <- phylogeny.filtered[!duplicated(phylogeny.filtered),]
-
-  } else {
-
-    message("Using pre-calculated phylogeny")
-
-    data.directory <- system.file("extdata/", package = "microbiome")
-
-    phylogeny.filtered <- read.profiling(level = "phylogeny.filtered", data.dir = data.directory)
-
-    phylogeny.full <- read.profiling(level = "phylogeny.full", data.dir = data.directory)
-
-    if (!params$chip == "HITChip") { stop("Pre-calculated phylogeny available only for HITChip") }
-    
-  }
+  phylogeny.filtered <- ph$filtered
+  phylogeny.full <- ph$full
 
   ####################
   ## COMPUTE SUMMARIES
@@ -193,9 +124,6 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   rownames( oligo.abs ) <- rownames( oligo.log10 )
   colnames( oligo.abs ) <- colnames( oligo.log10 )
 
-  # Oligo summarization
-  finaldata <- list()
-  finaldata[["oligo"]] <- oligo.abs
   levels <- c("species", "L2", "L1")
   if (params$chip %in% c("MITChip", "PITChip", "ChickChip")) {
     levels <- c(levels, "L0")
@@ -205,36 +133,11 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
       summarization.methods <- unique(summarization.methods)
    }
   }
+  params$summarization.methods <- summarization.methods
 
-  if (ncol(oligo.log10) == 1) { 
-    warning("Only a single sample selected - skipping NMF summarization")
-    summarization.methods <- setdiff(summarization.methods, "nmf")
-  }
-  
-  for (level in levels) {
-    finaldata[[level]] <- list()
-    for (method in summarization.methods) {
-
-        message(paste(level, method))
-	# For species/L1/L2 summarization use the filtered phylogeny: phylogeny.filtered!
-    	summarized.log10 <- summarize.probesets(
-					phylogeny.info = phylogeny.filtered,		
-			    		  oligo.data = oligo.log10, 
-      			       	          method = method, 
-					   level = level)$summarized.matrix
-
-        # Store the data in absolute scale					
-        finaldata[[level]][[method]] <- 10^summarized.log10
-
-	# Finish this later
-	if (level == "L2") {
-	  rownames(finaldata[[level]][[method]]) <- gsub("^Clostridia$", "Clostridium (sensu stricto)", rownames(finaldata[[level]][[method]]))
-	}
-
-    }
-  }
-
-  list(data = finaldata, phylogeny.info = phylogeny.filtered, phylogeny.full = phylogeny.full, naHybs = naHybs, params = params)
+  list(probedata = oligo.abs, taxonomy = phylogeny.filtered, phylogeny.full = phylogeny.full, naHybs = naHybs, params = params)
 
 }
+
+
 

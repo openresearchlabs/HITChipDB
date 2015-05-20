@@ -452,7 +452,8 @@ scaling.minmax <- function (dat, quantile.points = NULL, minmax.points = NULL, r
 
 WriteLog <- function (naHybs, params) {
 
-  scriptVersion <- sessionInfo()$otherPkgs$microbiome$Version # microbiome package number
+  scriptVersion1 <- sessionInfo()$otherPkgs$microbiome$Version # microbiome package number
+  scriptVersion2 <- sessionInfo()$otherPkgs$HITChipDB$Version # microbiome package number
 
   ## Write log of parameters used in profiling in to the file
   tmpTime <- strsplit(as.character(Sys.time()), split=" ")[[1]]
@@ -463,7 +464,8 @@ WriteLog <- function (naHybs, params) {
 
   cat("Log of profiling script\n", "\n", file=logfilename)
   cat("profiling date: ",profTime, "\n", file=logfilename, append=T)
-  cat("script version: ", scriptVersion,  "\n",file=logfilename, append=T)
+  cat("script version microbiome: ", scriptVersion1,  "\n",file=logfilename, append=T)
+  cat("script version HITChipDB: ", scriptVersion2,  "\n",file=logfilename, append=T)
   cat("data retrieved from db: ",params$useDB,  "\n", file=logfilename, append=T)
   cat("project IDs: ",params$prj$projectID,  "\n", file=logfilename, append=T)
   cat("sample IDs: ",params$samples$sampleID,  "\n", file=logfilename, append=T)
@@ -479,7 +481,7 @@ WriteLog <- function (naHybs, params) {
 
   ## Save profiling parameters 
   paramfilename <- paste(params$wdir,"/",profTime,"_profiling_params.Rdata", sep="")
-  save(logfilename, profTime, scriptVersion, params, naHybs, file = paramfilename)  
+  save(logfilename, profTime, scriptVersion1, scriptVersion2, params, naHybs, file = paramfilename)  
 
   list(log.file = logfilename, parameter.file = paramfilename)
   
@@ -491,19 +493,30 @@ WriteLog <- function (naHybs, params) {
 #' Arguments:
 #'   @param finaldata preprocessed data matrices in absolute scale (from the chipdata function)
 #'   @param output.dir output directory
+<<<<<<< HEAD
 #'   @param phylogeny.info phylogeny.info used in summarization
 #'   @param phylogeny.info.full phylogeny.info.full unfiltered phylogenyinfo
 #'   @param meta sample metadata 
+=======
+#'   @param tax.table tax.table used in summarization
+#'   @param tax.table.full tax.table.full unfiltered phylogenyinfo
+#'   @param meta sample metadata samples x features
+>>>>>>> 1135b976880f9145ff553b04e0af9b51f506fc6b
 #'   @param verbose verbose
 #'
 #' Returns:
-#'   @return Preprocessed data in absolute scale, phylogeny.info, and parameters
+#'   @return Preprocessed data in absolute scale, tax.table, and parameters
 #'
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
+<<<<<<< HEAD
 WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info.full, meta, verbose = TRUE) {
+=======
+
+WriteChipData <- function (finaldata, output.dir, tax.table, tax.table.full, meta, verbose = TRUE) {
+>>>>>>> 1135b976880f9145ff553b04e0af9b51f506fc6b
 
   ## Write oligoprofile in original (non-log) domain
   fname <- paste(output.dir, "/oligoprofile.tab", sep = "")
@@ -513,22 +526,27 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
   ## Write the other levels in log domain
   for (level in setdiff(names(finaldata), "oligo")) {
     for (method in names(finaldata[[level]])) {
-      # Skip species-nmf as not validated
-      if (!(level == "species" && method == "nmf")) {      
         fname <- paste(output.dir, "/", level, "-", method, ".tab", sep = "")
         mydat <- finaldata[[level]][[method]]
         WriteMatrix(cbind(rownames(mydat), mydat), fname, verbose)
-      }
     }
   }
   
-  # Write filtered phylogeny.info 
-  fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
-  WriteMatrix(phylogeny.info, fname, verbose)
+  # Write metadata template
+  fname <- paste(output.dir, "/meta.tab", sep = "")
+  WriteMatrix(meta, fname, verbose)  
 
-  # Write unfiltered phylogeny.info
+  # Write tax.table that shall be used for probe summarization
+  fname <- paste(output.dir, "/taxonomy.tab", sep = "")
+  WriteMatrix(tax.table, fname, verbose)
+
+  # Write filtered tax.table 
+  fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
+  WriteMatrix(tax.table, fname, verbose)
+
+  # Write unfiltered tax.table
   fname <- paste(output.dir, "/phylogeny.full.tab", sep = "")
-  WriteMatrix(phylogeny.info.full, fname, verbose)
+  WriteMatrix(tax.table.full, fname, verbose)
 
    # Write metadata
   fname <- paste(output.dir, "/meta.tab", sep = "")
@@ -841,7 +859,7 @@ threshold.data <- function(dat, sd.times = 6){
 #'
 #' Arguments:
 #'   @param rm.phylotypes rm.phylotypes
-#'   @param phylogeny.info phylogeny.info
+#'   @param tax.table tax.table
 #'
 #' Returns:
 #'   @return probe name vector
@@ -851,15 +869,15 @@ threshold.data <- function(dat, sd.times = 6){
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
+sync.rm.phylotypes <- function (rm.phylotypes, tax.table) {
 
   # If remove L0 is not NULL, then add L1 groups under this group to removal list
   if (!is.null(rm.phylotypes$L0)) {
     rm.phylotypes$L1 <- c(rm.phylotypes$L1,
   		unlist(levelmap(phylotypes = rm.phylotypes$L0, 
-				level.from = "L0", 
-				level.to = "L1", 
-				phylogeny.info = phylogeny.info)))
+				from = "L0", 
+				to = "L1", 
+				 tax.table = tax.table)))
 
     rm.phylotypes$L1 <- unique(rm.phylotypes$L1)
   }
@@ -868,8 +886,8 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
   if (!is.null(rm.phylotypes$L1)) {
     rm.phylotypes$L2 <- c(rm.phylotypes$L2,
   			unlist(levelmap(phylotypes = rm.phylotypes$L1, 
-			level.from = "L1", level.to = "L2", 
-			phylogeny.info = phylogeny.info)))
+			from = "L1", to = "L2", 
+			tax.table = tax.table)))
 
     rm.phylotypes$L2 <- unique(rm.phylotypes$L2)
   }
@@ -878,9 +896,9 @@ sync.rm.phylotypes <- function (rm.phylotypes, phylogeny.info) {
   if (!is.null(rm.phylotypes$L2)) {
     rm.phylotypes$species <- c(rm.phylotypes$species,
   			unlist(levelmap(phylotypes = rm.phylotypes$L2, 
-				level.from = "L2", 
-				level.to = "species", 
-				phylogeny.info = phylogeny.info)))
+				from = "L2", 
+				to = "species", 
+				tax.table = tax.table)))
 
     rm.phylotypes$species <- unique(rm.phylotypes$species)
   }

@@ -1,10 +1,40 @@
+
+#' Shade et al. (2014). Conditionally Rare Taxa Disproportionately Contribute to Temporal Changes in Microbial Diversity. mBio 5(4):e01371-14. doi: 10.1128/mBio.01371-14
+#'
+#' Ellison AM (1987). Effect of seed dimorphism on the density-dependent dynamics of experimental populations of Atriplex triangularis (Chenopodiaceae). Am. J. Bot. 74:1280–1288. doi:10.2307/2444163.
+#'
+
+#' List color scales
+#'
+#' 
+#'
+#' 
+#'   @return list of color scales
+#'
+#' @export
+#' @examples list.color.scales()
+#' @references See citation('microbiome') 
+#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
+#' @keywords utilities
+
+list.color.scales <- function() {
+    ## Different colour scales
+    list(`white/blue` = colorRampPalette(c("white", "darkblue"), 
+         interpolate = "linear")(100), 
+         `white/black` = colorRampPalette(c("white", "black"), 
+         interpolate = "linear")(100), 
+        `black/yellow/white` = colorRampPalette(c("black", "yellow", "white"), 
+         bias = 0.5, interpolate = "linear")(100))
+}
+
+
 #' PlotPhylochipHeatmap
 #'
 #' Description: Plots heatmap of the oligo profiles together with phylotype grouping and sample clustering
 #'
 #' Arguments:
 #'   @param data oligoprofile data in original (non-log) domain
-#'   @param phylogeny.info oligo-phylotype mappings
+#'   @param taxonomy oligo-phylotype mappings
 #'   @param metric clustering metric
 #'   @param level taxonomic level to show (L0 / L1 / L2 / species)
 #'   @param tree.display tree.display
@@ -23,7 +53,7 @@
 #' @keywords utilities
 
 PlotPhylochipHeatmap <- function (data,
-                         phylogeny.info,
+                         taxonomy,
                          metric = "pearson", 
                          level = "L1", 
                          tree.display = TRUE, 
@@ -54,17 +84,17 @@ PlotPhylochipHeatmap <- function (data,
    paper <- par("din")
 
    if (level == "oligo") { level <- "oligoID" }
-   tax.order <- order(as.character(phylogeny.info[[level]]), na.last = FALSE)
+   tax.order <- order(as.character(taxonomy[[level]]), na.last = FALSE)
 
-   nainds <- is.na(phylogeny.info[, level])
+   nainds <- is.na(taxonomy[, level])
    if (sum(nainds) > 0) {
-     phylogeny.info[nainds, level] <- '-'  # replace empty maps
+     taxonomy[nainds, level] <- '-'  # replace empty maps
    }
 
-   levs <- unlist(lapply(split(phylogeny.info[[level]], as.factor(phylogeny.info[[level]])), length))
-   # order the rows in phylogeny.info by level
-   phylogeny.info <- phylogeny.info[tax.order,]
-   phylogeny.info <- phylogeny.info[phylogeny.info$oligoID %in% rownames(data), ]
+   levs <- unlist(lapply(split(taxonomy[[level]], as.factor(taxonomy[[level]])), length))
+   # order the rows in taxonomy by level
+   taxonomy <- taxonomy[tax.order,]
+   taxonomy <- taxonomy[taxonomy$oligoID %in% rownames(data), ]
 
    annwidth <- max(strwidth(names(levs),units="inch"))*2.54*1.2
    profilewidth <- max(strheight(names(levs),units="inch"))*2.54*dim(data)[2]*1.6
@@ -111,7 +141,7 @@ PlotPhylochipHeatmap <- function (data,
 
    par(mar = c(1,1,0,0), oma = c(0,0,0,0))
    
-   img <- as.matrix(rev(as.data.frame(t(data[as.character(phylogeny.info$oligoID),]))))
+   img <- as.matrix(rev(as.data.frame(t(data[as.character(taxonomy$oligoID),]))))
    image(z = img, col = palette, axes = FALSE, frame.plot = TRUE, zlim = limits)
    plot.new()
    par(mar = c(1, 0, 0, 1), usr = c(0, 1, 0, 1), xaxs = 'i', yaxs = 'i')

@@ -4,12 +4,12 @@
 \alias{sync.rm.phylotypes}
 \title{Description: List oligos associated with removed phylotypes from different levels}
 \usage{
-sync.rm.phylotypes(rm.phylotypes, phylogeny.info)
+sync.rm.phylotypes(rm.phylotypes, tax.table)
 }
 \arguments{
 \item{rm.phylotypes}{rm.phylotypes}
 
-\item{phylogeny.info}{phylogeny.info
+\item{tax.table}{tax.table
 
 Returns:}
 }

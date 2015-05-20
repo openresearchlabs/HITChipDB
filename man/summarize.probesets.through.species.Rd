@@ -4,13 +4,13 @@
 \alias{summarize.probesets.through.species}
 \title{Description: summarize.probesets.through.species}
 \usage{
-summarize.probesets.through.species(level, phylogeny.info, oligo.data, method,
+summarize.probesets.through.species(level, taxonomy, oligo.data, method,
   verbose = FALSE)
 }
 \arguments{
 \item{level}{summarization level}
 
-\item{phylogeny.info}{oligo - phylotype matching data.frame}
+\item{taxonomy}{oligo - phylotype matching data.frame}
 
 \item{oligo.data}{preprocessed probes x samples data matrix in log10 domain}
 

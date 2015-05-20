@@ -11,8 +11,9 @@
 #' Returns:
 #'  @return Used for its side effects
 #'
-#' @examples data(peerj32); 
-#'          c3d <- Core3D(createCore(t(peerj32$microbes)))
+#' @examples 
+#'  # data(peerj32); 
+#'  # c3d <- Core3D(core_matrix(t(peerj32$microbes)))
 #' @export 
 #' 
 #' @references 
