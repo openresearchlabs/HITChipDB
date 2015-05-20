@@ -493,6 +493,7 @@ WriteLog <- function (naHybs, params) {
 #'   @param output.dir output directory
 #'   @param phylogeny.info phylogeny.info used in summarization
 #'   @param phylogeny.info.full phylogeny.info.full unfiltered phylogenyinfo
+#'   @param meta sample metadata 
 #'   @param verbose verbose
 #'
 #' Returns:
@@ -502,8 +503,7 @@ WriteLog <- function (naHybs, params) {
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
-WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info.full, verbose = TRUE) {
+WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info.full, meta, verbose = TRUE) {
 
   ## Write oligoprofile in original (non-log) domain
   fname <- paste(output.dir, "/oligoprofile.tab", sep = "")
@@ -521,7 +521,6 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
       }
     }
   }
-
   
   # Write filtered phylogeny.info 
   fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
@@ -530,6 +529,10 @@ WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info
   # Write unfiltered phylogeny.info
   fname <- paste(output.dir, "/phylogeny.full.tab", sep = "")
   WriteMatrix(phylogeny.info.full, fname, verbose)
+
+   # Write metadata
+  fname <- paste(output.dir, "/meta.tab", sep = "")
+  WriteMatrix(meta, fname, verbose)
 
   # Return path to the output directory 
   output.dir

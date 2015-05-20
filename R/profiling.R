@@ -40,8 +40,11 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   # Complete phylogeny before melting temperature etc. filters
   phylogeny.info.full <- chipdata$phylogeny.full
 
+  # Metadata template
+  meta <- data.frame(sample = colnames(finaldata$oligo))
+  
   ## Write preprocessed data in tab delimited file
-  outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, verbose = verbose)
+  outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, meta, verbose = verbose)
 
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
