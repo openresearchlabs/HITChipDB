@@ -135,7 +135,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   }
   params$summarization.methods <- summarization.methods
 
-  list(probedata = oligo.abs, taxonomy = phylogeny.filtered, phylogeny.full = phylogeny.full, naHybs = naHybs, params = params)
+  list(probedata = oligo.abs, taxonomy = phylogeny.filtered, taxonomy.full = phylogeny.full, naHybs = naHybs, params = params)
 
 }
 

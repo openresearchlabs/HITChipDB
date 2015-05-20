@@ -5,7 +5,8 @@
 #' Arguments:
 #'   @param dbuser MySQL username
 #'   @param dbpwd  MySQL password
-#'   @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT"; PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")
+#'   @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT";
+#'                                PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")
 #'   @param verbose verbose
 #'   @param host host; needed with FTP connections
 #'   @param port port; needed with FTP connections
@@ -36,7 +37,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   params    <- chipdata$params
 
   # Phylogeny used for L1/L2/species summarization
-  taxonomy <- chipdata$phylogeny.info
+  taxonomy <- chipdata$taxonomy
 
   # Complete phylogeny before melting temperature etc. filters
   taxonomy.full <- chipdata$phylogeny.full
@@ -51,19 +52,31 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   outd <- WriteChipData(list(oligo = probedata), params$wdir, 
        	  	taxonomy, taxonomy.full, meta, verbose = verbose)
 
-<<<<<<< HEAD
   # Metadata template
   meta <- data.frame(sample = colnames(finaldata$oligo))
-  
+
+  # Summarize probes into species abundance table
+  abundance.tables <- list()
+  abundance.tables$oligo <- probedata
+  for (method in summarization.methods) {
+    abundance.tables[["species"]][[method]] <- summarize_probedata(params$wdir, probedata = probedata, taxonomy = taxonomy,
+      	 		     level = "species", method = method)
+    for (level in setdiff(names(taxonomy), c("species", "oligoID"))) {
+      spec <- abundance.tables[["species"]][[method]] 
+      abundance.tables[[level]][[method]]  <- species2higher(spec, taxonomy, level, method)
+    }
+  }   
+
   ## Write preprocessed data in tab delimited file
-  outd <- WriteChipData(finaldata, params$wdir, phylogeny.info, phylogeny.info.full, meta, verbose = verbose)
+  outd <- WriteChipData(abundance.tables, params$wdir, taxonomy, taxonomy.full, meta, verbose = verbose)
+  
   # Add oligo heatmap into output directory
   # Provide oligodata in the _original (non-log) domain_
   hc.params <- add.heatmap(log10(finaldata[["oligo"]]), 
   	          output.dir = params$wdir, taxonomy = taxonomy)
 
   # Plot hierachical clustering trees into the output directory
-  dat <- finaldata[["oligo"]]
+  dat <- abundance.tables[["oligo"]]
 
   if (ncol(dat) > 2) { 
 

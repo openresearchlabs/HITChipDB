@@ -13,7 +13,8 @@ run.profiling.script(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
 
 \item{dbpwd}{MySQL password}
 
-\item{dbname}{MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT"; PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")}
+\item{dbname}{MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT";
+                             PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")}
 
 \item{verbose}{verbose}
 

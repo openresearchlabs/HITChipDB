@@ -493,15 +493,9 @@ WriteLog <- function (naHybs, params) {
 #' Arguments:
 #'   @param finaldata preprocessed data matrices in absolute scale (from the chipdata function)
 #'   @param output.dir output directory
-<<<<<<< HEAD
-#'   @param phylogeny.info phylogeny.info used in summarization
-#'   @param phylogeny.info.full phylogeny.info.full unfiltered phylogenyinfo
-#'   @param meta sample metadata 
-=======
 #'   @param tax.table tax.table used in summarization
 #'   @param tax.table.full tax.table.full unfiltered phylogenyinfo
 #'   @param meta sample metadata samples x features
->>>>>>> 1135b976880f9145ff553b04e0af9b51f506fc6b
 #'   @param verbose verbose
 #'
 #' Returns:
@@ -511,14 +505,9 @@ WriteLog <- function (naHybs, params) {
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-<<<<<<< HEAD
-WriteChipData <- function (finaldata, output.dir, phylogeny.info, phylogeny.info.full, meta, verbose = TRUE) {
-=======
-
 WriteChipData <- function (finaldata, output.dir, tax.table, tax.table.full, meta, verbose = TRUE) {
->>>>>>> 1135b976880f9145ff553b04e0af9b51f506fc6b
 
-  ## Write oligoprofile in original (non-log) domain
+## Write oligoprofile in original (non-log) domain
   fname <- paste(output.dir, "/oligoprofile.tab", sep = "")
   mydat <- finaldata[["oligo"]]
   WriteMatrix(cbind(rownames(mydat), mydat), fname, verbose)
