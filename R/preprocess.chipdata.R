@@ -107,8 +107,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 			     verbose = verbose, 
 			     chip = params$chip)
 
-  phylogeny.filtered <- ph$filtered
-  phylogeny.full <- ph$full
+  taxonomy.filtered <- ph$filtered
+  taxonomy.full <- ph$full
 
   ####################
   ## COMPUTE SUMMARIES
@@ -135,7 +135,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   }
   params$summarization.methods <- summarization.methods
 
-  list(probedata = oligo.abs, taxonomy = phylogeny.filtered, phylogeny.full = phylogeny.full, naHybs = naHybs, params = params)
+  list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params)
 
 }
 
@@ -157,7 +157,8 @@ probe.summarization <- function (probedata, taxonomy, levels, summarization.meth
     for (method in summarization.methods) {
 
         message(paste(level, method))
-	# For species/L1/L2 summarization use the filtered phylogeny: phylogeny.filtered!
+
+	# For species/L1/L2 summarization use the filtered phylogeny: taxonomy.filtered!
     	summarized.log10 <- summarize.probesets(
 					taxonomy = taxonomy,		
 			    		  oligo.data = log10(probedata), 

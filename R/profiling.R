@@ -36,7 +36,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   params    <- chipdata$params
 
   # Phylogeny used for L1/L2/species summarization
-  taxonomy <- chipdata$phylogeny.info
+  taxonomy <- chipdata$taxonomy
 
   # Complete phylogeny before melting temperature etc. filters
   taxonomy.full <- chipdata$phylogeny.full
