@@ -135,50 +135,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   }
   params$summarization.methods <- summarization.methods
 
-<<<<<<< HEAD
   list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params)
-=======
-  list(probedata = oligo.abs, taxonomy = phylogeny.filtered, taxonomy.full = phylogeny.full, naHybs = naHybs, params = params)
->>>>>>> ffec31b300c1477e53b1cd410be91b5408ce2a37
 
 }
 
 
-
-<<<<<<< HEAD
-probe.summarization <- function (probedata, taxonomy, levels, summarization.methods) {
-
-  # Ensure we have all levels
-  levels <- intersect(levels, colnames(taxonomy))
-
-  # Oligo summarization
-  finaldata <- list()
-  finaldata$oligo <- probedata
-
-  for (level in levels) {
-
-    finaldata[[level]] <- list()
-
-    for (method in summarization.methods) {
-
-        message(paste(level, method))
-
-	# For species/L1/L2 summarization use the filtered phylogeny: taxonomy.filtered!
-    	summarized.log10 <- summarize.probesets(
-					taxonomy = taxonomy,		
-			    		  oligo.data = log10(probedata), 
-      			       	          method = method, 
-					   level = level)$summarized.matrix
-
-        # Store the data in absolute scale					
-        finaldata[[level]][[method]] <- 10^summarized.log10
-
-    }
-  }
-
-  finaldata
-
-}
-
-=======
->>>>>>> ffec31b300c1477e53b1cd410be91b5408ce2a37
