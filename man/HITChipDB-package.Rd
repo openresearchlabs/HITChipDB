@@ -13,7 +13,7 @@ Brief summary of the HITChipDB package
 Package: \tab HITChipDB\cr
 Type: \tab Package\cr
 Version: \tab See sessionInfo() or DESCRIPTION file\cr
-Date: \tab 2012\cr
+Date: \tab 2012-2015\cr
 License: \tab FreeBSD\cr
 LazyLoad: \tab yes\cr
 }
