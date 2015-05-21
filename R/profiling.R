@@ -41,7 +41,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   taxonomy <- chipdata$taxonomy
 
   # Complete phylogeny before melting temperature etc. filters
-  taxonomy.full <- chipdata$phylogeny.full
+  taxonomy.full <- chipdata$taxonomy.full
 
   # Create sample metadata template
   meta <- data.frame(list(index = 1:ncol(probedata), 
