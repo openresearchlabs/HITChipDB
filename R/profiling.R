@@ -53,23 +53,24 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   outd <- WriteChipData(list(oligo = probedata), params$wdir, 
        	  	taxonomy, taxonomy.full, meta, verbose = verbose)
 
-  probe.parameters <- NULL
-  if (method == "frpa") {
-    if (verbose) {message("Loading pre-calculated RPA preprocessing parameters")}
-    probes <- unique(taxonomy[, "oligoID"])
-    rpa.hitchip.species.probe.parameters <- list()
-    load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
-    probe.parameters <- rpa.hitchip.species.probe.parameters
-    # Ensure we use only those parameters that are in the filtered phylogeny
-    for (bac in names(probe.parameters)) {
-      probe.parameters[[bac]] <- probe.parameters[[bac]][intersect(names(probe.parameters[[bac]]), probes)]
-    }
-  }
-
   # Summarize probes into species abundance table
   abundance.tables <- list()
   abundance.tables$oligo <- probedata
   for (method in summarization.methods) {
+
+    probe.parameters <- NULL
+    if (method == "frpa") {
+      if (verbose) {message("Loading pre-calculated RPA preprocessing parameters")}
+      probes <- unique(taxonomy[, "oligoID"])
+      rpa.hitchip.species.probe.parameters <- list()
+      load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
+      probe.parameters <- rpa.hitchip.species.probe.parameters
+      # Ensure we use only those parameters that are in the filtered phylogeny
+      for (bac in names(probe.parameters)) {
+        probe.parameters[[bac]] <- probe.parameters[[bac]][intersect(names(probe.parameters[[bac]]), probes)]
+      }
+    }
+
     abu <- summarize_probedata(data.dir = params$wdir, 
       	 		     level = "species", method = method, 
 			     probe.parameters = probe.parameters)
@@ -118,6 +119,33 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   params$paramfilename <- tmp$parameter.file
 
   params
+
+}
+
+species2higher <- function (species.matrix, taxonomy, level, method) {
+
+  # List all species for the given level (L0 / L1 / L2)")
+  phylogroups <- levelmap(phylotypes = NULL, from = level, to = "species", taxonomy)
+
+  summarized.matrix <- matrix(NA, nrow = length(phylogroups), ncol = ncol(species.matrix))
+  rownames(summarized.matrix) <- sort(names(phylogroups))
+  colnames(summarized.matrix) <- colnames(species.matrix)
+
+  # Go through each phylogroup and summarize from species level
+  for (pg in names(phylogroups)) {
+
+    specs <- unique(phylogroups[[pg]])
+    mat <- matrix(species.matrix[specs,], nrow = length(specs))
+
+    if (method == "ave") { vec <- colMeans(mat) }
+    if (method == "sum") { vec <- colSums(mat)  } 
+    if (length(grep("rpa", method)) > 0) { vec <- colSums(mat) } # For RPA, use the sum for L1/L2
+
+    summarized.matrix[pg, ] <- vec
+
+  }
+
+  summarized.matrix
 
 }
 
