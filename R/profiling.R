@@ -48,6 +48,11 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
        	                  sample = colnames(probedata)), 
 			  stringsAsFactors = FALSE)
 
+
+  # Remove certain species from summarization taxonomy
+  rm.species = c("Victivallis vadensis")  
+  taxonomy <- taxonomy[!taxonomy$species %in% rm.species,]
+
   # Write preprocessed probe-level data, taxonomy and 
   # metadata template in tab-delimited file
   outd <- WriteChipData(list(oligo = probedata), params$wdir, 
