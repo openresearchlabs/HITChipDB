@@ -1,3 +1,4 @@
+
 species2higher <- function (species.matrix, taxonomy, level, method) {
 
   # List all species for the given level (L0 / L1 / L2)")

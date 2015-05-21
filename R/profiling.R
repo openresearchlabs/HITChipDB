@@ -48,28 +48,36 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
        	                  sample = colnames(probedata)), 
 			  stringsAsFactors = FALSE)
 
-
-  # Remove certain species from summarization taxonomy
-  rm.species = c("Victivallis vadensis")  
-  taxonomy <- taxonomy[!taxonomy$species %in% rm.species,]
-
   # Write preprocessed probe-level data, taxonomy and 
   # metadata template in tab-delimited file
   outd <- WriteChipData(list(oligo = probedata), params$wdir, 
        	  	taxonomy, taxonomy.full, meta, verbose = verbose)
 
-  # Metadata template
-  meta <- data.frame(sample = colnames(probedata))
+  probe.parameters <- NULL
+  if (method == "frpa") {
+    if (verbose) {message("Loading pre-calculated RPA preprocessing parameters")}
+    probes <- unique(taxonomy[, "oligoID"])
+    rpa.hitchip.species.probe.parameters <- list()
+    load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
+    probe.parameters <- rpa.hitchip.species.probe.parameters
+    # Ensure we use only those parameters that are in the filtered phylogeny
+    for (bac in names(probe.parameters)) {
+      probe.parameters[[bac]] <- probe.parameters[[bac]][intersect(names(probe.parameters[[bac]]), probes)]
+    }
+  }
 
   # Summarize probes into species abundance table
   abundance.tables <- list()
   abundance.tables$oligo <- probedata
   for (method in summarization.methods) {
-    abundance.tables[["species"]][[method]] <- summarize_probedata(params$wdir, probedata = probedata, taxonomy = taxonomy,
-      	 		     level = "species", method = method)
-    for (level in setdiff(names(taxonomy), c("species", "oligoID"))) {
+    abu <- summarize_probedata(data.dir = params$wdir, 
+      	 		     level = "species", method = method, 
+			     probe.parameters = probe.parameters)
+    abundance.tables[["species"]][[method]] <- abu
+
+    for (level in setdiff(colnames(taxonomy), c("species", "specimen", "oligoID", "pmTm"))) {
       spec <- abundance.tables[["species"]][[method]] 
-      abundance.tables[[level]][[method]]  <- species2higher(spec, taxonomy, level, method)
+      abundance.tables[[level]][[method]] <- species2higher(spec, taxonomy, level, method)
     }
   }   
 

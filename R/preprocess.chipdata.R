@@ -98,7 +98,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## GET OLIGO-PHYLOTYPE MAPPINGS
   ##################################
 
-  ph <- ReadPhylogeny(params$phylogeny, params$rm.phylotypes, params$remove.nonspecific.oligos,
+  ph <- ReadPhylogeny(params$phylogeny, params$rm.phylotypes, 
+     			params$remove.nonspecific.oligos,
 	    		     dbuser = dbuser, 
 			     dbpwd = dbpwd, 
 			     dbname = dbname, 

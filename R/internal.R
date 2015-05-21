@@ -1,3 +1,4 @@
+
 #' Description: Calculate species summaries and possibly update d.oligo2
 #'
 #' Arguments:
@@ -505,7 +506,7 @@ WriteLog <- function (naHybs, params) {
 #' @keywords utilities
 WriteChipData <- function (finaldata, output.dir, tax.table, tax.table.full, meta, verbose = TRUE) {
 
-## Write oligoprofile in original (non-log) domain
+  ## Write oligoprofile in original (non-log) domain
   fname <- paste(output.dir, "/oligoprofile.tab", sep = "")
   mydat <- finaldata[["oligo"]]
   WriteMatrix(cbind(rownames(mydat), mydat), fname, verbose)
@@ -528,11 +529,11 @@ WriteChipData <- function (finaldata, output.dir, tax.table, tax.table.full, met
   WriteMatrix(tax.table, fname, verbose)
 
   # Write filtered tax.table 
-  fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
+  fname <- paste(output.dir, "/taxonomy.filtered.tab", sep = "")
   WriteMatrix(tax.table, fname, verbose)
 
   # Write unfiltered tax.table
-  fname <- paste(output.dir, "/phylogeny.full.tab", sep = "")
+  fname <- paste(output.dir, "/taxonomy.full.tab", sep = "")
   WriteMatrix(tax.table.full, fname, verbose)
 
    # Write metadata

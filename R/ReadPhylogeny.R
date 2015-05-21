@@ -8,7 +8,6 @@ ReadPhylogeny <- function (
 			     verbose = verbose, 
 			     chip) {
 
-
     message("Fetching Phylogeny from the database")
     phylogeny.full <- get.phylogeny.info(phylogeny, 
 	    		     dbuser = dbuser, 
@@ -19,7 +18,8 @@ ReadPhylogeny <- function (
 			     verbose = verbose, 
 			     chip = chip)
 
-    ph <- polish.hitchip.phylogeny(phylogeny.full, chip, rm.phylotypes, remove.nonspecific.oligos)
+    ph <- polish.hitchip.phylogeny(phylogeny.full, chip, rm.phylotypes, 
+       	  				remove.nonspecific.oligos)
     phylogeny.full <- ph$full
     phylogeny.filtered <- ph$filtered
 
@@ -36,17 +36,18 @@ polish.hitchip.phylogeny <- function (phylogeny.full, chip, rm.phylotypes, remov
     #Ignatzschineria et al. Ignatzschineria et rel. 
     #                 64                      61 
     phylogeny.full[grep("Ignatzschineria et al.", phylogeny.full$L2),"L2"] <- "Ignatzschineria et rel."
-
-    # Fix the Clostridia name			     
-    if ( chip == "HITChip" ) { 
-      phylogeny.full$L2 <- gsub("^Clostridia$", "Clostridium (sensu stricto)", as.character(phylogeny.full$L2))
-    }
+    phylogeny.full[grep("^Clostridiales$", phylogeny.full$L2),"L2"] <- "Clostridium \\(sensu stricto\\)" 
+    phylogeny.full[grep("^Clostridia$", phylogeny.full$L2),"L2"] <- "Clostridium \\(sensu stricto\\)" 
 
     # This handles also pmTm, complement and mismatch filtering
     # This is the phylogeny used in probe summarization into taxonomic levels
     rm.oligos <- sync.rm.phylotypes(rm.phylotypes, phylogeny.full)$oligos
 
     phylogeny.filtered <- prune16S(phylogeny.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = rm.phylotypes$oligos, remove.nonspecific.oligos = remove.nonspecific.oligos)
+
+    # Remove certain species from summarization phylogeny.filtered
+    rm.species <- c("Victivallis vadensis")  
+    phylogeny.filtered <- phylogeny.filtered[!phylogeny.filtered$species %in% rm.species,]
 
     # Remove probes that target multiple L1 groups
     hits <- table(unique(phylogeny.filtered[, c("oligoID", "L1")])$oligoID)
