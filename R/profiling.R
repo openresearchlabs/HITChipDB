@@ -59,17 +59,15 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
   for (method in summarization.methods) {
 
-    abu <- summarize_probedata(
-    	                     probedata = probedata,
-			     taxonomy = taxonomy,
-      	 		     level = "species", method = method)
-
-    abundance.tables[["species"]][[method]] <- abu
+    output.dir <- params$wdir
+    res <- read_hitchip(output.dir, method = method)
+    abundance.tables[["species"]][[method]] <- res$abundance.table
 
     for (level in setdiff(colnames(taxonomy), c("species", "specimen", "oligoID", "pmTm"))) {
       spec <- abundance.tables[["species"]][[method]] 
       abundance.tables[[level]][[method]] <- species2higher(spec, taxonomy, level, method)
     }
+
   }   
 
   ## Write preprocessed data in tab delimited file
