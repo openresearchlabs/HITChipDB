@@ -59,24 +59,10 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
   for (method in summarization.methods) {
 
-    probe.parameters <- NULL
-    if (method == "frpa") {
-      if (verbose) {message("Loading pre-calculated RPA preprocessing parameters")}
-      probes <- unique(taxonomy[, "oligoID"])
-      rpa.hitchip.species.probe.parameters <- list()
-      load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
-      probe.parameters <- rpa.hitchip.species.probe.parameters
-      # Ensure we use only those parameters that are in the filtered phylogeny
-      for (bac in names(probe.parameters)) {
-        probe.parameters[[bac]] <- probe.parameters[[bac]][intersect(names(probe.parameters[[bac]]), probes)]
-      }
-    }
-
     abu <- summarize_probedata(
     	                     probedata = probedata,
 			     taxonomy = taxonomy,
-      	 		     level = "species", method = method, 
-			     probe.parameters = probe.parameters)
+      	 		     level = "species", method = method)
 
     abundance.tables[["species"]][[method]] <- abu
 
