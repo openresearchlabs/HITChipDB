@@ -56,6 +56,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   # Summarize probes into species abundance table
   abundance.tables <- list()
   abundance.tables$oligo <- probedata
+
   for (method in summarization.methods) {
 
     probe.parameters <- NULL
@@ -71,9 +72,12 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
       }
     }
 
-    abu <- summarize_probedata(data.dir = params$wdir, 
+    abu <- summarize_probedata(
+    	                     probedata = probedata,
+			     taxonomy = taxonomy,
       	 		     level = "species", method = method, 
 			     probe.parameters = probe.parameters)
+
     abundance.tables[["species"]][[method]] <- abu
 
     for (level in setdiff(colnames(taxonomy), c("species", "specimen", "oligoID", "pmTm"))) {
@@ -125,7 +129,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 species2higher <- function (species.matrix, taxonomy, level, method) {
 
   # List all species for the given level (L0 / L1 / L2)")
-  phylogroups <- levelmap(phylotypes = NULL, from = level, to = "species", taxonomy)
+  phylogroups <- levelmap(NULL, from = level, to = "species", taxonomy)
 
   summarized.matrix <- matrix(NA, nrow = length(phylogroups), ncol = ncol(species.matrix))
   rownames(summarized.matrix) <- sort(names(phylogroups))

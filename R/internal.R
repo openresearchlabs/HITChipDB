@@ -856,10 +856,11 @@ threshold.data <- function(dat, sd.times = 6){
 
 sync.rm.phylotypes <- function (rm.phylotypes, tax.table) {
 
-  # If remove L0 is not NULL, then add L1 groups under this group to removal list
+  # If remove L0 is not NULL, then 
+  # add L1 groups under this group to removal list
   if (!is.null(rm.phylotypes$L0)) {
     rm.phylotypes$L1 <- c(rm.phylotypes$L1,
-  		unlist(levelmap(phylotypes = rm.phylotypes$L0, 
+  		unlist(levelmap(rm.phylotypes$L0, 
 				from = "L0", 
 				to = "L1", 
 				 tax.table = tax.table)))
@@ -870,17 +871,18 @@ sync.rm.phylotypes <- function (rm.phylotypes, tax.table) {
   # If remove L1 is not NULL, then add L2 groups under this group to removal list
   if (!is.null(rm.phylotypes$L1)) {
     rm.phylotypes$L2 <- c(rm.phylotypes$L2,
-  			unlist(levelmap(phylotypes = rm.phylotypes$L1, 
+  			unlist(levelmap(rm.phylotypes$L1, 
 			from = "L1", to = "L2", 
 			tax.table = tax.table)))
 
     rm.phylotypes$L2 <- unique(rm.phylotypes$L2)
   }
 
-  # If remove L2 is not NULL, then add species groups under this group to removal list
+  # If remove L2 is not NULL, then 
+  # add species groups under this group to removal list
   if (!is.null(rm.phylotypes$L2)) {
     rm.phylotypes$species <- c(rm.phylotypes$species,
-  			unlist(levelmap(phylotypes = rm.phylotypes$L2, 
+  			unlist(levelmap(rm.phylotypes$L2, 
 				from = "L2", 
 				to = "species", 
 				tax.table = tax.table)))

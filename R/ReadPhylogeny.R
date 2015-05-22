@@ -36,7 +36,6 @@ polish.hitchip.phylogeny <- function (phylogeny.full, chip, rm.phylotypes, remov
     #Ignatzschineria et al. Ignatzschineria et rel. 
     #                 64                      61 
     phylogeny.full[grep("Ignatzschineria et al.", phylogeny.full$L2),"L2"] <- "Ignatzschineria et rel."
-    phylogeny.full[grep("^Clostridiales$", phylogeny.full$L2),"L2"] <- "Clostridium \\(sensu stricto\\)" 
     phylogeny.full[grep("^Clostridia$", phylogeny.full$L2),"L2"] <- "Clostridium \\(sensu stricto\\)" 
 
     # This handles also pmTm, complement and mismatch filtering
@@ -44,10 +43,6 @@ polish.hitchip.phylogeny <- function (phylogeny.full, chip, rm.phylotypes, remov
     rm.oligos <- sync.rm.phylotypes(rm.phylotypes, phylogeny.full)$oligos
 
     phylogeny.filtered <- prune16S(phylogeny.full, pmTm.margin = 2.5, complement = 1, mismatch = 0, rmoligos = rm.phylotypes$oligos, remove.nonspecific.oligos = remove.nonspecific.oligos)
-
-    # Remove certain species from summarization phylogeny.filtered
-    rm.species <- c("Victivallis vadensis")  
-    phylogeny.filtered <- phylogeny.filtered[!phylogeny.filtered$species %in% rm.species,]
 
     # Remove probes that target multiple L1 groups
     hits <- table(unique(phylogeny.filtered[, c("oligoID", "L1")])$oligoID)
