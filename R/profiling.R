@@ -17,6 +17,9 @@
 #'   @return Profiling parameters. Also writes output to the user-specified directory.
 #'
 #' @importFrom microbiome summarize_probedata
+#' @importFrom microbiome read_hitchip
+#' @importFrom phyloseq otu_table
+#'
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
@@ -60,9 +63,9 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   for (method in summarization.methods) {
 
     output.dir <- params$wdir
-    res <- read_hitchip(output.dir, method = method)
-    abundance.tables[["species"]][[method]] <- res$abundance.table
-    spec <- abundance.tables[["species"]][[method]] 
+    pseq <- read_hitchip(output.dir, method = method, detection.threshold = 0)
+    spec <- otu_table(pseq)@.Data
+    abundance.tables[["species"]][[method]] <- spec
 
     for (level in setdiff(colnames(taxonomy), c("species", "specimen", "oligoID", "pmTm"))) {
       
