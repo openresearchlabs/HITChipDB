@@ -1,3 +1,4 @@
+library(knitr)
 library(rmarkdown)
 rmarkdown::render("vignette.Rmd")
 
