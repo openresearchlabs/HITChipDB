@@ -30,7 +30,7 @@ install_github("microbiome/HITChipDB")
 
 ### Extracting HITChip data from the MySQL database ('profiling')
 
-[Instructions to extract data from database](wurcomputer) (HIT/MIT/PIT/ChickChip)
+[Instructions to extract data from database](wurcomputer.md) (HIT/MIT/PIT/ChickChip)
 
 ### Oligo heatmap
 
@@ -74,14 +74,6 @@ projs <- list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
 **MITChip, PITChip, ChickChip** Use WUR database computer
   ([instructions](wurcomputer))
 
-
-### Probe-level operations 
-
-[Probe-level preprocessing](Probelevel.md)
-
-### Robust Probabilistic Averaging
-
-[RPA](RPA.md)
 
 
 ### Further SQL functions to be documented
