@@ -63,7 +63,8 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   for (method in summarization.methods) {
 
     output.dir <- params$wdir
-    pseq <- read_hitchip(output.dir, method = method, detection.threshold = 0)
+    pseq <- read_hitchip(output.dir, method = method, 
+    	    			     detection.threshold = 0)$pseq
     spec <- otu_table(pseq)@.Data
     abundance.tables[["species"]][[method]] <- spec
 
@@ -71,11 +72,13 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
       
       # TODO Switch to this when DB access is running again and possible to 
       # check consistency.
-      #pseq <- hitchip2physeq(t(spec), meta, taxonomy, detection.limit = 0)
-      #tg <- tax_glom(pseq, level)
-      #ab <- tg@otu_table
-      #rownames(ab) <- as.character(as.data.frame(tax_table(tg))[[level]])
-      #abundance.tables[[level]][[method]] <- ab
+      taxo <- unique(taxonomy[, c(level, "species")])
+      rownames(taxo) <- as.character(taxo$species)
+      pseq <- hitchip2physeq(t(spec), meta, taxo, detection.limit = 0)
+      tg <- tax_glom(pseq, level)
+      ab <- tg@otu_table
+      rownames(ab) <- as.character(as.data.frame(tax_table(tg))[[level]])
+      abundance.tables[[level]][[method]] <- ab
 
       abundance.tables[[level]][[method]] <- species2higher(spec, taxonomy, level, method)
 
