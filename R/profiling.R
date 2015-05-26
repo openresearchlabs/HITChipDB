@@ -74,13 +74,20 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
       # check consistency.
       taxo <- unique(taxonomy[, c(level, "species")])
       rownames(taxo) <- as.character(taxo$species)
+
+      # This includes pseudocount +1 in each cell
       pseq <- hitchip2physeq(t(spec), meta, taxo, detection.limit = 0)
+      # This not; compatible with earlier
+      # pseq <- hitchip2physeq(t(spec) - 1, meta, taxo, detection.limit = 0)
+
       tg <- tax_glom(pseq, level)
       ab <- tg@otu_table
       rownames(ab) <- as.character(as.data.frame(tax_table(tg))[[level]])
+      ab <- ab[order(rownames(ab)),]
       abundance.tables[[level]][[method]] <- ab
 
-      abundance.tables[[level]][[method]] <- species2higher(spec, taxonomy, level, method)
+      #ab2 <- species2higher(spec, taxonomy, level, method)
+      #abundance.tables[[level]][[method]] <- ab2
 
     }
 
