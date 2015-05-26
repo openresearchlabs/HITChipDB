@@ -70,15 +70,14 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
     for (level in setdiff(colnames(taxonomy), c("species", "specimen", "oligoID", "pmTm"))) {
       
-      # TODO Switch to this when DB access is running again and possible to 
-      # check consistency.
       taxo <- unique(taxonomy[, c(level, "species")])
       rownames(taxo) <- as.character(taxo$species)
 
       # This includes pseudocount +1 in each cell
-      pseq <- hitchip2physeq(t(spec), meta, taxo, detection.limit = 0)
+      # pseq <- hitchip2physeq(t(spec), meta, taxo, detection.limit = 0)
+
       # This not; compatible with earlier
-      # pseq <- hitchip2physeq(t(spec) - 1, meta, taxo, detection.limit = 0)
+      pseq <- hitchip2physeq(t(spec) - 1, meta, taxo, detection.limit = 0)
 
       tg <- tax_glom(pseq, level)
       ab <- tg@otu_table
