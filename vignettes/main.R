@@ -1,11 +1,12 @@
+library(knitr)
 library(rmarkdown)
 rmarkdown::render("vignette.Rmd")
 
 fs <- list.files(pattern = ".Rmd$")
 for (f in setdiff(fs, "Installation.Rmd")) { 
     print(f)
-    #knit(f) 
     rmarkdown::render(f, "md_document")
+    knit(f) 
 }
 system("git add *.md")
 system("git add figure/*")

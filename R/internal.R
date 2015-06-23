@@ -1,3 +1,4 @@
+
 #' Description: Calculate species summaries and possibly update d.oligo2
 #'
 #' Arguments:
@@ -230,8 +231,6 @@ choose.samples <- function (con, multi = TRUE, title = 'Select samples:', condit
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip = NULL) {
-
-  #microbiome::InstallMarginal("RMySQL")
 
   ## Determine the working directory
   wdir <- tclvalue(tkchooseDirectory(title = "Save output files into directory:")) 
@@ -507,7 +506,7 @@ WriteLog <- function (naHybs, params) {
 #' @keywords utilities
 WriteChipData <- function (finaldata, output.dir, tax.table, tax.table.full, meta, verbose = TRUE) {
 
-## Write oligoprofile in original (non-log) domain
+  ## Write oligoprofile in original (non-log) domain
   fname <- paste(output.dir, "/oligoprofile.tab", sep = "")
   mydat <- finaldata[["oligo"]]
   WriteMatrix(cbind(rownames(mydat), mydat), fname, verbose)
@@ -530,11 +529,11 @@ WriteChipData <- function (finaldata, output.dir, tax.table, tax.table.full, met
   WriteMatrix(tax.table, fname, verbose)
 
   # Write filtered tax.table 
-  fname <- paste(output.dir, "/phylogeny.filtered.tab", sep = "")
+  fname <- paste(output.dir, "/taxonomy.filtered.tab", sep = "")
   WriteMatrix(tax.table, fname, verbose)
 
   # Write unfiltered tax.table
-  fname <- paste(output.dir, "/phylogeny.full.tab", sep = "")
+  fname <- paste(output.dir, "/taxonomy.full.tab", sep = "")
   WriteMatrix(tax.table.full, fname, verbose)
 
    # Write metadata
@@ -588,8 +587,6 @@ mysql.format <- function (s) {
 
 FetchData <- function (params, con, scriptVersion, save.data, scaling, cmetrics) {
 
-  # microbiome::InstallMarginal("RMySQL")
-
   ## COLLECTING DATA FROM THE DATABASE
   message("Collecting data from the database\n")
 
@@ -619,10 +616,9 @@ FetchData <- function (params, con, scriptVersion, save.data, scaling, cmetrics)
   rs <- dbSendQuery(con, 'SELECT * FROM tmp1')
 
   rawdata <- fetch(rs, n = -1)
-  rawdataDim <- dim(rawdata)
 
   ## Check if there is any data
-  if(rawdataDim[1]==0)
+  if(nrow(rawdata) == 0)
     stop("No data found for these samples (perhaps they are not normalized yet?).\n\n")
 
   ## Create the data matrix (featuretab) for clustering based on all array features, 
@@ -860,10 +856,11 @@ threshold.data <- function(dat, sd.times = 6){
 
 sync.rm.phylotypes <- function (rm.phylotypes, tax.table) {
 
-  # If remove L0 is not NULL, then add L1 groups under this group to removal list
+  # If remove L0 is not NULL, then 
+  # add L1 groups under this group to removal list
   if (!is.null(rm.phylotypes$L0)) {
     rm.phylotypes$L1 <- c(rm.phylotypes$L1,
-  		unlist(levelmap(phylotypes = rm.phylotypes$L0, 
+  		unlist(levelmap(rm.phylotypes$L0, 
 				from = "L0", 
 				to = "L1", 
 				 tax.table = tax.table)))
@@ -874,17 +871,18 @@ sync.rm.phylotypes <- function (rm.phylotypes, tax.table) {
   # If remove L1 is not NULL, then add L2 groups under this group to removal list
   if (!is.null(rm.phylotypes$L1)) {
     rm.phylotypes$L2 <- c(rm.phylotypes$L2,
-  			unlist(levelmap(phylotypes = rm.phylotypes$L1, 
+  			unlist(levelmap(rm.phylotypes$L1, 
 			from = "L1", to = "L2", 
 			tax.table = tax.table)))
 
     rm.phylotypes$L2 <- unique(rm.phylotypes$L2)
   }
 
-  # If remove L2 is not NULL, then add species groups under this group to removal list
+  # If remove L2 is not NULL, then 
+  # add species groups under this group to removal list
   if (!is.null(rm.phylotypes$L2)) {
     rm.phylotypes$species <- c(rm.phylotypes$species,
-  			unlist(levelmap(phylotypes = rm.phylotypes$L2, 
+  			unlist(levelmap(rm.phylotypes$L2, 
 				from = "L2", 
 				to = "species", 
 				tax.table = tax.table)))

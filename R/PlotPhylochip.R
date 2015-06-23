@@ -1,15 +1,8 @@
-
-#' Shade et al. (2014). Conditionally Rare Taxa Disproportionately Contribute to Temporal Changes in Microbial Diversity. mBio 5(4):e01371-14. doi: 10.1128/mBio.01371-14
-#'
-#' Ellison AM (1987). Effect of seed dimorphism on the density-dependent dynamics of experimental populations of Atriplex triangularis (Chenopodiaceae). Am. J. Bot. 74:1280–1288. doi:10.2307/2444163.
-#'
-
 #' List color scales
 #'
-#' 
+#'  @param ... Arguments to be passed
 #'
-#' 
-#'   @return list of color scales
+#' @return list of color scales
 #'
 #' @export
 #' @examples list.color.scales()
@@ -17,7 +10,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-list.color.scales <- function() {
+list.color.scales <- function(...) {
     ## Different colour scales
     list(`white/blue` = colorRampPalette(c("white", "darkblue"), 
          interpolate = "linear")(100), 
@@ -63,6 +56,8 @@ PlotPhylochipHeatmap <- function (data,
 			 hclust.method = "complete") {
 
   # data = dat; metric = "pearson"; level = "L2"; tree.display = TRUE; palette = "white/black"; fontsize = 40; figureratio = 10; hclust.method = "complete"
+
+  taxonomy <- as.data.frame(taxonomy)  
 
   list.color.scales <- NULL
 

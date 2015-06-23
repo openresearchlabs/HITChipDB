@@ -98,7 +98,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## GET OLIGO-PHYLOTYPE MAPPINGS
   ##################################
 
-  ph <- ReadPhylogeny(params$phylogeny, params$rm.phylotypes, params$remove.nonspecific.oligos,
+  ph <- ReadPhylogeny(params$phylogeny, params$rm.phylotypes, 
+     			params$remove.nonspecific.oligos,
 	    		     dbuser = dbuser, 
 			     dbpwd = dbpwd, 
 			     dbname = dbname, 
@@ -107,8 +108,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
 			     verbose = verbose, 
 			     chip = params$chip)
 
-  phylogeny.filtered <- ph$filtered
-  phylogeny.full <- ph$full
+  taxonomy.filtered <- ph$filtered
+  taxonomy.full <- ph$full
 
   ####################
   ## COMPUTE SUMMARIES
@@ -135,9 +136,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   }
   params$summarization.methods <- summarization.methods
 
-  list(probedata = oligo.abs, taxonomy = phylogeny.filtered, taxonomy.full = phylogeny.full, naHybs = naHybs, params = params)
+  list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params)
 
 }
-
 
 

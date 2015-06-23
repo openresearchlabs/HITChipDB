@@ -13,6 +13,7 @@
 #'   @return filtered 16S data
 #'
 #' @export
+#' @importFrom microbiome n.phylotypes.per.oligo
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities

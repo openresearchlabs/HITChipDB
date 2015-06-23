@@ -1,11 +1,11 @@
 species2higher <- function (species.matrix, taxonomy, level, method) {
 
   # List all species for the given level (L0 / L1 / L2)")
-  phylogroups <- levelmap(phylotypes = NULL, from = level, to = "species", taxonomy)
+  phylogroups <- levelmap(NULL, from = level, to = "species", taxonomy)
 
-  summarized.matrix <- matrix(NA, nrow = length(phylogroups), ncol = ncol(oligo.data))
+  summarized.matrix <- matrix(NA, nrow = length(phylogroups), ncol = ncol(species.matrix))
   rownames(summarized.matrix) <- sort(names(phylogroups))
-  colnames(summarized.matrix) <- colnames(oligo.data)
+  colnames(summarized.matrix) <- colnames(species.matrix)
 
   # Go through each phylogroup and summarize from species level
   for (pg in names(phylogroups)) {

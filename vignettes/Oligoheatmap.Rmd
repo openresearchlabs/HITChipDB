@@ -4,17 +4,15 @@ Reproduce and modify the oligo heatmap of the [run.profiling.script](profiling).
 
 ```{r heatmap-example2, fig.path = "figure/"}
 library(HITChipDB)
-library(microbiome)
 
 # Define data directory (here: simulated data directory)
 data.directory <- system.file("extdata", package = "microbiome")
 
 # Read Oligo level data in original domain
-oligo.matrix.log10.simulated <- read.profiling(level = "oligo", 
-			              data.dir = data.directory, log10 = TRUE)
+probedata <- read.profiling(data.directory, "frpa")$probedata
 
 # Read Oligo-phylogeny mapping table (two methods):
-phylogeny.info <- GetPhylogeny("HITChip", "full")
+taxonomy <- GetPhylogeny("HITChip", "full")
 ```
 
 Save the image in a file (too large to be opened directly in
@@ -26,13 +24,10 @@ library(microbiome)
 ppcm <- 150
 png(filename = "oligoprofileClustering.png", 
      width = max(trunc(ppcm*21), 
-                 trunc(ppcm*21*ncol(oligo.matrix.log10.simulated)/70)), 
+                 trunc(ppcm*21*ncol(probedata)/70)), 
      height = trunc(ppcm*29.7))
-
-
-library(HITChipDB)
-tmp <- PlotPhylochipHeatmap(oligo.matrix.log10.simulated, 
-				phylogeny.info, level = "L1", metric = "pearson")
+tmp <- PlotPhylochipHeatmap(probedata, 
+		taxonomy, level = "L1", metric = "pearson")
 dev.off()
 ```
 

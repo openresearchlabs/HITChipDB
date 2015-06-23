@@ -1,30 +1,21 @@
 Package: HITChipDB
 Type: Package
 Title: HITChipDB
-Version: 0.5.18
-Date: 2015-05-20
+Version: 0.5.20
+Date: 2015-06-23
 Author: Leo Lahti and Jarkko Salojarvi
 Maintainer: microbiome developer team <microbiome-admin@googlegroups.com>
 Description: Tools for HITChipDB preprocessing.
 License: BSD_2_clause + file LICENSE
 Depends:
     R (>= 3.0.1),
-    ade4,
     DBI,
-    grDevices,
+    grDevices,    
     microbiome,
-    parallel,
     preprocessCore,    
     RMySQL,
-    RPA,
-    tcltk,
-    vegan
+    tcltk
 Suggests:
-    affy,
-    MASS,
-    plyr,
-    reshape,
-    svDialogs,
     knitr,
     rmarkdown
 URL: http://microbiome.github.com
