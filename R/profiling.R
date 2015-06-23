@@ -63,9 +63,12 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   for (method in summarization.methods) {
 
     output.dir <- params$wdir
-    pseq <- read_hitchip(output.dir, method = method, 
-    	    			     detection.threshold = 0)$pseq
-    spec <- otu_table(pseq)@.Data
+
+    spec <- summarize_probedata(probedata = probedata,
+      	 	             taxonomy = taxonomy,
+      	 		     level = "species",
+			     method = method)
+
     abundance.tables[["species"]][[method]] <- spec
 
     for (level in setdiff(colnames(taxonomy), c("species", "specimen", "oligoID", "pmTm"))) {
@@ -75,18 +78,26 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
       # This includes pseudocount +1 in each cell
       # pseq <- hitchip2physeq(t(spec), meta, taxo, detection.limit = 0)
-
       # This not; compatible with earlier
-      pseq <- hitchip2physeq(t(spec) - 1, meta, taxo, detection.limit = 0)
-
-      tg <- tax_glom(pseq, level)
-      ab <- tg@otu_table
-      rownames(ab) <- as.character(as.data.frame(tax_table(tg))[[level]])
-      ab <- ab[order(rownames(ab)),]
-      abundance.tables[[level]][[method]] <- ab
+      #pseq <- hitchip2physeq(t(spec) - 1, meta, taxo, detection.limit = 0)
+      #tg <- tax_glom(pseq, level)
+      #ab <- tg@otu_table
+      #rownames(ab) <- as.character(as.data.frame(tax_table(tg))[[level]])
+      #ab <- ab[order(rownames(ab)),]
+      #abundance.tables[[level]][[method]] <- ab
 
       #ab2 <- species2higher(spec, taxonomy, level, method)
-      #abundance.tables[[level]][[method]] <- ab2
+      levs <- unique(taxonomy[[level]])
+      ab2 <- matrix(NA, nrow = length(levs), ncol = ncol(spec))
+      rownames(ab2) <- levs
+      colnames(ab2) <- colnames(spec)
+      for (pt in levs) {
+        # Species associated with this level
+        specs <- unique(taxonomy[which(taxonomy[[level]] == pt), "species"])
+	ab2[pt, ] <- colSums(spec[specs,])
+      }
+
+      abundance.tables[[level]][[method]] <- ab2
 
     }
 
