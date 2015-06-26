@@ -3,6 +3,7 @@
 export(FetchData)
 export(PlotPhylochipHeatmap)
 export(ReadParameters)
+export(ReadPhylogeny)
 export(ScaleProfile)
 export(WriteChipData)
 export(WriteLog)
