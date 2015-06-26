@@ -10,6 +10,7 @@
 #'   @param host host		     
 #'   @param port port
 #'   @param verbose verbose
+#'   @param chip chip
 #'
 #' Returns:                                        
 #'   @return phylogeny
