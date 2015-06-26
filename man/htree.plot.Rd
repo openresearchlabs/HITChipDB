@@ -21,10 +21,6 @@ Plot hierarchical clustering for the input data in absolute
 and log10 scale using euclidean and pearson correlation similarities.
 Intended for internal use in the run.profiling.script function.
 }
-\examples{
-data(peerj32)
-  tmp <- htree.plot(peerj32$microbes[,1:5])
-}
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
 }

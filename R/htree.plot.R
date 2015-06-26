@@ -11,9 +11,6 @@
 #' @return Used for its side effects; returns the arguments
 #'
 #' @export
-#' @examples 
-#'   data(peerj32)
-#'   tmp <- htree.plot(peerj32$microbes[,1:5])
 #' @references See citation('microbiome')
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities

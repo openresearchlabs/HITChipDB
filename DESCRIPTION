@@ -1,8 +1,8 @@
 Package: HITChipDB
 Type: Package
 Title: HITChipDB
-Version: 0.5.20
-Date: 2015-06-23
+Version: 0.5.21
+Date: 2015-06-26
 Author: Leo Lahti and Jarkko Salojarvi
 Maintainer: microbiome developer team <microbiome-admin@googlegroups.com>
 Description: Tools for HITChipDB preprocessing.
@@ -11,9 +11,9 @@ Depends:
     R (>= 3.0.1),
     DBI,
     grDevices,    
-    microbiome,
     preprocessCore,    
     RMySQL,
+    RPA,
     tcltk
 Suggests:
     knitr,

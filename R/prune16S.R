@@ -1,3 +1,19 @@
+#' Description: Check number of matching phylotypes for each probe
+#' 
+#' Arguments:
+#'   @param taxonomy oligo - phylotype matching data.frame
+#'   @param level phylotype level
+#'
+#' Returns:
+#'   @return number of matching phylotypes for each probe
+#'
+#' @export
+#' @references See citation("microbiome") 
+#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
+#' @keywords utilities
+n.phylotypes.per.oligo <- function (taxonomy, level) {
+  sapply(split(as.vector(taxonomy[, level]), as.vector(taxonomy[, "oligoID"])), function(x) length(unique(x)))
+}
 
 #' Description: filter 16S data
 #' 
@@ -13,7 +29,6 @@
 #'   @return filtered 16S data
 #'
 #' @export
-#' @importFrom microbiome n.phylotypes.per.oligo
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
