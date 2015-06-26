@@ -106,7 +106,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
       for (pt in levs) {
         # Species associated with this level
         specs <- unique(taxonomy[which(taxonomy[[level]] == pt), "species"])
-	ab2[pt, ] <- colSums(spec[specs,])
+	ab2[pt, ] <- colSums(matrix(spec[specs,], nrow = length(specs)))
       }
 
       abundance.tables[[level]][[method]] <- ab2

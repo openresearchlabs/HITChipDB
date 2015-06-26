@@ -2,6 +2,7 @@
 .Rproj.user
 vignettes/old
 vignettes/*~
+inst/extras
 inst/extras/*~
 inst/extras/*.tar.gz
 inst/extras/.RData
