@@ -4,22 +4,28 @@ Reproduce and modify the oligo heatmap of the [run.profiling.script](profiling).
 
 
 ```r
+library(microbiome)
 library(HITChipDB)
 
 # Define data directory (here: simulated data directory)
 data.directory <- system.file("extdata", package = "microbiome")
 
 # Read Oligo level data in original domain
-probedata <- read.profiling(data.directory, "frpa")$probedata
+probedata <- read_hitchip(data.directory, "frpa")$probedata
 ```
 
 ```
 ## Reading Chip data from /home/lei/R/x86_64-unknown-linux-gnu-library/3.2/microbiome/extdata
+## Loading pre-calculated RPA preprocessing parameters
+```
+
+```
+## [1] 1025   20
 ```
 
 ```r
 # Read Oligo-phylogeny mapping table (two methods):
-taxonomy <- GetPhylogeny("HITChip", "full")
+taxonomy <- GetPhylogeny("HITChip", "filtered")
 ```
 
 Save the image in a file (too large to be opened directly in
