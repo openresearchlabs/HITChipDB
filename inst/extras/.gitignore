@@ -3,3 +3,4 @@
 *.Rcheck
 .RData
 *~
+build.vm.R
