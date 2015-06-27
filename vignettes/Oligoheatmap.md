@@ -15,12 +15,7 @@ probedata <- read_hitchip(data.directory, "frpa")$probedata
 ```
 
 ```
-## Reading Chip data from /home/lei/R/x86_64-unknown-linux-gnu-library/3.2/microbiome/extdata
 ## Loading pre-calculated RPA preprocessing parameters
-```
-
-```
-## [1] 1025   20
 ```
 
 ```r

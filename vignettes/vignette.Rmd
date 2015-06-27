@@ -76,9 +76,7 @@ projs <- list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
 
 
 
-### Further SQL functions to be documented
-
-The following functions are also available:
+### Further SQL functions 
 
 * get.phylogeny.info: from the MySQL db
 * fetch.projects: Fetch projects from the phyloarray MySQL database
