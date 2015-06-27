@@ -25,7 +25,9 @@ ReadPhylogeny(phylogeny, rm.phylotypes, remove.nonspecific.oligos,
 
 \item{port}{port}
 
-\item{verbose}{verbose
+\item{verbose}{verbose}
+
+\item{chip}{chip
 
 Returns:}
 }

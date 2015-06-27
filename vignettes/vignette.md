@@ -1,7 +1,7 @@
 ---
 title: "HITChipDB vignette"
 author: "Leo Lahti and Jarkko Salojarvi"
-date: "2015-06-26"
+date: "2015-06-27"
 output: md_document
 ---
 
