@@ -16,10 +16,6 @@
 #' Returns:
 #'   @return Profiling parameters. Also writes output to the user-specified directory.
 #'
-#' @importFrom microbiome summarize_probedata
-#' @importFrom microbiome read_hitchip
-#' @importFrom phyloseq otu_table
-#'
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
@@ -63,11 +59,27 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   for (method in summarization.methods) {
 
     output.dir <- params$wdir
+    level <- "species"
 
-    spec <- summarize_probedata(probedata = probedata,
-      	 	             taxonomy = taxonomy,
-      	 		     level = "species",
-			     method = method)
+    # If the data is not given as input, read it from the data directory
+    if (method == "frpa") {
+      message("Loading pre-calculated RPA preprocessing parameters")
+      probes <- unique(taxonomy[, "oligoID"])
+      rpa.hitchip.species.probe.parameters <- list()
+      load(system.file("extdata/probe.parameters.rda", package = "HITChipDB"))
+      probe.parameters <- rpa.hitchip.species.probe.parameters
+      # Ensure we use only those parameters that are in the filtered phylogeny
+      for (bac in names(probe.parameters)) {
+        probe.parameters[[bac]] <- probe.parameters[[bac]][intersect(names(probe.parameters[[bac]]), probes)]
+      }
+    }
+
+    # Summarize probes through species level
+    if (method %in% c("rpa", "frpa")) {
+      spec <- summarize.rpa(taxonomy, level, probedata, verbose = TRUE, probe.parameters = probe.parameters)$abundance.table
+    } else if (method == "sum") {
+      spec <- summarize.sum(taxonomy, level, probedata, verbose = TRUE, downweight.ambiguous.probes = TRUE)$abundance.table
+    }
 
     abundance.tables[["species"]][[method]] <- spec
 
@@ -94,7 +106,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
       for (pt in levs) {
         # Species associated with this level
         specs <- unique(taxonomy[which(taxonomy[[level]] == pt), "species"])
-	ab2[pt, ] <- colSums(spec[specs,])
+	ab2[pt, ] <- colSums(matrix(spec[specs,], nrow = length(specs)))
       }
 
       abundance.tables[[level]][[method]] <- ab2

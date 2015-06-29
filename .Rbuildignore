@@ -1,4 +1,9 @@
 .git
+<<<<<<< HEAD
 inst/extras
 
+=======
+inst/extras/.RData
+inst/extras
+>>>>>>> 3a7088e3f1f5c58815f5d0ae01da9b3c27e3f28b
 

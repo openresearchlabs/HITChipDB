@@ -1,3 +1,24 @@
+#' Read phylogeny
+#' 
+#' Arguments:
+#'   @param phylogeny phylogeny
+#'   @param rm.phylotypes rm.phylotypes
+#'   @param remove.nonspecific.oligos remove.nonspecific.oligos
+#'   @param dbuser dbuser		     
+#'   @param dbpwd dbpwd			     
+#'   @param dbname dbname		     
+#'   @param host host		     
+#'   @param port port
+#'   @param verbose verbose
+#'   @param chip chip
+#'
+#' Returns:                                        
+#'   @return phylogeny
+#'
+#' @export
+#' @references See citation("microbiome") 
+#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
+#' @keywords utilities
 ReadPhylogeny <- function ( 
 	      	 phylogeny, rm.phylotypes, remove.nonspecific.oligos,
 	    		     dbuser = dbuser, 

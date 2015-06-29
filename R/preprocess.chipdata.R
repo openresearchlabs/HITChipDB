@@ -17,7 +17,6 @@
 #'
 #' @export
 #' @importFrom DBI dbDriver
-#' @importFrom microbiome levelmap
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
