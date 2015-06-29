@@ -6,7 +6,7 @@
 \usage{
 run.profiling.script(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
   port = NULL, summarization.methods = c("frpa", "sum"),
-  which.projects = NULL)
+  which.projects = NULL, probe.parameters = NULL)
 }
 \arguments{
 \item{dbuser}{MySQL username}
@@ -24,7 +24,9 @@ run.profiling.script(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
 
 \item{summarization.methods}{List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave}
 
-\item{which.projects}{Optionally specify the projects to extract. All samples from these projects will be included.
+\item{which.projects}{Optionally specify the projects to extract. All samples from these projects will be included.}
+
+\item{probe.parameters}{probe.parameters
 
 Returns:}
 }
