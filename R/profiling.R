@@ -62,7 +62,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
     output.dir <- params$wdir
     level <- "species"
 
-    print("If the data is not given as input, read it from the data directory")
+    # print("If the data is not given as input, read it from the data directory")
     if (method == "frpa") {
 
       message("Loading pre-calculated RPA preprocessing parameters")
