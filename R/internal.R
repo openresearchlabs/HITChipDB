@@ -859,34 +859,20 @@ sync.rm.phylotypes <- function (rm.phylotypes, tax.table) {
   # If remove L0 is not NULL, then 
   # add L1 groups under this group to removal list
   if (!is.null(rm.phylotypes$L0)) {
-    rm.phylotypes$L1 <- c(rm.phylotypes$L1,
-  		unlist(levelmap(rm.phylotypes$L0, 
-				from = "L0", 
-				to = "L1", 
-				 tax.table = tax.table)))
-
+    rm.phylotypes$L1 <- c(rm.phylotypes$L1, tax.table[which(tax.table[["L0"]] == rm.phylotypes$L0), "L1"])
     rm.phylotypes$L1 <- unique(rm.phylotypes$L1)
   }
 
   # If remove L1 is not NULL, then add L2 groups under this group to removal list
   if (!is.null(rm.phylotypes$L1)) {
-    rm.phylotypes$L2 <- c(rm.phylotypes$L2,
-  			unlist(levelmap(rm.phylotypes$L1, 
-			from = "L1", to = "L2", 
-			tax.table = tax.table)))
-
+    rm.phylotypes$L2 <- c(rm.phylotypes$L2, tax.table[which(tax.table[["L1"]] == rm.phylotypes$L0), "L2"])
     rm.phylotypes$L2 <- unique(rm.phylotypes$L2)
   }
 
   # If remove L2 is not NULL, then 
   # add species groups under this group to removal list
   if (!is.null(rm.phylotypes$L2)) {
-    rm.phylotypes$species <- c(rm.phylotypes$species,
-  			unlist(levelmap(rm.phylotypes$L2, 
-				from = "L2", 
-				to = "species", 
-				tax.table = tax.table)))
-
+    rm.phylotypes$species <- c(rm.phylotypes$species, tax.table[which(tax.table[["L2"]] == rm.phylotypes$L0), "species"])
     rm.phylotypes$species <- unique(rm.phylotypes$species)
   }
 
