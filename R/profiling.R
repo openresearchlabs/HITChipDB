@@ -26,7 +26,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
   htree.plot <- NULL		     
 
-  # Fetch and preprocess the data		     
+  message("Fetch and preprocess the data")
   chipdata  <- preprocess.chipdata(dbuser, dbpwd, dbname, 
   	       				verbose = verbose,
 					   host = host,
@@ -34,6 +34,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 		 	  summarization.methods = summarization.methods, 
 			         which.projects = which.projects)
 
+  message("---Preprocessing ready")
   probedata <- chipdata$probedata
   params    <- chipdata$params
 
@@ -48,21 +49,23 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
        	                  sample = colnames(probedata)), 
 			  stringsAsFactors = FALSE)
 
-  # Write preprocessed probe-level data, taxonomy and 
-  # metadata template in tab-delimited file
+  message("Write preprocessed probe-level data, taxonomy and metadata template in tab-delimited file")
   outd <- WriteChipData(list(oligo = probedata), params$wdir, 
        	  	taxonomy, taxonomy.full, meta, verbose = verbose)
 
-  # Summarize probes into species abundance table
+  message("Summarize probes into species abundance table")
   abundance.tables <- list()
   abundance.tables$oligo <- probedata
 
+  message("Go through methods")
   for (method in params$summarization.methods) {
+  
+    print(method)
 
     output.dir <- params$wdir
     level <- "species"
 
-    # print("If the data is not given as input, read it from the data directory")
+    # ("If the data is not given as input, read it from the data directory")
     if (method == "frpa") {
 
       message("Loading pre-calculated RPA preprocessing parameters")
@@ -76,15 +79,16 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
       }
     }
 
-    # Summarize probes through species level
+    message("Summarize probes through species level")
     if (method %in% c("rpa", "frpa")) {
       spec <- summarize.rpa(taxonomy, level, probedata, verbose = TRUE, probe.parameters = probe.parameters)$abundance.table
     } else if (method == "sum") {
       spec <- summarize.sum(taxonomy, level, probedata, verbose = TRUE, downweight.ambiguous.probes = TRUE)$abundance.table
     }
-
+    
     abundance.tables[["species"]][[method]] <- spec
 
+    message("Higher-level tables")
     for (level in setdiff(colnames(taxonomy), c("species", "specimen", "oligoID", "pmTm"))) {
       
       taxo <- unique(taxonomy[, c(level, "species")])
@@ -117,7 +121,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
   }   
 
-  ## Write preprocessed data in tab delimited file
+  message("Write preprocessed data in tab delimited file")
   outd <- WriteChipData(abundance.tables, params$wdir, taxonomy, taxonomy.full, meta, verbose = verbose)
   
   # Add oligo heatmap into output directory

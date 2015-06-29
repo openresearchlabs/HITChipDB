@@ -136,7 +136,9 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
    }
   }
 
-  list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params, summarization.methods = summarization.methods)
+  params$summarization.methods <- summarization.methods
+
+  list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params)
 
 }
 
