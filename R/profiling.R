@@ -12,6 +12,7 @@
 #'   @param port port; needed with FTP connections
 #'   @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave
 #'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
+#'   @param probe.parameters probe.parameters
 #'
 #' Returns:
 #'   @return Profiling parameters. Also writes output to the user-specified directory.
@@ -21,7 +22,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL) {
+run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, probe.parameters = NULL) {
 
   htree.plot <- NULL		     
 
@@ -56,13 +57,14 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   abundance.tables <- list()
   abundance.tables$oligo <- probedata
 
-  for (method in summarization.methods) {
+  for (method in params$summarization.methods) {
 
     output.dir <- params$wdir
     level <- "species"
 
-    # If the data is not given as input, read it from the data directory
+    print("If the data is not given as input, read it from the data directory")
     if (method == "frpa") {
+
       message("Loading pre-calculated RPA preprocessing parameters")
       probes <- unique(taxonomy[, "oligoID"])
       rpa.hitchip.species.probe.parameters <- list()

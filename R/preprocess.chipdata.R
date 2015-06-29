@@ -40,6 +40,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   } else if (!params$chip == "HITChip" && "frpa" %in% summarization.methods)  {
     warning(paste("RPA used instead of frozen-RPA (fRPA) for", params$chip))
     summarization.methods <- unique(gsub("frpa", "rpa", summarization.methods))
+
   }
 
   message("Get sample information matrix for the selected projects")
@@ -67,7 +68,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   fdat.hybinfo <- project.info[match(colnames(fdat.orig), project.info$hybridisationID), ]
   rownames(fdat.hybinfo) <- colnames(fdat.orig)
 
-  ## Discard the hybs that contain only NAs
+  message("Discard the hybs that contain only NAs")
   onlyNA <- colMeans(is.na(fdat.orig)) == 1
   naHybs <- colnames(fdat.orig)[onlyNA]
   if(sum(onlyNA) > 0){
@@ -81,12 +82,12 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## Between-array normalization
   ##############################
 
-  # Minmax parameters hard-coded to standardize normalization;
+  message("Minmax parameters hard-coded to standardize normalization")
   # Using the parameters from HITChip atlas 
   # params$minmax.points <- c(30.02459, 132616.91371)
   params$minmax.points <- c(30, 133000) 
 
-  # selected scaling for featurelevel data
+  # "selected scaling for featurelevel data"
   # Background correction after this step, if any. 
   # Order of normalization / bg correction was validated empirically.
   # bg.adjust intentionally set to NULL 
@@ -97,6 +98,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## GET OLIGO-PHYLOTYPE MAPPINGS
   ##################################
 
+  message("ReadPhylogeny")
   ph <- ReadPhylogeny(params$phylogeny, params$rm.phylotypes, 
      			params$remove.nonspecific.oligos,
 	    		     dbuser = dbuser, 
@@ -114,7 +116,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   ## COMPUTE SUMMARIES
   ####################
 
-  # Summarize probes into oligos and hybridisations into samples
+  message("Summarize probes into oligos and hybridisations into samples")
   oligo.log10 <- summarize.rawdata(log10(d.scaled), 
   	      			   fdat.hybinfo, 
 				   fdat.oligoinfo = fdat.oligoinfo)
@@ -133,9 +135,8 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
       summarization.methods <- unique(summarization.methods)
    }
   }
-  params$summarization.methods <- summarization.methods
 
-  list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params)
+  list(probedata = oligo.abs, taxonomy = taxonomy.filtered, taxonomy.full = taxonomy.full, naHybs = naHybs, params = params, summarization.methods = summarization.methods)
 
 }
 
