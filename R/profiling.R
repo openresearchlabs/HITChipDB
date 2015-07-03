@@ -60,7 +60,7 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
   message("Go through methods")
   for (method in params$summarization.methods) {
   
-    print(method)
+    # print(method)
 
     output.dir <- params$wdir
     level <- "species"
