@@ -82,10 +82,11 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
   rkeep <- (rowMeans(filter.table == 1) == 1)
 
   # Remove annotations which are identical for all samples
-  ckeep <- sapply(project.info.all, function (x) {!length(unique(x)) == 1})
+  # ckeep <- sapply(project.info.all, function (x) {!length(unique(x)) == 1})
 
   message("Filter the data")
-  project.info <- project.info.all[rkeep, ckeep]
+  #project.info <- project.info.all[rkeep, ckeep]
+  project.info <- project.info.all[rkeep, ]  
 
   project.info                  
      
