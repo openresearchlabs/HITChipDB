@@ -75,7 +75,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
     message("Removing the following hybs, because they contain only NAs:\n")
     message(naHybs,"\n")
     fdat.orig <- fdat.orig[, !onlyNA]
-    fdat.hybinfo <- fdat.hybinfo[, !onlyNA]
+    fdat.hybinfo <- fdat.hybinfo[!onlyNA, ] 
   }
 
   ##############################
