@@ -1,27 +1,20 @@
-#' run.profiling.script
-#' 
-#' Description: Profiling main script
-#'
-#' Arguments:
-#'   @param dbuser MySQL username
-#'   @param dbpwd  MySQL password
-#'   @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT";
+#' @title Run profiling script
+#' @description Profiling main script
+#' @param dbuser MySQL username
+#' @param dbpwd  MySQL password
+#' @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT";
 #'                                PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")
-#'   @param verbose verbose
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
-#'   @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave
-#'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
-#'   @param probe.parameters probe.parameters
-#'
-#' Returns:
-#'   @return Profiling parameters. Also writes output to the user-specified directory.
-#'
+#' @param verbose verbose
+#' @param host host; needed with FTP connections
+#' @param port port; needed with FTP connections
+#' @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave
+#' @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
+#' @param probe.parameters probe.parameters
+#' @return Profiling parameters. Also writes output to the user-specified directory.
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, probe.parameters = NULL) {
 
   htree.plot <- NULL		     
