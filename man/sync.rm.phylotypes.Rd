@@ -6,14 +6,16 @@
 \usage{
 sync.rm.phylotypes(rm.phylotypes, tax.table)
 }
+\arguments{
+\item{rm.phylotypes}{rm.phylotypes}
+
+\item{tax.table}{tax.table
+
+Returns:
+  @return probe name vector}
+}
 \description{
 Arguments:
-  @param rm.phylotypes rm.phylotypes
-  @param tax.table tax.table
-}
-\details{
-Returns:
-  @return probe name vector
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

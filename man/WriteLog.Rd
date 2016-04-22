@@ -6,14 +6,16 @@
 \usage{
 WriteLog(naHybs, params)
 }
+\arguments{
+\item{naHybs}{hybridisation that were removed due to NAs}
+
+\item{params}{parameters
+
+Returns:
+  @return List of scaling methods}
+}
 \description{
 Arguments:
-  @param naHybs hybridisation that were removed due to NAs  
-  @param params parameters
-}
-\details{
-Returns:
-  @return List of scaling methods
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

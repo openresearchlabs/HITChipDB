@@ -6,16 +6,19 @@
 \usage{
 calculate.hclust(dat, method = "complete", metric = "pearson")
 }
+\arguments{
+\item{dat}{data matrix (use log10 with pearson!)}
+
+\item{method}{hierarchical clustering method (see ?hclust)}
+
+\item{metric}{clustering metrics (spearman / pearson / euclidean)}
+}
+\value{
+hclust object for log10 and for absolute scale data
+}
 \description{
 Calculate hierarchical clustering for standard selections in 
 profiling script
-}
-\details{
-@param dat data matrix (use log10 with pearson!)
-  @param method hierarchical clustering method (see ?hclust)
-  @param metric clustering metrics (spearman / pearson / euclidean)
-
-@return hclust object for log10 and for absolute scale data
 }
 \examples{
 \dontrun{  

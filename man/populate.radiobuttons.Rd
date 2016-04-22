@@ -6,17 +6,22 @@
 \usage{
 populate.radiobuttons(tt, title, var.names, var.values, var.init)
 }
+\arguments{
+\item{tt}{TBA}
+
+\item{title}{TBA}
+
+\item{var.names}{TBA}
+
+\item{var.values}{TBA}
+
+\item{var.init}{TBA
+
+Returns:
+  @return A list.}
+}
 \description{
 Arguments:
-  @param tt TBA
-  @param title TBA
-  @param var.names TBA 
-  @param var.values TBA
-  @param var.init TBA
-}
-\details{
-Returns:
-  @return A list.
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

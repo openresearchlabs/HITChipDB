@@ -7,23 +7,33 @@
 get.phylogeny.info(phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE,
   chip = "HITChip", host = NULL, port = NULL, rmoligos = NULL)
 }
+\arguments{
+\item{phylogeny}{phylogeny (default: 16S)}
+
+\item{dbuser}{MySQL user}
+
+\item{dbpwd}{MySQL password}
+
+\item{dbname}{MySqL database name}
+
+\item{verbose}{verbose}
+
+\item{chip}{chip type}
+
+\item{host}{host; needed with FTP connections}
+
+\item{port}{port; needed with FTP connections}
+
+\item{rmoligos}{oligos to exclude}
+}
+\value{
+phylogeny.info
+}
 \description{
 Description: Get phylogeny
 }
 \details{
 Arguments:
-  @param phylogeny phylogeny (default: 16S)
-  @param dbuser MySQL user
-  @param dbpwd MySQL password
-  @param dbname MySqL database name
-  @param verbose verbose
-  @param chip chip type
-  @param host host; needed with FTP connections
-  @param port port; needed with FTP connections
-  @param rmoligos oligos to exclude
-
-Returns:
-  @return phylogeny.info
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

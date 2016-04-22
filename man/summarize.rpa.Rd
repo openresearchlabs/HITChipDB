@@ -7,18 +7,24 @@
 summarize.rpa(taxonomy, level, probedata, verbose = TRUE,
   probe.parameters = NULL)
 }
-\description{
-Arguments:
-  @param taxonomy oligo - phylotype matching data.frame
-  @param level taxonomic level for the summarization. 
-  @param probedata preprocessed probes x samples data matrix in absolute domain
-  @param verbose print intermediate messages
-  @param probe.parameters Optional. If probe.parameters are given,
+\arguments{
+\item{taxonomy}{oligo - phylotype matching data.frame}
+
+\item{level}{taxonomic level for the summarization.}
+
+\item{probedata}{preprocessed probes x samples data matrix in absolute domain}
+
+\item{verbose}{print intermediate messages}
+
+\item{probe.parameters}{Optional. If probe.parameters are given,
          the summarization is based on these and model parameters are not
-	    estimated. A list. One element for each probeset with the following probe vectors: 
+        estimated. A list. One element for each probeset with the following probe vectors: 
     affinities, variances
 Returns:
-  @return List with two elements: abundance.table (summarized data matrix in absolute scale) and probe.parameters (RPA probe level parameter estimates)
+  @return List with two elements: abundance.table (summarized data matrix in absolute scale) and probe.parameters (RPA probe level parameter estimates)}
+}
+\description{
+Arguments:
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

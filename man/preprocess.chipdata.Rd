@@ -9,21 +9,32 @@ preprocess.chipdata(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
   summarization.methods = c("frpa", "sum"), which.projects = NULL,
   all.samples = TRUE)
 }
-\description{
-Arguments:
-  @param dbuser MySQL username
-  @param dbpwd  MySQL password
-  @param dbname MySQL database name
-  @param verbose monitor processing through intermediate messages
-  @param host host; needed with FTP connections
-  @param port port; needed with FTP connections
-  @param use.precalculated.phylogeny use precalculated phylogeny?
-  @param summarization.methods List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave"
-  @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
-  @param all.samples Use all samples from the selected project by default? TRUE / FALSE
+\arguments{
+\item{dbuser}{MySQL username}
+
+\item{dbpwd}{MySQL password}
+
+\item{dbname}{MySQL database name}
+
+\item{verbose}{monitor processing through intermediate messages}
+
+\item{host}{host; needed with FTP connections}
+
+\item{port}{port; needed with FTP connections}
+
+\item{use.precalculated.phylogeny}{use precalculated phylogeny?}
+
+\item{summarization.methods}{List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave"}
+
+\item{which.projects}{Optionally specify the projects to extract. All samples from these projects will be included.}
+
+\item{all.samples}{Use all samples from the selected project by default? TRUE / FALSE
                                        
 Returns:
-  @return Preprocessed data and parameters
+  @return Preprocessed data and parameters}
+}
+\description{
+Arguments:
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

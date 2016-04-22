@@ -6,14 +6,16 @@
 \usage{
 threshold.data(dat, sd.times = 6)
 }
+\arguments{
+\item{dat}{data}
+
+\item{sd.times}{standard deviation threshold
+
+Returns:
+  @return thresholded data matrix}
+}
 \description{
 Arguments:
-  @param dat data
-  @param sd.times standard deviation threshold
-}
-\details{
-Returns:
-  @return thresholded data matrix
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

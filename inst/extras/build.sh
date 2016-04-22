@@ -1,8 +1,8 @@
 
-/usr/bin/R CMD BATCH document.R
-/usr/bin/R CMD build ../../
-/usr/bin/R CMD check HITChipDB_0.5.29.tar.gz
-/usr/bin/R CMD INSTALL HITChipDB_0.5.29.tar.gz
+/home/lei/bin/R CMD BATCH document.R
+/home/lei/bin/R CMD build ../../
+/home/lei/bin/R CMD check HITChipDB_0.6.30.tar.gz
+/home/lei/bin/R CMD INSTALL HITChipDB_0.6.30.tar.gz
 
 
 

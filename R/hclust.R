@@ -1,17 +1,13 @@
-
-
 #' calculate.hclust
 #' 
 #' Calculate hierarchical clustering for standard selections in 
 #' profiling script
 #'
 #' 
-#'   @param dat data matrix (use log10 with pearson!)
-#'   @param method hierarchical clustering method (see ?hclust)
-#'   @param metric clustering metrics (spearman / pearson / euclidean)
-#'
-#' 
-#'   @return hclust object for log10 and for absolute scale data
+#' @param dat data matrix (use log10 with pearson!)
+#' @param method hierarchical clustering method (see ?hclust)
+#' @param metric clustering metrics (spearman / pearson / euclidean)
+#' @return hclust object for log10 and for absolute scale data
 #'
 #' @export
 #' @examples 

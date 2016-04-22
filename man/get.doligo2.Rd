@@ -6,13 +6,17 @@
 \usage{
 get.doligo2(featuretab, d.scaled, oligo.ids)
 }
+\arguments{
+\item{featuretab}{featuretab}
+
+\item{d.scaled}{d.scaled}
+
+\item{oligo.ids}{oligo.ids
+Returns:
+  @return d.oligo2}
+}
 \description{
 Arguments:
-  @param featuretab featuretab
-  @param d.scaled d.scaled
-  @param oligo.ids oligo.ids
-Returns:
-  @return d.oligo2
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

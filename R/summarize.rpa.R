@@ -1,11 +1,11 @@
 #' Description: Probeset summarization with RPA
 #' 
 #' Arguments:
-#'   @param taxonomy oligo - phylotype matching data.frame
-#'   @param level taxonomic level for the summarization. 
-#'   @param probedata preprocessed probes x samples data matrix in absolute domain
-#'   @param verbose print intermediate messages
-#'   @param probe.parameters Optional. If probe.parameters are given,
+#' @param taxonomy oligo - phylotype matching data.frame
+#' @param level taxonomic level for the summarization. 
+#' @param probedata preprocessed probes x samples data matrix in absolute domain
+#' @param verbose print intermediate messages
+#' @param probe.parameters Optional. If probe.parameters are given,
 #'          the summarization is based on these and model parameters are not
 #' 	    estimated. A list. One element for each probeset with the following probe vectors: 
 #'	    affinities, variances

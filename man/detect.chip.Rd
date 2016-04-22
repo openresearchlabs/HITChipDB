@@ -6,13 +6,16 @@
 \usage{
 detect.chip(dbname)
 }
+\arguments{
+\item{dbname}{MySQL database name
+
+Returns:}
+}
+\value{
+chip name
+}
 \description{
 Arguments:
-  @param dbname MySQL database name
-}
-\details{
-Returns:
-  @return chip name
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

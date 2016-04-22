@@ -7,17 +7,23 @@
 ScaleProfile(dat, method = "minmax", bg.adjust = NULL,
   minmax.quantiles = c(0.005, 0.995), minmax.points = NULL)
 }
+\arguments{
+\item{dat}{data matrix in original absolute scale}
+
+\item{method}{normalization method}
+
+\item{bg.adjust}{background adjustment}
+
+\item{minmax.quantiles}{quantiles for minmax}
+
+\item{minmax.points}{minmax end points
+
+
+Returns:
+  @return Normalized data matrix in absolute scale}
+}
 \description{
 Arguments:
-  @param dat data matrix in original absolute scale
-  @param method normalization method
-  @param bg.adjust background adjustment 
-  @param minmax.quantiles quantiles for minmax
-  @param minmax.points minmax end points
-}
-\details{
-Returns:
-  @return Normalized data matrix in absolute scale
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

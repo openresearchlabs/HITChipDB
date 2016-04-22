@@ -6,13 +6,16 @@
 \usage{
 estimate.min.threshold(dat)
 }
+\arguments{
+\item{dat}{data matrix (in approximately normal scale ie. logged)
+
+Returns:}
+}
+\value{
+threshold value
+}
 \description{
 Arguments:
-  @param dat data matrix (in approximately normal scale ie. logged)
-}
-\details{
-Returns:
-  @return threshold value
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

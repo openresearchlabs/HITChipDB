@@ -5,11 +5,11 @@
 #' Description: List projects in MySQL database
 #'
 #' Arguments:
-#'   @param dbuser MySQL user
-#'   @param dbpwd  MySQL password
-#'   @param dbname MySqL database name
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
+#' @param dbuser MySQL user
+#' @param dbpwd  MySQL password
+#' @param dbname MySqL database name
+#' @param host host; needed with FTP connections
+#' @param port port; needed with FTP connections
 
 #' Returns:
 #'   @return project names vector
@@ -45,18 +45,16 @@ list.mysql.projects <- function (dbuser, dbpwd, dbname, host = NULL, port = NULL
 #' Description: Get phylogeny
 #' 
 #' Arguments:
-#'   @param phylogeny phylogeny (default: 16S)
-#'   @param dbuser MySQL user
-#'   @param dbpwd MySQL password
-#'   @param dbname MySqL database name
-#'   @param verbose verbose
-#'   @param chip chip type
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
-#'   @param rmoligos oligos to exclude
-#'
-#' Returns:
-#'   @return phylogeny.info
+#' @param phylogeny phylogeny (default: 16S)
+#' @param dbuser MySQL user
+#' @param dbpwd MySQL password
+#' @param dbname MySqL database name
+#' @param verbose verbose
+#' @param chip chip type
+#' @param host host; needed with FTP connections
+#' @param port port; needed with FTP connections
+#' @param rmoligos oligos to exclude
+#' @return phylogeny.info
 #'
 #' @export
 #' @importFrom DBI dbDriver

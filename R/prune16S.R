@@ -1,8 +1,8 @@
 #' Description: Check number of matching phylotypes for each probe
 #' 
 #' Arguments:
-#'   @param taxonomy oligo - phylotype matching data.frame
-#'   @param level phylotype level
+#' @param taxonomy oligo - phylotype matching data.frame
+#' @param level phylotype level
 #'
 #' Returns:
 #'   @return number of matching phylotypes for each probe
@@ -18,12 +18,12 @@ n.phylotypes.per.oligo <- function (taxonomy, level) {
 #' Description: filter 16S data
 #' 
 #' Arguments:
-#'   @param full16S full16S
-#'   @param pmTm.margin pmTm margin
-#'   @param complement logical
-#'   @param mismatch logical
-#'   @param rmoligos oligos to exclude
-#'   @param remove.nonspecific.oligos Logical. Remove oligos with multiple targets.
+#' @param full16S full16S
+#' @param pmTm.margin pmTm margin
+#' @param complement logical
+#' @param mismatch logical
+#' @param rmoligos oligos to exclude
+#' @param remove.nonspecific.oligos Logical. Remove oligos with multiple targets.
 #'
 #' Returns:
 #'   @return filtered 16S data

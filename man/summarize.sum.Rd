@@ -7,17 +7,22 @@
 summarize.sum(taxonomy, level, probedata, verbose = TRUE,
   downweight.ambiguous.probes = TRUE)
 }
+\arguments{
+\item{taxonomy}{oligo - phylotype matching data.frame}
+
+\item{level}{taxonomic level for the summarization.}
+
+\item{probedata}{preprocessed probes x samples data matrix in absolute domain}
+
+\item{verbose}{print intermediate messages}
+
+\item{downweight.ambiguous.probes}{Downweight probes with multiple targets
+
+Returns:
+  @return List with two elements: abundance.table (summarized data matrix in absolute scale) and probe.parameters used in the calculations}
+}
 \description{
 Arguments:
-  @param taxonomy oligo - phylotype matching data.frame
-  @param level taxonomic level for the summarization. 
-  @param probedata preprocessed probes x samples data matrix in absolute domain
-  @param verbose print intermediate messages
-  @param downweight.ambiguous.probes Downweight probes with multiple targets
-}
-\details{
-Returns:
-  @return List with two elements: abundance.table (summarized data matrix in absolute scale) and probe.parameters used in the calculations
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

@@ -6,13 +6,18 @@
 \usage{
 WriteMatrix(dat, filename, verbose = FALSE)
 }
+\arguments{
+\item{dat}{data matrix}
+
+\item{filename}{output file}
+
+\item{verbose}{verbose}
+}
+\value{
+output file location
+}
 \description{
-Arguments:
-  @param dat data matrix
-  @param filename output file
-  @param verbose verbose
-Returns:
-  @return output file location
+Description: Write matrix in tab file
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

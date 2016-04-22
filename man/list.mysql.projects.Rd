@@ -6,18 +6,24 @@
 \usage{
 list.mysql.projects(dbuser, dbpwd, dbname, host = NULL, port = NULL)
 }
+\arguments{
+\item{dbuser}{MySQL user}
+
+\item{dbpwd}{MySQL password}
+
+\item{dbname}{MySqL database name}
+
+\item{host}{host; needed with FTP connections}
+
+\item{port}{port; needed with FTP connections
+Returns:
+  @return project names vector}
+}
 \description{
 Description: List projects in MySQL database
 }
 \details{
 Arguments:
-  @param dbuser MySQL user
-  @param dbpwd  MySQL password
-  @param dbname MySqL database name
-  @param host host; needed with FTP connections
-  @param port port; needed with FTP connections
-Returns:
-  @return project names vector
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

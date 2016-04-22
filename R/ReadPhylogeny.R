@@ -1,16 +1,16 @@
 #' Read phylogeny
 #' 
 #' Arguments:
-#'   @param phylogeny phylogeny
-#'   @param rm.phylotypes rm.phylotypes
-#'   @param remove.nonspecific.oligos remove.nonspecific.oligos
-#'   @param dbuser dbuser		     
-#'   @param dbpwd dbpwd			     
-#'   @param dbname dbname		     
-#'   @param host host		     
-#'   @param port port
-#'   @param verbose verbose
-#'   @param chip chip
+#' @param phylogeny phylogeny
+#' @param rm.phylotypes rm.phylotypes
+#' @param remove.nonspecific.oligos remove.nonspecific.oligos
+#' @param dbuser dbuser		     
+#' @param dbpwd dbpwd			     
+#' @param dbname dbname		     
+#' @param host host		     
+#' @param port port
+#' @param verbose verbose
+#' @param chip chip
 #'
 #' Returns:                                        
 #'   @return phylogeny

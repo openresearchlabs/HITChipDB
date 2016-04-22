@@ -2,32 +2,43 @@
 % Please edit documentation in R/profiling.R
 \name{add.heatmap}
 \alias{add.heatmap}
-\title{add.heatmap
-Description: Add oligprofile heatmap into output directory}
+\title{add.heatmap}
 \usage{
 add.heatmap(dat, output.dir, output.file = NULL, taxonomy, ppcm = 150,
   hclust.method = "complete", palette = "white/black", level = "L1",
   metric = "pearson", figureratio = 10, fontsize = 40,
   tree.display = TRUE)
 }
-\description{
-Arguments:
-  @param dat oligoprofile data in original (non-log) domain
-  @param output.dir output data directory
-  @param output.file output file name
-  @param taxonomy oligo-phylotype mappings
-  @param ppcm figure size
-  @param hclust.method hierarchical clustering method
-  @param palette color palette ("white/black" / "white/blue" / "black/yellow/white")
-  @param level taxonomic level to show
-  @param metric clustering metric
-  @param figureratio figure ratio
-  @param fontsize font size
-  @param tree.display tree.display
+\arguments{
+\item{dat}{oligoprofile data in original (non-log) domain}
+
+\item{output.dir}{output data directory}
+
+\item{output.file}{output file name}
+
+\item{taxonomy}{oligo-phylotype mappings}
+
+\item{ppcm}{figure size}
+
+\item{hclust.method}{hierarchical clustering method}
+
+\item{palette}{color palette ("white/black" / "white/blue" / "black/yellow/white")}
+
+\item{level}{taxonomic level to show}
+
+\item{metric}{clustering metric}
+
+\item{figureratio}{figure ratio}
+
+\item{fontsize}{font size}
+
+\item{tree.display}{tree.display}
 }
-\details{
-Returns:
-  @return Plotting parameters
+\value{
+Plotting parameters
+}
+\description{
+Add oligprofile heatmap into output directory.
 }
 \examples{
 # data(peerj32); hc <- add.heatmap(peerj32$microbes[, 1:4])

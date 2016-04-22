@@ -8,22 +8,32 @@ ReadPhylogeny(phylogeny, rm.phylotypes, remove.nonspecific.oligos,
   dbuser = dbuser, dbpwd = dbpwd, dbname = dbname, host = host,
   port = port, verbose = verbose, chip)
 }
+\arguments{
+\item{phylogeny}{phylogeny}
+
+\item{rm.phylotypes}{rm.phylotypes}
+
+\item{remove.nonspecific.oligos}{remove.nonspecific.oligos}
+
+\item{dbuser}{dbuser}
+
+\item{dbpwd}{dbpwd}
+
+\item{dbname}{dbname}
+
+\item{host}{host}
+
+\item{port}{port}
+
+\item{verbose}{verbose}
+
+\item{chip}{chip
+
+Returns:                                        
+  @return phylogeny}
+}
 \description{
 Arguments:
-  @param phylogeny phylogeny
-  @param rm.phylotypes rm.phylotypes
-  @param remove.nonspecific.oligos remove.nonspecific.oligos
-  @param dbuser dbuser		     
-  @param dbpwd dbpwd			     
-  @param dbname dbname		     
-  @param host host		     
-  @param port port
-  @param verbose verbose
-  @param chip chip
-}
-\details{
-Returns:                                        
-  @return phylogeny
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
