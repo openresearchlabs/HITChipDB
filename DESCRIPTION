@@ -10,8 +10,8 @@ License: BSD_2_clause + file LICENSE
 Depends:
     R (>= 3.0.1),
     DBI,
-    grDevices,    
-    preprocessCore,    
+    grDevices,
+    preprocessCore,
     RMySQL,
     RPA,
     tcltk
@@ -20,3 +20,4 @@ Suggests:
     rmarkdown
 URL: http://microbiome.github.com
 Packaged: 2012-01-12 14:19:39 UTC; lei
+RoxygenNote: 5.0.1
