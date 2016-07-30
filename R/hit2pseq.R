@@ -83,11 +83,7 @@ hitchip2physeq <- function (otu, meta, taxonomy = NULL, detection.limit = 10^1.8
     # Metadata
     rownames(meta) <- as.character(meta$sample)
     sampledata <- sample_data(meta[colnames(otumat),])
-
     pseq <- merge_phyloseq(pseq, sampledata)
-
-    # Harmonize the fields
-    # pseq@sam_data <- harmonize_fields(pseq@sam_data)
     
   }
   
