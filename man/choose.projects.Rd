@@ -6,13 +6,17 @@
 \usage{
 choose.projects(con, multi = TRUE, condition = NULL)
 }
+\arguments{
+\item{con}{valid MySQL connection}
+
+\item{multi}{enable selection of multiple options}
+
+\item{condition}{TBA
+Returns:
+  @return vector of project names}
+}
 \description{
 Arguments:
-  @param con valid MySQL connection
-  @param multi enable selection of multiple options
-  @param condition TBA
-Returns:
-  @return vector of project names
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

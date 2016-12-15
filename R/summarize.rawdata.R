@@ -2,9 +2,9 @@
 #'              summarize oligos into probes and hybridisations into samples
 #'
 #' Arguments:
-#'   @param fdat.log10 normalized raw data matrix oligos x hybridisations in log10 scale
-#'   @param fdat.hybinfo hybridization info table
-#'   @param fdat.oligoinfo oligo info table
+#' @param fdat.log10 normalized raw data matrix oligos x hybridisations in log10 scale
+#' @param fdat.hybinfo hybridization info table
+#' @param fdat.oligoinfo oligo info table
 #' 
 #' Returns:
 #'   @return probes x samples matrix in log10 scale

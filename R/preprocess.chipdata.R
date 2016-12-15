@@ -1,16 +1,16 @@
 #' Description: Profiling preprocessing script
 #'
 #' Arguments:
-#'   @param dbuser MySQL username
-#'   @param dbpwd  MySQL password
-#'   @param dbname MySQL database name
-#'   @param verbose monitor processing through intermediate messages
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
-#'   @param use.precalculated.phylogeny use precalculated phylogeny?
-#'   @param summarization.methods List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave"
-#'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
-#'   @param all.samples Use all samples from the selected project by default? TRUE / FALSE
+#' @param dbuser MySQL username
+#' @param dbpwd  MySQL password
+#' @param dbname MySQL database name
+#' @param verbose monitor processing through intermediate messages
+#' @param host host; needed with FTP connections
+#' @param port port; needed with FTP connections
+#' @param use.precalculated.phylogeny use precalculated phylogeny?
+#' @param summarization.methods List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave"
+#' @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
+#' @param all.samples Use all samples from the selected project by default? TRUE / FALSE
 #'                                        
 #' Returns:
 #'   @return Preprocessed data and parameters

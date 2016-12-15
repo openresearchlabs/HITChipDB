@@ -7,20 +7,29 @@
 fetch.sample.info(allowed.projects, chiptype = NULL, dbuser, dbpwd, dbname,
   selected.samples = NULL, host = NULL, port = NULL)
 }
+\arguments{
+\item{allowed.projects}{list projects for which to fetch the data}
+
+\item{chiptype}{chiptype (eg. new.chip)}
+
+\item{dbuser}{MySQL user}
+
+\item{dbpwd}{MySQL password}
+
+\item{dbname}{MySqL database name}
+
+\item{selected.samples}{Sample to investigate. By default all.}
+
+\item{host}{host; needed with FTP connections}
+
+\item{port}{port; needed with FTP connections
+@return project.info data.frame}
+}
 \description{
 Description: Fetch sample information from HITChip atlas
 }
 \details{
 Arguments:
-  @param allowed.projects list projects for which to fetch the data
-  @param chiptype chiptype (eg. new.chip)
-  @param dbuser MySQL user
-  @param dbpwd MySQL password
-  @param dbname MySqL database name
-  @param selected.samples Sample to investigate. By default all.
-  @param host host; needed with FTP connections
-  @param port port; needed with FTP connections
-  @return project.info data.frame
 }
 \examples{
 # info <- fetch.sample.info(allowed.projects, dbuser, dbpwd, 

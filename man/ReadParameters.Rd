@@ -7,16 +7,20 @@
 ReadParameters(con, which.projects = NULL, all.samples = TRUE,
   chip = NULL)
 }
+\arguments{
+\item{con}{Output from dbConnect(dbDriver("MySQL"), username = dbuser, password = dbpwd, dbname = 'PhyloArray')}
+
+\item{which.projects}{Optionally list which projects to take. All samples returned.}
+
+\item{all.samples}{Return all samples from the selected projects: TRUE/FALSE}
+
+\item{chip}{chip
+
+Returns:
+  @return list with defined parameters}
+}
 \description{
 Arguments:
-  @param con Output from dbConnect(dbDriver("MySQL"), username = dbuser, password = dbpwd, dbname = 'PhyloArray')
-  @param which.projects Optionally list which projects to take. All samples returned.
-  @param all.samples Return all samples from the selected projects: TRUE/FALSE
-  @param chip chip
-}
-\details{
-Returns:
-  @return list with defined parameters
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

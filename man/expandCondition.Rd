@@ -6,13 +6,14 @@
 \usage{
 expandCondition(condition)
 }
+\arguments{
+\item{condition}{condition
+
+Returns:
+ @return TBA}
+}
 \description{
 Arguments:
- @param condition condition
-}
-\details{
-Returns:
- @return TBA
 }
 \examples{
 # TBA

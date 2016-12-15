@@ -6,14 +6,16 @@
 \usage{
 n.phylotypes.per.oligo(taxonomy, level)
 }
+\arguments{
+\item{taxonomy}{oligo - phylotype matching data.frame}
+
+\item{level}{phylotype level
+
+Returns:
+  @return number of matching phylotypes for each probe}
+}
 \description{
 Arguments:
-  @param taxonomy oligo - phylotype matching data.frame
-  @param level phylotype level
-}
-\details{
-Returns:
-  @return number of matching phylotypes for each probe
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

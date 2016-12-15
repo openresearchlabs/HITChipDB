@@ -6,11 +6,13 @@
 \usage{
 get.sampleid(d.oligo)
 }
+\arguments{
+\item{d.oligo}{d.oligo matrix
+Returns:
+  @return sampleID vector}
+}
 \description{
 Arguments:
-  @param d.oligo d.oligo matrix
-Returns:
-  @return sampleID vector
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

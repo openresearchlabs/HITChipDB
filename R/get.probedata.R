@@ -1,15 +1,13 @@
 #' Description: Get probedata
 #' 
-#' Arguments:
-#'   @param hybridization.ids Specify the hybridizations to retrieve
-#'   @param rmoligos oligos to exclude
-#'   @param dbuser MySQL user
-#'   @param dbpwd  MySQL password
-#'   @param dbname MySqL database name
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
-#' Returns:                                        
-#'   @return list with data (features x hybridizations matrix) and info (features x info) fields 
+#' @param hybridization.ids Specify the hybridizations to retrieve
+#' @param rmoligos oligos to exclude
+#' @param dbuser MySQL user
+#' @param dbpwd  MySQL password
+#' @param dbname MySqL database name
+#' @param host host; needed with FTP connections
+#' @param port port; needed with FTP connections
+#' @return list with data (features x hybridizations matrix) and info (features x info) fields 
 #'
 #' @export
 #' @import RMySQL
@@ -18,10 +16,6 @@
 #' @keywords utilities
 
 get.probedata <- function (hybridization.ids, rmoligos, dbuser, dbpwd, dbname, host = NULL, port = NULL) {
-
-  #hybridization.ids <- unique(project.info[["hybridisationID"]]); rmoligos <- params$rm.phylotypes$oligos
-
-  # microbiome::InstallMarginal("RMySQL")
 
   # List unique hybridisations for the selected samples
   hids <- mysql.format(hybridization.ids)

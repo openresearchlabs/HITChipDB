@@ -7,18 +7,24 @@
 prune16S(full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0,
   rmoligos = NULL, remove.nonspecific.oligos = FALSE)
 }
+\arguments{
+\item{full16S}{full16S}
+
+\item{pmTm.margin}{pmTm margin}
+
+\item{complement}{logical}
+
+\item{mismatch}{logical}
+
+\item{rmoligos}{oligos to exclude}
+
+\item{remove.nonspecific.oligos}{Logical. Remove oligos with multiple targets.
+
+Returns:
+  @return filtered 16S data}
+}
 \description{
 Arguments:
-  @param full16S full16S
-  @param pmTm.margin pmTm margin
-  @param complement logical
-  @param mismatch logical
-  @param rmoligos oligos to exclude
-  @param remove.nonspecific.oligos Logical. Remove oligos with multiple targets.
-}
-\details{
-Returns:
-  @return filtered 16S data
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

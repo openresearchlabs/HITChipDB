@@ -2,15 +2,18 @@
 % Please edit documentation in R/profiling.R
 \name{phylotype.rm.list}
 \alias{phylotype.rm.list}
-\title{Description: Default list of removed phylotypes and oligos}
+\title{Default list of removed phylotypes and oligos}
 \usage{
 phylotype.rm.list(chip)
 }
+\arguments{
+\item{chip}{Chip name (HIT/MIT/PIT/Chick)Chip}
+}
+\value{
+List of removed oligos and phylotypes
+}
 \description{
-Arguments:
- @param chip Chip name (HIT/MIT/PIT/Chick)Chip
-Returns:
-  @return List of removed oligos and phylotypes
+Default list of removed phylotypes and oligos
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

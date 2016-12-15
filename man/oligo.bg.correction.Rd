@@ -8,18 +8,25 @@ oligo.bg.correction(d.oligo2, bgc.method)
 
 oligo.bg.correction(d.oligo2, bgc.method)
 }
+\arguments{
+\item{d.oligo2}{d.oligo2}
+
+\item{bgc.method}{background correction method
+Returns:}
+
+\item{d.oligo2}{d.oligo2}
+
+\item{bgc.method}{background correction method
+Returns:
+  @return Background-corrected data matrix}
+}
+\value{
+Background-corrected data matrix
+}
 \description{
 Arguments:
-  @param d.oligo2 d.oligo2
-  @param bgc.method background correction method
-Returns:
-  @return Background-corrected data matrix
 
 Arguments:
-  @param d.oligo2 d.oligo2
-  @param bgc.method background correction method
-Returns:
-  @return Background-corrected data matrix
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

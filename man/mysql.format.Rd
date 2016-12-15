@@ -6,13 +6,14 @@
 \usage{
 mysql.format(s)
 }
+\arguments{
+\item{s}{string vector
+
+Returns:
+  @return mysql query version}
+}
 \description{
 Arguments:
-  @param s string vector
-}
-\details{
-Returns:
-  @return mysql query version
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

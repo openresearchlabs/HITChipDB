@@ -7,17 +7,26 @@
 get.probedata(hybridization.ids, rmoligos, dbuser, dbpwd, dbname, host = NULL,
   port = NULL)
 }
+\arguments{
+\item{hybridization.ids}{Specify the hybridizations to retrieve}
+
+\item{rmoligos}{oligos to exclude}
+
+\item{dbuser}{MySQL user}
+
+\item{dbpwd}{MySQL password}
+
+\item{dbname}{MySqL database name}
+
+\item{host}{host; needed with FTP connections}
+
+\item{port}{port; needed with FTP connections}
+}
+\value{
+list with data (features x hybridizations matrix) and info (features x info) fields
+}
 \description{
-Arguments:
-  @param hybridization.ids Specify the hybridizations to retrieve
-  @param rmoligos oligos to exclude
-  @param dbuser MySQL user
-  @param dbpwd  MySQL password
-  @param dbname MySqL database name
-  @param host host; needed with FTP connections
-  @param port port; needed with FTP connections
-Returns:                                        
-  @return list with data (features x hybridizations matrix) and info (features x info) fields
+Description: Get probedata
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

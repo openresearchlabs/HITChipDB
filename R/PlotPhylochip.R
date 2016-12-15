@@ -1,50 +1,20 @@
-#' List color scales
-#'
-#'  @param ... Arguments to be passed
-#'
-#' @return list of color scales
-#'
-#' @export
-#' @examples list.color.scales()
-#' @references See citation('microbiome') 
-#' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
-#' @keywords utilities
-
-list.color.scales <- function(...) {
-    ## Different colour scales
-    list(`white/blue` = colorRampPalette(c("white", "darkblue"), 
-         interpolate = "linear")(100), 
-         `white/black` = colorRampPalette(c("white", "black"), 
-         interpolate = "linear")(100), 
-        `black/yellow/white` = colorRampPalette(c("black", "yellow", "white"), 
-         bias = 0.5, interpolate = "linear")(100))
-}
-
-
-#' PlotPhylochipHeatmap
-#'
-#' Description: Plots heatmap of the oligo profiles together with phylotype grouping and sample clustering
-#'
-#' Arguments:
-#'   @param data oligoprofile data in original (non-log) domain
-#'   @param taxonomy oligo-phylotype mappings
-#'   @param metric clustering metric
-#'   @param level taxonomic level to show (L0 / L1 / L2 / species)
-#'   @param tree.display tree.display
-#'   @param palette color palette ("white/black" / "white/blue" / "black/yellow/white")
-#'   @param fontsize font size
-#'   @param figureratio figure ratio
-#'   @param hclust.method hierarchical clustering method. See help(hclust) for details. To prevent ordering of the rows, use hclust.method = NULL.
-#'
-#' Returns:
-#'   @return parameters
-#'
+#' @title PlotPhylochipHeatmap
+#' @description Plots heatmap of the oligo profiles together with phylotype grouping and sample clustering
+#' @param data oligoprofile data in original (non-log) domain
+#' @param taxonomy oligo-phylotype mappings
+#' @param metric clustering metric
+#' @param level taxonomic level to show (L0 / L1 / L2 / species)
+#' @param tree.display tree.display
+#' @param palette color palette ("white/black" / "white/blue" / "black/yellow/white")
+#' @param fontsize font size
+#' @param figureratio figure ratio
+#' @param hclust.method hierarchical clustering method. See help(hclust) for details. To prevent ordering of the rows, use hclust.method = NULL.
+#' @return parameters
 #' @export
 #' @examples # TODO
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 PlotPhylochipHeatmap <- function (data,
                          taxonomy,
                          metric = "pearson", 

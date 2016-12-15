@@ -7,18 +7,24 @@
 WriteChipData(finaldata, output.dir, tax.table, tax.table.full, meta,
   verbose = TRUE)
 }
-\description{
-Arguments:
-  @param finaldata preprocessed data matrices in absolute scale (from the chipdata function)
-  @param output.dir output directory
-  @param tax.table tax.table used in summarization
-  @param tax.table.full tax.table.full unfiltered phylogenyinfo
-  @param meta sample metadata samples x features
-  @param verbose verbose
+\arguments{
+\item{finaldata}{preprocessed data matrices in absolute scale (from the chipdata function)}
+
+\item{output.dir}{output directory}
+
+\item{tax.table}{tax.table used in summarization}
+
+\item{tax.table.full}{tax.table.full unfiltered phylogenyinfo}
+
+\item{meta}{sample metadata samples x features}
+
+\item{verbose}{verbose}
 }
-\details{
-Returns:
-  @return Preprocessed data in absolute scale, tax.table, and parameters
+\value{
+Preprocessed data in absolute scale, tax.table, and parameters
+}
+\description{
+Description: Writed data into the output directory
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

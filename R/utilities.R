@@ -1,17 +1,14 @@
 #' Description: Write matrix in tab file
 #'
-#' Arguments:
-#'   @param dat data matrix
-#'   @param filename output file
-#'   @param verbose verbose
-#' Returns:
-#'   @return output file location
+#' @param dat data matrix
+#' @param filename output file
+#' @param verbose verbose
+#' @return output file location
 #'
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 WriteMatrix <- function (dat, filename, verbose = FALSE) { 
 
   if (verbose) { message(paste("Writing output in ", filename)) }
@@ -24,10 +21,10 @@ WriteMatrix <- function (dat, filename, verbose = FALSE) {
 #' Description: determine threshold for bg correction
 #'
 #' Arguments:
-#'   @param dat data matrix (in approximately normal scale ie. logged)
+#' @param dat data matrix (in approximately normal scale ie. logged)
 #'
 #' Returns:
-#'   @return threshold value
+#' @return threshold value
 #'
 #' @export
 #' @references See citation("microbiome") 

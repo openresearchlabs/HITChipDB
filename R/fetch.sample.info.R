@@ -3,14 +3,14 @@
 #' Description: Fetch sample information from HITChip atlas
 #'
 #' Arguments:
-#'   @param allowed.projects list projects for which to fetch the data
-#'   @param chiptype chiptype (eg. new.chip)
-#'   @param dbuser MySQL user
-#'   @param dbpwd MySQL password
-#'   @param dbname MySqL database name
-#'   @param selected.samples Sample to investigate. By default all.
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
+#' @param allowed.projects list projects for which to fetch the data
+#' @param chiptype chiptype (eg. new.chip)
+#' @param dbuser MySQL user
+#' @param dbpwd MySQL password
+#' @param dbname MySqL database name
+#' @param selected.samples Sample to investigate. By default all.
+#' @param host host; needed with FTP connections
+#' @param port port; needed with FTP connections
 #'   @return project.info data.frame
 #'
 #' @examples # info <- fetch.sample.info(allowed.projects, dbuser, dbpwd, 

@@ -1,27 +1,20 @@
-#' run.profiling.script
-#' 
-#' Description: Profiling main script
-#'
-#' Arguments:
-#'   @param dbuser MySQL username
-#'   @param dbpwd  MySQL password
-#'   @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT";
+#' @title Run profiling script
+#' @description Profiling main script
+#' @param dbuser MySQL username
+#' @param dbpwd  MySQL password
+#' @param dbname MySQL database name (HITChip: "Phyloarray"; MITChip: "Phyloarray_MIT";
 #'                                PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")
-#'   @param verbose verbose
-#'   @param host host; needed with FTP connections
-#'   @param port port; needed with FTP connections
-#'   @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave
-#'   @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
-#'   @param probe.parameters probe.parameters
-#'
-#' Returns:
-#'   @return Profiling parameters. Also writes output to the user-specified directory.
-#'
+#' @param verbose verbose
+#' @param host host; needed with FTP connections
+#' @param port port; needed with FTP connections
+#' @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave
+#' @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
+#' @param probe.parameters probe.parameters
+#' @return Profiling parameters. Also writes output to the user-specified directory.
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, probe.parameters = NULL) {
 
   htree.plot <- NULL		     
@@ -164,32 +157,26 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 
 
 
-#' add.heatmap
-#' Description: Add oligprofile heatmap into output directory
-#'
-#' Arguments:
-#'   @param dat oligoprofile data in original (non-log) domain
-#'   @param output.dir output data directory
-#'   @param output.file output file name
-#'   @param taxonomy oligo-phylotype mappings
-#'   @param ppcm figure size
-#'   @param hclust.method hierarchical clustering method
-#'   @param palette color palette ("white/black" / "white/blue" / "black/yellow/white")
-#'   @param level taxonomic level to show
-#'   @param metric clustering metric
-#'   @param figureratio figure ratio
-#'   @param fontsize font size
-#'   @param tree.display tree.display
-#'
-#' Returns:
-#'   @return Plotting parameters
-#'
+#' @title add.heatmap
+#' @description Add oligprofile heatmap into output directory.
+#' @param dat oligoprofile data in original (non-log) domain
+#' @param output.dir output data directory
+#' @param output.file output file name
+#' @param taxonomy oligo-phylotype mappings
+#' @param ppcm figure size
+#' @param hclust.method hierarchical clustering method
+#' @param palette color palette ("white/black" / "white/blue" / "black/yellow/white")
+#' @param level taxonomic level to show
+#' @param metric clustering metric
+#' @param figureratio figure ratio
+#' @param fontsize font size
+#' @param tree.display tree.display
+#' @return Plotting parameters
 #' @export
 #' @examples # data(peerj32); hc <- add.heatmap(peerj32$microbes[, 1:4])
 #' @references See citation("microbiome")
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 add.heatmap <- function (dat, output.dir, output.file = NULL, taxonomy, ppcm = 150, 
 	         hclust.method = "complete", palette = "white/black", level = "L1", metric = "pearson", 
   		 figureratio = 10, fontsize = 40, tree.display = TRUE) {
@@ -235,19 +222,14 @@ add.heatmap <- function (dat, output.dir, output.file = NULL, taxonomy, ppcm = 1
 
 
 
-
-#' Description: Default list of removed phylotypes and oligos
-#'
-#' Arguments:
-#'  @param chip Chip name (HIT/MIT/PIT/Chick)Chip
-#' Returns:
-#'   @return List of removed oligos and phylotypes
-#'
+#' @title Default list of removed phylotypes and oligos
+#' @description Default list of removed phylotypes and oligos
+#' @param chip Chip name (HIT/MIT/PIT/Chick)Chip
+#' @return List of removed oligos and phylotypes
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-
 phylotype.rm.list <- function (chip) {
 
   rm.phylotypes <- list()

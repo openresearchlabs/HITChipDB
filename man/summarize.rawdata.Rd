@@ -7,15 +7,18 @@
 \usage{
 summarize.rawdata(fdat.log10, fdat.hybinfo, fdat.oligoinfo)
 }
+\arguments{
+\item{fdat.log10}{normalized raw data matrix oligos x hybridisations in log10 scale}
+
+\item{fdat.hybinfo}{hybridization info table}
+
+\item{fdat.oligoinfo}{oligo info table
+
+Returns:
+  @return probes x samples matrix in log10 scale}
+}
 \description{
 Arguments:
-  @param fdat.log10 normalized raw data matrix oligos x hybridisations in log10 scale
-  @param fdat.hybinfo hybridization info table
-  @param fdat.oligoinfo oligo info table
-}
-\details{
-Returns:
-  @return probes x samples matrix in log10 scale
 }
 \author{
 Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}

@@ -1,10 +1,10 @@
 #' Description: Detect the chip type (H/M/PITChip) from database name
 #'
 #' Arguments:
-#'   @param dbname MySQL database name
+#' @param dbname MySQL database name
 #' 
 #' Returns:
-#'   @return chip name
+#' @return chip name
 #'
 #' @export
 #' @references See citation("microbiome") 
