@@ -18,10 +18,10 @@ ReadParameters(con, which.projects = NULL, all.samples = TRUE,
 
 \item{save.dir}{save.dir}
 
-\item{use.default.parameters}{use.default.parameters
-
-Returns:
-  @return list with defined parameters}
+\item{use.default.parameters}{use.default.parameters}
+}
+\value{
+list with defined parameters
 }
 \description{
 Define parameters in select box.
