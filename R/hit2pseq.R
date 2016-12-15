@@ -46,7 +46,8 @@ hitchip2physeq <- function (otu, meta, taxonomy = NULL, detection.limit = 10^1.8
   # for that by default
   if (is.null(taxonomy) && nrow(otumat) < 3000) {
 
-    ph <- GetPhylogeny("HITChip")
+    #ph <- GetPhylogeny("HITChip")
+    ph = get_hitchip_taxonomy("HITChip", phylogeny.version = "full", data.dir = NULL)
     ph <- unique(ph[, c("L1", "L2", "species")])
     colnames(ph) <- c("Phylum", "Genus", "Phylotype")
     taxonomy <- ph
@@ -82,11 +83,7 @@ hitchip2physeq <- function (otu, meta, taxonomy = NULL, detection.limit = 10^1.8
     # Metadata
     rownames(meta) <- as.character(meta$sample)
     sampledata <- sample_data(meta[colnames(otumat),])
-
     pseq <- merge_phyloseq(pseq, sampledata)
-
-    # Harmonize the fields
-    pseq@sam_data <- harmonize_fields(pseq@sam_data)
     
   }
   
