@@ -1,16 +1,12 @@
 #' @title Define parameters in select box
 #' @description Define parameters in select box.
-#'
 #' @param con Output from dbConnect(dbDriver("MySQL"), username = dbuser, password = dbpwd, dbname = 'PhyloArray')
 #' @param which.projects Optionally list which projects to take. All samples returned.
 #' @param all.samples Return all samples from the selected projects: TRUE/FALSE
 #' @param chip chip
 #' @param save.dir save.dir
 #' @param use.default.parameters use.default.parameters
-#' 
-#' Returns:
-#'   @return list with defined parameters
-#'
+#' @return list with defined parameters
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
@@ -20,6 +16,8 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip
   ## Determine the working directory
   if (is.null(save.dir)) {
     wdir <- tclvalue(tkchooseDirectory(title = "Save output files into directory:")) 
+  } else {
+    wdir <- save.dir
   }
     
   ## Choose samples to display
@@ -93,6 +91,6 @@ ReadParameters <- function (con, which.projects = NULL, all.samples = TRUE, chip
   # List oligos and phylotypes to remove by default
   rm.phylotypes <- phylotype.rm.list(chip) 
 
-  list(wdir = save.dir, prj = prj, samples = samples, phylogeny = phylogeny, normalization = scal, bgc.method = bgc.method, remove.nonspecific.oligos = remove.nonspecific.oligos, chip = chip, rm.phylotypes = rm.phylotypes)
+  list(wdir = wdir, prj = prj, samples = samples, phylogeny = phylogeny, normalization = scal, bgc.method = bgc.method, remove.nonspecific.oligos = remove.nonspecific.oligos, chip = chip, rm.phylotypes = rm.phylotypes)
 
 }
