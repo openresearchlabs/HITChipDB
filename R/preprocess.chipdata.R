@@ -11,9 +11,9 @@
 #' @param summarization.methods List summarization methods to be included in output. With HITChip frpa always used; with other chips rpa always used. Other options: "sum", "ave"
 #' @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
 #' @param all.samples Use all samples from the selected project by default? TRUE / FALSE
-#'                                        
-#' Returns:
-#'   @return Preprocessed data and parameters
+#' @param save.dir Output data folder                                       
+#' @param use.default.parameters use.default.parameters 
+#' @return Preprocessed data and parameters
 #'
 #' @export
 #' @importFrom DBI dbDriver
@@ -21,7 +21,7 @@
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
 
-preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, all.samples = TRUE) {
+preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, use.precalculated.phylogeny = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, all.samples = TRUE, save.dir = ".", use.default.parameters = FALSE) {
 
   ## ask parameters or read from R-file
   drv <- dbDriver("MySQL")
@@ -32,7 +32,7 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   }
   
   chip <- detect.chip(dbname)
-  params <- ReadParameters(con, which.projects = which.projects, all.samples = all.samples, chip = chip)  
+  params <- ReadParameters(con, which.projects = which.projects, all.samples = all.samples, chip = chip, save.dir = save.dir, use.default.parameters = use.default.parameters)  
 
   if (params$chip == "HITChip" && "rpa" %in% summarization.methods)  {
     warning("Frozen-RPA (fRPA) used instead of RPA for HITChip.")

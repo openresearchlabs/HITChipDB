@@ -7,7 +7,7 @@
 preprocess.chipdata(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
   port = NULL, use.precalculated.phylogeny = NULL,
   summarization.methods = c("frpa", "sum"), which.projects = NULL,
-  all.samples = TRUE)
+  all.samples = TRUE, save.dir = ".", use.default.parameters = FALSE)
 }
 \arguments{
 \item{dbuser}{MySQL username}
@@ -28,10 +28,14 @@ preprocess.chipdata(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
 
 \item{which.projects}{Optionally specify the projects to extract. All samples from these projects will be included.}
 
-\item{all.samples}{Use all samples from the selected project by default? TRUE / FALSE
-                                       
-Returns:
-  @return Preprocessed data and parameters}
+\item{all.samples}{Use all samples from the selected project by default? TRUE / FALSE}
+
+\item{save.dir}{Output data folder}
+
+\item{use.default.parameters}{use.default.parameters}
+}
+\value{
+Preprocessed data and parameters
 }
 \description{
 Arguments:

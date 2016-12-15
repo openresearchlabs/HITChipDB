@@ -10,12 +10,14 @@
 #' @param summarization.methods List summarization methods to be included in output. For HITChip frpa always used; for other chips, rpa always used. Other options: sum, ave
 #' @param which.projects Optionally specify the projects to extract. All samples from these projects will be included.
 #' @param probe.parameters probe.parameters
+#' @param save.dir Output data folder                                        
+#' @param use.default.parameters use.default.parameters
 #' @return Profiling parameters. Also writes output to the user-specified directory.
 #' @export
 #' @references See citation("microbiome") 
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, probe.parameters = NULL) {
+run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = NULL, port = NULL, summarization.methods = c("frpa", "sum"), which.projects = NULL, probe.parameters = NULL, save.dir = NULL, use.default.parameters = FALSE) {
 
   htree.plot <- NULL		     
 
@@ -25,7 +27,9 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 					   host = host,
 					   port = port, 
 		 	  summarization.methods = summarization.methods, 
-			         which.projects = which.projects)
+			         which.projects = which.projects, 
+				       save.dir = save.dir, 
+ 			     use.default.parameters = use.default.parameters)
 
   message("---Preprocessing ready")
   probedata <- chipdata$probedata

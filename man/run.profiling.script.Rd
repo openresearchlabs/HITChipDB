@@ -6,7 +6,8 @@
 \usage{
 run.profiling.script(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
   port = NULL, summarization.methods = c("frpa", "sum"),
-  which.projects = NULL, probe.parameters = NULL)
+  which.projects = NULL, probe.parameters = NULL, save.dir = NULL,
+  use.default.parameters = FALSE)
 }
 \arguments{
 \item{dbuser}{MySQL username}
@@ -27,6 +28,10 @@ PITChip old: "Phyloarray_PIT"; PITChip new: "pitchipdb")}
 \item{which.projects}{Optionally specify the projects to extract. All samples from these projects will be included.}
 
 \item{probe.parameters}{probe.parameters}
+
+\item{save.dir}{Output data folder}
+
+\item{use.default.parameters}{use.default.parameters}
 }
 \value{
 Profiling parameters. Also writes output to the user-specified directory.
