@@ -58,11 +58,17 @@ fetch.sample.info <- function (allowed.projects, chiptype = NULL,
   #combine 
   project.info.all <- cbind(project.info.all,project.info.arrays[match(project.info.all$arrayID,project.info.arrays$arrayID),c("barcode","designID")])
    
-  # if no chiptype specified, use all
+  message("if no chiptype specified, use all")
   if (is.null(chiptype)) {chiptype <- unique(project.info.all$designID)}
   if (is.null(selected.samples)) {selected.samples <- unique(project.info.all$sampleID)}
 
-  # Pick selected samples only
+  message("Pick selected samples only")
+  if (nrow(project.info.all) == 0) {
+    warning("No data for this project with the given filters. Returning NULL.")
+    return(NULL)
+  }
+
+  message("Pick projectinfo")
   project.info.all <- project.info.all[project.info.all$sampleID %in% selected.samples,]
 
   # Close MySQL connection

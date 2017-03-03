@@ -53,10 +53,16 @@ preprocess.chipdata <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = N
   	       	  		    selected.samples = params$samples$sampleID)
 
 
+
   # Let us require that all data is from a unique chip design; otherwise stop				    
   if (length(unique(project.info$designID)) > 1) {
     # message(table(project.info$designID, project.info$projectName))
     stop("The selected projects are from different array versions or missing the array design info! Combining these is not allowed.")
+  }
+
+  if (nrow(project.info) == 0 || is.null(project.info)) {
+    warning("project.info is empty")
+    return(NULL)    
   }
 
   message("Get probe-level data for the selected hybridisations")

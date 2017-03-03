@@ -31,6 +31,10 @@ run.profiling.script <- function (dbuser, dbpwd, dbname, verbose = TRUE, host = 
 				       save.dir = save.dir, 
  			     use.default.parameters = use.default.parameters)
 
+  if (is.null(chipdata)) {
+    return(NULL)
+  }
+
   message("---Preprocessing ready")
   probedata <- chipdata$probedata
   params    <- chipdata$params
