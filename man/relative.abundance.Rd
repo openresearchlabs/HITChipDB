@@ -23,11 +23,10 @@ with a given threshold.
   data(peerj32)
   relab <- relative.abundance(10^t(peerj32$microbes), det.th = 0)
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation('microbiome')
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

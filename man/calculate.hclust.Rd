@@ -27,11 +27,10 @@ profiling script
   hc <- calculate.hclust(dat, 'complete', 'pearson')
 }
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation('microbiome')
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

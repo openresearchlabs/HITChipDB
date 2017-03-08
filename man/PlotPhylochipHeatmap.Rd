@@ -36,11 +36,10 @@ Plots heatmap of the oligo profiles together with phylotype grouping and sample 
 \examples{
 # TODO
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

@@ -16,6 +16,11 @@
 
 summarize.rawdata <- function (fdat.log10, fdat.hybinfo, fdat.oligoinfo) {
 
+  if (ncol(fdat.log10) < 2) {
+    warning("fdat has less than 2 features - corrupted - returning NULL")
+    return(NULL)
+  }
+
   # fdat.log10 <- log10(d.scaled); fdat.hybinfo = fdat.hybinfo; fdat.oligoinfo = fdat.oligoinfo
   # fdat.log10 <- log10(d.scaled);
 

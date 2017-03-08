@@ -26,11 +26,10 @@ Preprocessed data in absolute scale, tax.table, and parameters
 \description{
 Description: Writed data into the output directory
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

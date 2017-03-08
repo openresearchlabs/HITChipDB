@@ -35,11 +35,10 @@ Arguments:
 # info <- fetch.sample.info(allowed.projects, dbuser, dbpwd, 
          # dbname, selected.samples = NULL, host = NULL, port = NULL)
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

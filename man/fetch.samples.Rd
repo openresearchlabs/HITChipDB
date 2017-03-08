@@ -30,11 +30,10 @@ projectName='B')}".
 \examples{
 # TBA
 }
-\author{
-Douwe Molenaar. Maintainer: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 }
+\author{
+Douwe Molenaar. Maintainer: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

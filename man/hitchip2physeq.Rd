@@ -30,12 +30,11 @@ Convert HITChip data into phyloseq format.
   pseq <- hitchip2physeq(otu, meta)
 }
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 Utilizes the phyloseq package, see citation("phyloseq"). 
             For this function, see citation('microbiome').
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

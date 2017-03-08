@@ -28,11 +28,10 @@ list with data (features x hybridizations matrix) and info (features x info) fie
 \description{
 Description: Get probedata
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

@@ -29,11 +29,10 @@ With robust = FALSE, the standard minmax is carried out. This
   such that the upper quantiles and minimum values of the data match 
   (instead of maximum values).
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

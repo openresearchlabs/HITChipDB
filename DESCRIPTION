@@ -1,7 +1,7 @@
 Package: HITChipDB
 Type: Package
 Title: HITChipDB
-Version: 0.6.33
+Version: 0.6.34
 Author: Leo Lahti and Jarkko Salojarvi
 Maintainer: microbiome developer team <microbiome-admin@googlegroups.com>
 Description: Tools for HITChipDB preprocessing.
@@ -21,4 +21,4 @@ Suggests:
     rmarkdown
 URL: http://microbiome.github.com
 Packaged: 2012-01-12 14:19:39 UTC; lei
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

@@ -43,11 +43,10 @@ Add oligprofile heatmap into output directory.
 \examples{
 # data(peerj32); hc <- add.heatmap(peerj32$microbes[, 1:4])
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

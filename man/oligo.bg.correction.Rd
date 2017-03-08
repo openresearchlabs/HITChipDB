@@ -2,6 +2,7 @@
 % Please edit documentation in R/internal.R
 \name{oligo.bg.correction}
 \alias{oligo.bg.correction}
+\alias{oligo.bg.correction}
 \title{Description: Calculate species summaries and possibly update d.oligo2}
 \usage{
 oligo.bg.correction(d.oligo2, bgc.method)
@@ -28,16 +29,15 @@ Arguments:
 
 Arguments:
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("microbiome")
 
 See citation("microbiome")
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{internal}
 \keyword{utilities}
-

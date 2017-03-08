@@ -21,11 +21,10 @@ Plot hierarchical clustering for the input data in absolute
 and log10 scale using euclidean and pearson correlation similarities. 
 Intended for internal use in the run.profiling.script function.
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation('microbiome')
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-

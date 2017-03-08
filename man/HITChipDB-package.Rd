@@ -2,8 +2,8 @@
 % Please edit documentation in R/HITChipDB-package.R
 \docType{package}
 \name{HITChipDB-package}
-\alias{HITChipDB}
 \alias{HITChipDB-package}
+\alias{HITChipDB}
 \title{R package for HITChipDB studies}
 \description{
 Brief summary of the HITChipDB package
@@ -23,12 +23,11 @@ R package for HITChipDB studies
 \examples{
 library(HITChipDB)
 }
-\author{
-Leo Lahti and Jarkko Salojarvi (UH/WUR). Contact: \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation("HITChipDB")
 \url{http://microbiome.github.com}
 }
+\author{
+Leo Lahti and Jarkko Salojarvi (UH/WUR). Contact: \email{microbiome-admin@googlegroups.com}
+}
 \keyword{package}
-

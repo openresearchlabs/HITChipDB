@@ -28,11 +28,10 @@ Import HITChip output into phyloseq format.
   dat <- import_hitchip(data.dir)
 }
 }
-\author{
-Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
-}
 \references{
 See citation('microbiome')
 }
+\author{
+Contact: Leo Lahti \email{microbiome-admin@googlegroups.com}
+}
 \keyword{utilities}
-
