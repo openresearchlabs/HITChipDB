@@ -23,13 +23,34 @@
 #'             For this function, see citation('microbiome').  
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-hitchip2physeq <- function (otu, meta, taxonomy = NULL, detection.limit = 10^1.8) {
+hitchip2physeq <- function (otu, meta = NULL, taxonomy = NULL, detection.limit = 10^1.8) {
 
   # OTU x Sample matrix: absolute 'read counts'
-  x <- t(otu) - detection.limit # HITChip detection limit
-  x[x < 0] <- 0
-  x <- 1 + x
 
+  # Previously we have used this transformation to remove the lowest abundance
+  # signal as an extra background correction step
+  # Remove the HITChip background, round to integers
+  # Now the distribution resembles more that of sequencing data
+  #x <- t(otu) - detection.limit # HITChip detection limit
+  #x[x < 0] <- 0
+  #x <- 1 + x
+
+  # However, for instance in the RMA bg correction model,
+  # the background (noise) is removed from the observation by subtraction at log scale
+  # which corresponds to division in non-log scale
+  # This also yields abundance distribution which is closer to that seen in sequencing studies
+  # Therefore decided to use that.
+  # Also: did not remarkably affect the relative abundances of the common taxa
+  # the effect is strongest at the lower end of the scale, where the new transformation is a bit more conservative
+  # ie. the smaller values tend more towards zero.
+  # This is potentially dampening out some sensitive low abundance findings but is on the other hand likely to be more
+  # robust and reproducible. Therefore this transformation is a safer default option, at least as long as
+  # a systematic benchmarking would indicate otherwise.
+  # x <- t(otu) / detection.threshold # HITChip detection limit
+  x <- log10(t(otu)) - log10(detection.limit) # HITChip detection limit
+  x[x < 0] <- 0 # Below detection limit is zero
+  x <- 10^x - 1 # Back to original domain; set baseline to zero
+  
   # -------------------------
 
   # Discretize to get 'counts'
