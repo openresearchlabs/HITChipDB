@@ -92,6 +92,9 @@ hitchip2physeq <- function (otu, meta = NULL, taxonomy = NULL, detection.limit =
 
    if (!is.null(taxonomy) || nrow(otumat) < 3000) {
      TAX <- tax_table(as.matrix(taxonomy[rownames(otumat), ]))
+     if (ncol(TAX) == 1) {
+       rownames(TAX) <- rownames(otumat)
+     }
 
      # Combine OTU and Taxon matrix into Phyloseq object
      pseq <- merge_phyloseq(pseq, TAX)
