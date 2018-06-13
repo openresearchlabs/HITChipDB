@@ -14,7 +14,7 @@
 #' @references See citation('microbiome')
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, verbose = F, taxonomy = NULL) {
+import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, verbose = F, taxonomy = NULL, taxonomy.full = NULL) {
 
   # Read	     
   if ( verbose ) { message(paste("Reading Chip data from", data.dir)) }
@@ -29,7 +29,7 @@ import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, v
 
   # Read taxonomy table
   if (is.null(taxonomy)) {
-    f <- paste(data.dir, "/taxonomy.tab", sep = "")
+  f <- paste(data.dir, "/taxonomy.tab", sep = "")
     if (!file.exists(f)) {
       # Old outputs had this name
       f <- paste(data.dir, "/phylogeny.filtered.tab", sep = "")    
@@ -39,12 +39,14 @@ import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, v
   res[["taxonomy"]] <- taxonomy
   
   # Read unfiltered taxonomy table
-  f <- paste(data.dir, "/taxonomy.full.tab", sep = "")
-  if (!file.exists(f)) {
-    # Old outputs had this name
-    f <- paste(data.dir, "/phylogeny.full.tab", sep = "")    
+  if (is.null(taxonomy.full)) {
+    f <- paste(data.dir, "/taxonomy.full.tab", sep = "")
+    if (!file.exists(f)) {
+      # Old outputs had this name
+      f <- paste(data.dir, "/phylogeny.full.tab", sep = "")    
+    }
+    taxonomy.full <- read.csv(f, header = TRUE, sep = "\t", as.is = TRUE)
   }
-  taxonomy.full <- read.csv(f, header = TRUE, sep = "\t", as.is = TRUE)
   res[["taxonomy.full"]] <- taxonomy.full
 
   # Read sample metadata      
