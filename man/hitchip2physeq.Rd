@@ -4,8 +4,7 @@
 \alias{hitchip2physeq}
 \title{HITChip to phyloseq}
 \usage{
-hitchip2physeq(otu, meta = NULL, taxonomy = NULL,
-  detection.limit = 10^1.8)
+hitchip2physeq(otu, meta = NULL, taxonomy = NULL, detection.limit = 10^1.8)
 }
 \arguments{
 \item{otu}{Sample x OTU absolute HITChip signal}

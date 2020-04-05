@@ -4,8 +4,14 @@
 \alias{prune16S}
 \title{Description: filter 16S data}
 \usage{
-prune16S(full16S, pmTm.margin = 2.5, complement = 1, mismatch = 0,
-  rmoligos = NULL, remove.nonspecific.oligos = FALSE)
+prune16S(
+  full16S,
+  pmTm.margin = 2.5,
+  complement = 1,
+  mismatch = 0,
+  rmoligos = NULL,
+  remove.nonspecific.oligos = FALSE
+)
 }
 \arguments{
 \item{full16S}{full16S}

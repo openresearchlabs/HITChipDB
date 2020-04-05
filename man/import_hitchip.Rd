@@ -4,8 +4,14 @@
 \alias{import_hitchip}
 \title{Import HITChip data}
 \usage{
-import_hitchip(data.dir, method = "frpa", detection.threshold = 0,
-  verbose = F)
+import_hitchip(
+  data.dir,
+  method = "frpa",
+  detection.threshold = 0,
+  verbose = F,
+  taxonomy = NULL,
+  taxonomy.full = NULL
+)
 }
 \arguments{
 \item{data.dir}{Profiling script output directory for reading the data.}

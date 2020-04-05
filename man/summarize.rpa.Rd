@@ -4,8 +4,13 @@
 \alias{summarize.rpa}
 \title{Description: Probeset summarization with RPA}
 \usage{
-summarize.rpa(taxonomy, level, probedata, verbose = TRUE,
-  probe.parameters = NULL)
+summarize.rpa(
+  taxonomy,
+  level,
+  probedata,
+  verbose = TRUE,
+  probe.parameters = NULL
+)
 }
 \arguments{
 \item{taxonomy}{oligo - phylotype matching data.frame}

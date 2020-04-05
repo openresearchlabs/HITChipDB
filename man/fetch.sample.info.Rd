@@ -4,8 +4,16 @@
 \alias{fetch.sample.info}
 \title{fetch.sample.info}
 \usage{
-fetch.sample.info(allowed.projects, chiptype = NULL, dbuser, dbpwd, dbname,
-  selected.samples = NULL, host = NULL, port = NULL)
+fetch.sample.info(
+  allowed.projects,
+  chiptype = NULL,
+  dbuser,
+  dbpwd,
+  dbname,
+  selected.samples = NULL,
+  host = NULL,
+  port = NULL
+)
 }
 \arguments{
 \item{allowed.projects}{list projects for which to fetch the data}

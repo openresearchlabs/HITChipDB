@@ -4,9 +4,17 @@
 \alias{PlotPhylochipHeatmap}
 \title{PlotPhylochipHeatmap}
 \usage{
-PlotPhylochipHeatmap(data, taxonomy, metric = "pearson", level = "L1",
-  tree.display = TRUE, palette = "white/black", fontsize = 40,
-  figureratio = 10, hclust.method = "complete")
+PlotPhylochipHeatmap(
+  data,
+  taxonomy,
+  metric = "pearson",
+  level = "L1",
+  tree.display = TRUE,
+  palette = "white/black",
+  fontsize = 40,
+  figureratio = 10,
+  hclust.method = "complete"
+)
 }
 \arguments{
 \item{data}{oligoprofile data in original (non-log) domain}

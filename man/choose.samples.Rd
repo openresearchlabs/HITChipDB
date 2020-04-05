@@ -4,8 +4,7 @@
 \alias{choose.samples}
 \title{choose.samples}
 \usage{
-choose.samples(con, multi = TRUE, title = "Select samples:",
-  condition = NULL)
+choose.samples(con, multi = TRUE, title = "Select samples:", condition = NULL)
 }
 \arguments{
 \item{con}{MySQL connection}

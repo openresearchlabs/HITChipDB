@@ -4,10 +4,20 @@
 \alias{preprocess.chipdata}
 \title{Description: Profiling preprocessing script}
 \usage{
-preprocess.chipdata(dbuser, dbpwd, dbname, verbose = TRUE, host = NULL,
-  port = NULL, use.precalculated.phylogeny = NULL,
-  summarization.methods = c("frpa", "sum"), which.projects = NULL,
-  all.samples = TRUE, save.dir = ".", use.default.parameters = FALSE)
+preprocess.chipdata(
+  dbuser,
+  dbpwd,
+  dbname,
+  verbose = TRUE,
+  host = NULL,
+  port = NULL,
+  use.precalculated.phylogeny = NULL,
+  summarization.methods = c("frpa", "sum"),
+  which.projects = NULL,
+  all.samples = TRUE,
+  save.dir = ".",
+  use.default.parameters = FALSE
+)
 }
 \arguments{
 \item{dbuser}{MySQL username}
