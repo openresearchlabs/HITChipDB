@@ -19,7 +19,7 @@
 #' @references See citation('microbiome')
 #' @author Contact: Leo Lahti \email{microbiome-admin@@googlegroups.com}
 #' @keywords utilities
-read_hitchip <- function(data.dir, method = "rpa", detection.threshold = 0, verbose = F) {
+read_hitchip <- function(data.dir, method = "rpa", detection.threshold = 0, verbose = F, taxonomy = NULL) {
 
   if (verbose) { message(paste("Reading Chip data from", data.dir)) }
 
@@ -37,13 +37,15 @@ read_hitchip <- function(data.dir, method = "rpa", detection.threshold = 0, verb
   colnames(tab) <- unlist(strsplit(readLines(f, 1), "\t"))[-1]
   res[["probedata"]] <- tab
 
-  message("Read taxonomy table")
-  f <- paste(data.dir, "/taxonomy.tab", sep = "")
-  if (!file.exists(f)) {
-    # Old outputs had this name
-    f <- paste(data.dir, "/phylogeny.filtered.tab", sep = "")    
+  # Read taxonomy table
+  if (is.null(taxonomy)) {
+    f <- paste(data.dir, "/taxonomy.tab", sep = "")
+    if (!file.exists(f)) {
+      # Old outputs had this name
+      f <- paste(data.dir, "/phylogeny.filtered.tab", sep = "")    
+    }
+    taxonomy <- read.csv(f, header = TRUE, sep = "\t", as.is = TRUE)
   }
-  taxonomy <- read.csv(f, header = TRUE, sep = "\t", as.is = TRUE)
   res[["taxonomy"]] <- taxonomy
   
   # Read unfiltered taxonomy table
