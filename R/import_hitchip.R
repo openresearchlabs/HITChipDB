@@ -21,13 +21,13 @@ import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, v
 
   res <- list()
 
-  # Read probe-level data
+  message("Read probe-level data")
   f <- paste(data.dir, "/oligoprofile.tab", sep = "")
   tab <- read.csv(f, header = TRUE, sep = "\t", row.names = 1, as.is = TRUE)
   colnames(tab) <- unlist(strsplit(readLines(f, 1), "\t"))[-1]
   res[["probedata"]] <- tab
 
-  # Read taxonomy table
+  message("Read taxonomy table")
   f <- paste(data.dir, "/taxonomy.tab", sep = "")
   if (!file.exists(f)) {
     # Old outputs had this name
@@ -36,7 +36,7 @@ import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, v
   taxonomy <- read.csv(f, header = TRUE, sep = "\t", as.is = TRUE)
   res[["taxonomy"]] <- taxonomy
   
-  # Read unfiltered taxonomy table
+  message("Read unfiltered taxonomy table")
   f <- paste(data.dir, "/taxonomy.full.tab", sep = "")
   if (!file.exists(f)) {
     # Old outputs had this name
@@ -45,7 +45,7 @@ import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, v
   taxonomy.full <- read.csv(f, header = TRUE, sep = "\t", as.is = TRUE)
   res[["taxonomy.full"]] <- taxonomy.full
 
-  # Read sample metadata      
+  message("Read sample metadata")
   f <- paste(data.dir, "/meta.tab", sep = "")
   if (file.exists(f)) {
     tab <- read.csv(f, header = TRUE, sep = "\t", as.is = TRUE)
@@ -56,19 +56,20 @@ import_hitchip <- function(data.dir, method = "frpa", detection.threshold = 0, v
 
   # -----------------------------------
 
-  # Only pick probe-level data, taxonomy and metadata
+  message("Only pick probe-level data, taxonomy and metadata")
   taxonomy <- res$taxonomy
   probedata <- res$probedata
   meta <- res$meta
 
-  # Summarize probes into abundance table
+  message("Summarize probes into abundance table")
   level <- "species"
+
   abu <- summarize_probedata(probedata = probedata,
       	 	             taxonomy = taxonomy,
       	 		     level = level,
 			     method = method)
 
-  # Convert the object into phyloseq format
+  message("Convert the object into phyloseq format")
   levels <- intersect(c("L0", "L1", "L2", "species"), colnames(taxonomy))
   taxonomy <- unique(taxonomy[, levels])
   rownames(taxonomy) <- taxonomy[, "species"]

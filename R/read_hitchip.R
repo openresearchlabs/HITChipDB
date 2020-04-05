@@ -24,19 +24,20 @@ read_hitchip <- function(data.dir, method = "rpa", detection.threshold = 0, verb
   if (verbose) { message(paste("Reading Chip data from", data.dir)) }
 
   # Convert to phyloseq format. Includes summarization to species level.
+  message("Import hitchip")
   pseq <- import_hitchip(data.dir, method = method,
        	  			   detection.threshold = detection.threshold,
 				   verbose = FALSE)
 
   res <- list()
 
-  # Read probe-level data
+  message("Read probe-level data")
   f <- paste(data.dir, "/oligoprofile.tab", sep = "")
   tab <- read.csv(f, header = TRUE, sep = "\t", row.names = 1, as.is = TRUE)
   colnames(tab) <- unlist(strsplit(readLines(f, 1), "\t"))[-1]
   res[["probedata"]] <- tab
 
-  # Read taxonomy table
+  message("Read taxonomy table")
   f <- paste(data.dir, "/taxonomy.tab", sep = "")
   if (!file.exists(f)) {
     # Old outputs had this name
