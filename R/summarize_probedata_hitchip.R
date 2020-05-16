@@ -75,7 +75,8 @@ summarize_probedata <- function(data.dir = NULL, probedata = NULL, taxonomy = NU
     otu.orig <- otu
 
     # Then sum up to the higher level
-    higher <- levelmap(rownames(otu), from = low, to = level, taxonomy)
+    #higher <- levelmap(rownames(otu), from = low, to = level, taxonomy)
+    higher <- map_levels(rownames(otu), from = low, to = level, taxonomy)    
     otu <- t(sapply(split(otu, higher), function (x) {colSums(matrix(x, ncol = ncol(otu)))}))
     colnames(otu) <- colnames(otu.orig)
 
