@@ -4,8 +4,14 @@
 \alias{ReadParameters}
 \title{Define parameters in select box}
 \usage{
-ReadParameters(con, which.projects = NULL, all.samples = TRUE,
-  chip = NULL, save.dir = NULL, use.default.parameters = FALSE)
+ReadParameters(
+  con,
+  which.projects = NULL,
+  all.samples = TRUE,
+  chip = NULL,
+  save.dir = NULL,
+  use.default.parameters = FALSE
+)
 }
 \arguments{
 \item{con}{Output from dbConnect(dbDriver("MySQL"), username = dbuser, password = dbpwd, dbname = 'PhyloArray')}

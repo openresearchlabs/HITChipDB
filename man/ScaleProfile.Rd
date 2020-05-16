@@ -4,8 +4,13 @@
 \alias{ScaleProfile}
 \title{Description: Between-arrays normalization}
 \usage{
-ScaleProfile(dat, method = "minmax", bg.adjust = NULL,
-  minmax.quantiles = c(0.005, 0.995), minmax.points = NULL)
+ScaleProfile(
+  dat,
+  method = "minmax",
+  bg.adjust = NULL,
+  minmax.quantiles = c(0.005, 0.995),
+  minmax.points = NULL
+)
 }
 \arguments{
 \item{dat}{data matrix in original absolute scale}

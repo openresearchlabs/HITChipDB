@@ -4,9 +4,18 @@
 \alias{ReadPhylogeny}
 \title{Read phylogeny}
 \usage{
-ReadPhylogeny(phylogeny, rm.phylotypes, remove.nonspecific.oligos,
-  dbuser = dbuser, dbpwd = dbpwd, dbname = dbname, host = host,
-  port = port, verbose = verbose, chip)
+ReadPhylogeny(
+  phylogeny,
+  rm.phylotypes,
+  remove.nonspecific.oligos,
+  dbuser = dbuser,
+  dbpwd = dbpwd,
+  dbname = dbname,
+  host = host,
+  port = port,
+  verbose = verbose,
+  chip
+)
 }
 \arguments{
 \item{phylogeny}{phylogeny}

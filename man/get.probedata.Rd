@@ -4,8 +4,15 @@
 \alias{get.probedata}
 \title{Description: Get probedata}
 \usage{
-get.probedata(hybridization.ids, rmoligos, dbuser, dbpwd, dbname, host = NULL,
-  port = NULL)
+get.probedata(
+  hybridization.ids,
+  rmoligos,
+  dbuser,
+  dbpwd,
+  dbname,
+  host = NULL,
+  port = NULL
+)
 }
 \arguments{
 \item{hybridization.ids}{Specify the hybridizations to retrieve}

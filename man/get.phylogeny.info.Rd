@@ -4,8 +4,17 @@
 \alias{get.phylogeny.info}
 \title{get.phylogeny.info}
 \usage{
-get.phylogeny.info(phylogeny = "16S", dbuser, dbpwd, dbname, verbose = TRUE,
-  chip = "HITChip", host = NULL, port = NULL, rmoligos = NULL)
+get.phylogeny.info(
+  phylogeny = "16S",
+  dbuser,
+  dbpwd,
+  dbname,
+  verbose = TRUE,
+  chip = "HITChip",
+  host = NULL,
+  port = NULL,
+  rmoligos = NULL
+)
 }
 \arguments{
 \item{phylogeny}{phylogeny (default: 16S)}

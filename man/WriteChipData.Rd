@@ -4,8 +4,14 @@
 \alias{WriteChipData}
 \title{Description: Writed data into the output directory}
 \usage{
-WriteChipData(finaldata, output.dir, tax.table, tax.table.full, meta,
-  verbose = TRUE)
+WriteChipData(
+  finaldata,
+  output.dir,
+  tax.table,
+  tax.table.full,
+  meta,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{finaldata}{preprocessed data matrices in absolute scale (from the chipdata function)}

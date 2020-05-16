@@ -4,8 +4,12 @@
 \alias{scaling.minmax}
 \title{Description: Minmax scaling.}
 \usage{
-scaling.minmax(dat, quantile.points = NULL, minmax.points = NULL,
-  robust = FALSE)
+scaling.minmax(
+  dat,
+  quantile.points = NULL,
+  minmax.points = NULL,
+  robust = FALSE
+)
 }
 \arguments{
 \item{dat}{data matrix in original absolute scale}

@@ -4,8 +4,13 @@
 \alias{read_hitchip}
 \title{Read HITChip}
 \usage{
-read_hitchip(data.dir, method = "rpa", detection.threshold = 0,
-  verbose = F)
+read_hitchip(
+  data.dir,
+  method = "rpa",
+  detection.threshold = 0,
+  verbose = F,
+  taxonomy = NULL
+)
 }
 \arguments{
 \item{data.dir}{Profiling script output directory for reading the data.}

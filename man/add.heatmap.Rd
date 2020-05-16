@@ -4,10 +4,20 @@
 \alias{add.heatmap}
 \title{add.heatmap}
 \usage{
-add.heatmap(dat, output.dir, output.file = NULL, taxonomy, ppcm = 150,
-  hclust.method = "complete", palette = "white/black", level = "L1",
-  metric = "pearson", figureratio = 10, fontsize = 40,
-  tree.display = TRUE)
+add.heatmap(
+  dat,
+  output.dir,
+  output.file = NULL,
+  taxonomy,
+  ppcm = 150,
+  hclust.method = "complete",
+  palette = "white/black",
+  level = "L1",
+  metric = "pearson",
+  figureratio = 10,
+  fontsize = 40,
+  tree.display = TRUE
+)
 }
 \arguments{
 \item{dat}{oligoprofile data in original (non-log) domain}
