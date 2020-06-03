@@ -1,6 +1,5 @@
 #' @import microbiome
 #' @import parallel
-#' @import tcltk
 #' @importFrom RPA summarize_probedata
 #' @importFrom graphics image
 #' @importFrom graphics layout
